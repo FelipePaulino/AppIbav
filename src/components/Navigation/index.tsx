@@ -18,7 +18,7 @@ export function NavigationComponent({ data, members, visitors }: IDataProps) {
     <Fragment>
       {data && (
         <Fragment>
-          <TouchableOpacity onPress={() => navigation.navigate("SendReport")}>
+          <TouchableOpacity >
             <Navigation
               style={{ borderBottomColor: "white", borderBottomWidth: 2 }}
             >
@@ -26,13 +26,13 @@ export function NavigationComponent({ data, members, visitors }: IDataProps) {
             </Navigation>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("MembersReport")}
+
             disabled={disableNavegation}>
             <Navigation disabled={disableNavegation}>{MenuNavigation.MEMBERS}</Navigation>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("VisitorsReport")}
+
             disabled={disableNavegation}>
             <Navigation disabled={disableNavegation}>{MenuNavigation.VISITORS}</Navigation>
           </TouchableOpacity>

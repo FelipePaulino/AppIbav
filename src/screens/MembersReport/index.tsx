@@ -42,6 +42,10 @@ export function MembersReportScreen() {
     setModalVisible(true);
   };
 
+  { console.log(state.textDate, 'state.textDate') }
+  { console.log(state.celulaSelect, 'state.celulaSelect') }
+  { console.log(state.offer, 'state.offer') }
+
   const dataUser = user && user[0] && user[0][1];
   const identifyCelula = user && user[0][1].numero_celula;
   const idCelulaSelect =
@@ -111,6 +115,8 @@ export function MembersReportScreen() {
       setMembersIdentify([...memberFilter, selectPerson]);
     }
   }, [selectPerson]);
+
+  console.log(selectPerson)
 
   function compared(a: IDataUserProps, b: IDataUserProps) {
     if (a.nome < b.nome) return -1;

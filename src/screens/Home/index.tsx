@@ -29,7 +29,7 @@ export function HomeScreen() {
 
   const { dispatch } = useFormReport();
   const clean = () => {
-    navigation.navigate("SendReport")
+    navigation.navigate("Report")
     dispatch({
       type: FormReportActions.setRedeSelect,
       payload: null,

@@ -375,7 +375,9 @@ export function SendReportScreen() {
                     />
                   </S.ContentC>
                 </S.Grid>
-
+                {console.log(state.textDate, 'state.textDate')}
+                {console.log(state.celulaSelect, 'state.celulaSelect')}
+                {console.log(state.offer, 'state.offer')}
                 <S.Grid>
                   <TitleComponent
                     title={`${FormFields.OBSERVATIONS}:`}

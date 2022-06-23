@@ -49,7 +49,7 @@ export function PreListAdminScreen() {
           <SelectedMenuComponent
             icon={<S.Font name="user-o" size={34} />}
             title="Usuário"
-            onPress={() => navigation.navigate("ListUsers")}
+            onPress={() => navigation.navigate("UserGrid")}
           />
 
           <SelectedMenuComponent

@@ -1,6 +1,6 @@
 export interface IPersonProps {
   nome: string;
-  status?: string;
-  delMember: () => void;
+  status: any;
+  delMember: any;
   onPress: () => void;
 }

@@ -23,7 +23,7 @@ import { selectCategory, selectCivilStatus, selectState } from "../../common/uti
 import { connectApi } from "../../common/services/ConnectApi";
 import { useFormReport } from "../../hooks/useFormReport";
 
-export function MembersInformationScreen(this: any, { route }: any) {
+export function MembersInformation(this: any, { route }: any) {
     const [successModal, setSuccessModal] = useState(false);
     const [showCalender, setShowCalender] = useState(false);
 

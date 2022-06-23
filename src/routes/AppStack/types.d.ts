@@ -5,7 +5,6 @@ export type INavigationAppStackProps = {
   Details: undefined;
   Members: undefined;
   Register: undefined;
-  ListUsers: undefined;
   SendReport: undefined;
   UserRegister: undefined;
   PreListAdmin: undefined;
@@ -13,9 +12,9 @@ export type INavigationAppStackProps = {
   VisitorsReport: undefined;
   Multiplication: undefined;
   WaitingApprove: undefined;
-  UsersInformation: undefined;
   PreRegisterAdmin: undefined;
   MemberInformation: undefined;
+  Report: undefined;
 };
 
 export type IPropsAppStack = NativeStackScreenProps<INavigationAppStackProps>;

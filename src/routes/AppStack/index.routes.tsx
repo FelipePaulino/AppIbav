@@ -4,7 +4,7 @@ import { HomeScreen } from "../../screens/Home";
 import { DetailsScreen } from "../../screens/Details";
 import { MembersScreen } from "../../screens/Members";
 import { RegisterScreen } from "../../screens/Register";
-import { ListUsersScreen } from "../../screens/ListUsers";
+import { ReportScreen } from "../../screens/Report";
 import { SendReportScreen } from "../../screens/SendReport";
 import { Multiplication } from "../../screens/Multiplication";
 import { UserRegisterScreen } from "../../screens/UserRegister";
@@ -12,9 +12,8 @@ import { PreListAdminScreen } from "../../screens/PreListAdmin";
 import { MembersReportScreen } from "../../screens/MembersReport";
 import { WaitingApproveScreen } from "../../screens/WaitingApprove";
 import { VisitorsReportScreen } from "../../screens/VisitorsReport";
-import { UsersInformationScreen } from "../../screens/ListInformation";
 import { PreRegisterAdminScreen } from "../../screens/PreRegisterAdmin";
-import { MembersInformationScreen } from "../../screens/MemberInformation";
+import { MembersInformation } from "../../screens/MemberInformation";
 
 import { INavigationAppStackProps } from "./types";
 
@@ -28,8 +27,8 @@ export function AppRoutes() {
       <Screen name="Details" component={DetailsScreen} />
       <Screen name="Members" component={MembersScreen} />
       <Screen name="Register" component={RegisterScreen} />
-      <Screen name="ListUsers" component={ListUsersScreen} />
-      <Screen name="SendReport" component={SendReportScreen} />
+      {/* <Screen name="SendReport" component={SendReportScreen} /> */}
+      <Screen name="Report" component={ReportScreen} />
       <Screen name="Multiplication" component={Multiplication} />
       <Screen name="PreListAdmin" component={PreListAdminScreen} />
       <Screen name="UserRegister" component={UserRegisterScreen} />
@@ -37,8 +36,7 @@ export function AppRoutes() {
       <Screen name="WaitingApprove" component={WaitingApproveScreen} />
       <Screen name="VisitorsReport" component={VisitorsReportScreen} />
       <Screen name="PreRegisterAdmin" component={PreRegisterAdminScreen} />
-      <Screen name="UsersInformation" component={UsersInformationScreen} />
-      <Screen name="MemberInformation" component={MembersInformationScreen} />
+      <Screen name="MemberInformation" component={MembersInformation} />
     </Navigator>
   );
 }
