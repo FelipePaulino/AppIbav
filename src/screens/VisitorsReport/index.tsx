@@ -3,7 +3,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFetch } from "../../hooks/useFetch";
+
 import { ModalComponent } from "../../components/Modal";
 import { ButtonComponent } from "../../components/Button";
 import { HeaderComponent } from "../../components/Header";
@@ -33,30 +33,31 @@ import { GetStorage } from "../../common/constants/storage";
 export function VisitorsReportScreen() {
   // const [error, setError] = useState("");
   const [user, setUser] = useState<any>();
+  const [loading, setLoading] = useState(false);
   // const [isAddVisible, setIsAddVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [memberStorage, setMemberStorage] = useState<any>();
   const [visitorsIdentify, setVisitorsIdentify] = useState<any>();
+  const [visitantes, setVisitantes] = useState<any>();
   const [selectPerson, setSelectPerson] = useState<
     ISelectedUserProps | undefined
   >(undefined);
 
   const { state, dispatch } = useFormReport();
-  const { data: celulas, isFetching: loading } = useFetch("celulas.json");
 
-  // const ID_CELULA =
-  //   memberStorage && memberStorage.length > 0 && memberStorage[0][0];
+  const ID_CELULA =
+    memberStorage && memberStorage.length > 0 && memberStorage[0][0];
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   connectApi.get(`/celulas/${ID_CELULA}/visitantes.json`)
-  //     .then((response) => {
-  //       setVisitantes(Object.values(response.data));
-  //       setLoading(false)
-  //     })
+  useEffect(() => {
+    setLoading(true);
+    connectApi.get(`/celulas/${ID_CELULA}/visitantes.json`)
+      .then((response) => {
+        setVisitantes(Object.values(response.data));
+        setLoading(false)
+      })
 
-  //     .catch(() => setLoading(false))
-  // }, [ID_CELULA])
+      .catch(() => setLoading(false))
+  }, [ID_CELULA])
 
   const handleOpenModalReport = () => {
     setModalVisible(true);
@@ -119,14 +120,9 @@ export function VisitorsReportScreen() {
   const dataUser = user && user[0] && user[0][1];
   const whatIsOffice = dataUser && dataUser.cargo;
 
-  const visitantes = celulas && Object.values(celulas[0][1].membros).filter((visitors: any) => {
-    return visitors.status === 'visitante'
-  })
-
   const newArrayVisitors = visitorsIdentify
     ? visitorsIdentify
     : visitantes;
-
 
   useEffect(() => {
     const visitorsFilter =

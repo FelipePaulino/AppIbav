@@ -23,7 +23,7 @@ import { selectCategory, selectCivilStatus, selectState } from "../../common/uti
 import { connectApi } from "../../common/services/ConnectApi";
 import { useFormReport } from "../../hooks/useFormReport";
 
-export function MembersInformationScreen(this: any, { route }: any) {
+export function MembersInformation(this: any, { route }: any) {
     const [successModal, setSuccessModal] = useState(false);
     const [showCalender, setShowCalender] = useState(false);
 
@@ -47,39 +47,39 @@ export function MembersInformationScreen(this: any, { route }: any) {
     const { user } = useUserFiltered();
     const { trigger, setTrigger } = useFormReport()
 
-
+    
     const identifyCelula = user && user[0][1].numero_celula;
 
     const serviceGet = new RequestService()
 
     const idCelula =
-        members && members.length > 0 && Object.entries(members[0])[0][1];
+    members && members.length > 0 && Object.entries(members[0])[0][1];
 
     useEffect(() => {
         const getCelulas = async () => {
-            await serviceGet.getCelulas().then((response) => {
-                setCelulas(Object.entries(response))
-            })
+          await serviceGet.getCelulas().then((response) =>{
+            setCelulas(Object.entries(response))
+          })
         }
-
+    
         getCelulas()
-    }, [])
+      }, [])
 
-    useEffect(() => {
+      useEffect(() => {
         const filterMembers =
-            celulas &&
-            celulas.filter((item: any) => {
-                return item[1].numero_celula == identifyCelula;
-            });
-
+          celulas &&
+          celulas.filter((item: any) => {
+            return item[1].numero_celula == identifyCelula;
+          });
+    
         if (filterMembers) {
-            setMembers(filterMembers);
-            AsyncStorage.setItem(
-                GetStorage.MEMBERS_FILTERED,
-                JSON.stringify(filterMembers)
-            );
+          setMembers(filterMembers);
+          AsyncStorage.setItem(
+            GetStorage.MEMBERS_FILTERED,
+            JSON.stringify(filterMembers)
+          );
         }
-    }, [identifyCelula, celulas]);
+      }, [identifyCelula, celulas]);
 
     const showMode = () => {
         setShowCalender(true);
@@ -105,7 +105,7 @@ export function MembersInformationScreen(this: any, { route }: any) {
 
     const timeModal = () => {
         setSuccessModal(true);
-    };
+      };
 
     const submitRegister = () => {
         try {

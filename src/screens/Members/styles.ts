@@ -79,3 +79,39 @@ export const Container = styled.View`
 `;
 
 export const Loading = styled(Image)``;
+
+export const Grid = styled.View`
+  margin-bottom: 32;
+`;
+
+export const ContentC = styled.View`
+  flex-direction: row;
+  align-items: flex-end;
+
+  margin: 0;
+  padding: 0;
+
+  width: 310;
+  height: 40;
+`;
+
+export const IconC = styled(FontAwesome5)`
+  color: ${({ theme }) => theme.colors.red};
+
+  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+
+  margin-right: 20;
+`;
+
+
+export const DescriptionC = styled.Text`
+  width: 100%;
+
+  font-size: 14;
+  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  color: ${({ theme }) => theme.colors.grey};
+  text-transform: uppercase;
+
+  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-width: 1;
+`;

@@ -20,6 +20,8 @@ export const Buttons = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  width: 20%;
 `;
 
 export const Content = styled.View`
