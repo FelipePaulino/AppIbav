@@ -3,6 +3,7 @@ import { NativeStackScreenProps } from "@react-navigation/native";
 export type INavigationAppStackProps = {
   Home: undefined;
   Details: undefined;
+  Network: undefined;
   Members: undefined;
   Register: undefined;
   ListUsers: undefined;

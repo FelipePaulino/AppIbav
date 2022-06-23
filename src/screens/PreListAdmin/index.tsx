@@ -55,7 +55,7 @@ export function PreListAdminScreen() {
           <SelectedMenuComponent
             icon={<S.UserGridIcon name="network-wired" />}
             title="Rede"
-            onPress={() => navigation.navigate("UserGrid")}
+            onPress={() => navigation.navigate("Network")}
           />
         </S.ContentOptions>
       </S.Content>
