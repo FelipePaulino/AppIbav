@@ -21,7 +21,8 @@ const loadingGif = require("../../assets/loader-two.gif");
 export default function NetworkScreenList() {
   const [celulas, setCelulas] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [showShearch, setShowShearch] = useState(false);
+  const [everyOne, setEveryOne] = useState('Todos')
   const { state, dispatch } = useFormReport();
 
   const services = new RequestService();
@@ -95,14 +96,11 @@ export default function NetworkScreenList() {
     (item: any) => item.discipulador === state.discipuladoSelect
   );
 
-  const netWork = state.redeSelect ? state.redeSelect : 'Todos';
-
   return (
     <Fragment>
       <HeaderComponent>
         <ComeBackComponent />
         <S.Navigation>{MenuNavigation.NETWORK}</S.Navigation>
-        {/* <NotificationComponent /> */}
       </HeaderComponent>
 
       {loading ? (
@@ -121,10 +119,10 @@ export default function NetworkScreenList() {
                   <S.IconC name="vector-square" />
                   <SelectComponent
                     onChange={handleRedeChange}
-                    labelSelect={netWork}
+                    labelSelect={state.redeSelect ? state.redeSelect : everyOne}
                     dataOptions={mapRedesUnicas}
                     selectedOption={handleRedeChange}
-                    width="80%"
+                    width="75%"
                   />
                 </S.ContentC>
               </S.Grid>
@@ -139,41 +137,54 @@ export default function NetworkScreenList() {
                   <S.IconC name="network-wired" />
                   <SelectComponent
                     onChange={handleDiscipuladoChange}
-                    labelSelect={state.discipuladoSelect}
+                    labelSelect={state.discipuladoSelect ? state.discipuladoSelect : 'Selecione'}
                     dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                     selectedOption={handleDiscipuladoChange}
-                      width="80%"
-                      disabled={state.redeSelect === "Todos" ? true : false}
+                    width="70%"
+                    disabled={state.redeSelect === "Selecione" ? true : false}
                   />
                 </S.ContentC>
               </S.Grid>
 
               <S.ContentButton>
                 <ButtonComponent
-                  title="Pesquisar"
+                  title={showShearch ? "Limpar" : "Pesquisar"}
                   width="50%"
-                  disabled={state.redeSelect === "Todos"}
+                  onPress={() => setShowShearch(!showShearch)}
+                  disabled={state.redeSelect === "Selecione"}
                 />
               </S.ContentButton>
+              {showShearch && (
+                <>
+                  {everyOne && (
+                      <>
+                        <Text>Rede</Text>
+                        <PersonLabelComponent nome={state.redeSelect} />
+                      </>
+                    )}
+                  {state.redeSelect &&
+                    !state.discipuladoSelect && (
+                      <>
+                        <Text>Discipulador</Text>
+                        {usersPerNetwork.map((item: any) => {
+                          return (
+                            <PersonLabelComponent nome={item.discipulador} />
+                          );
+                        })}
+                      </>
+                    )}
+
+                  {state.discipuladoSelect && (
+                    <>
+                      <Text>Célula</Text>
+                      {usersPerDisciples.map((item: any) => {
+                        return <PersonLabelComponent nome={item.lider} />;
+                      })}
+                    </>
+                  )}
+                </>
+              )}
             </S.Form>
-
-            {state.redeSelect !== "Todos" && state.discipuladoSelect === "Todos" && (
-              <>
-                <Text>Redes</Text>
-                {usersPerNetwork.map((item: any) => {
-                  return <PersonLabelComponent nome={item.discipulador} />;
-                })}
-              </>
-            )}
-
-            {state.redeSelect !== "Selecione" && state.discipuladoSelect !== "Selecione" && (
-              <>
-                <Text>Discipulados</Text>
-                {usersPerDisciples.map((item: any) => {
-                  return <PersonLabelComponent nome={item.lider} />;
-                })}
-              </>
-            )}
           </S.Content>
         </ScrollView>
       )}
