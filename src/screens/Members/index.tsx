@@ -95,8 +95,6 @@ export function MembersScreen(this: any) {
     }, [identifyCelula, celulas]);
   }
 
-  console.log(celulas && celulas, 'celulas')
-
   const timeModal = () => {
     setModalConcluded(true);
   };
@@ -133,6 +131,7 @@ export function MembersScreen(this: any) {
       type: FormReportActions.setDiscipuladoSelect,
       payload: value,
     });
+    console.log(value, 'valor setado')
     dispatch({
       type: FormReportActions.setCelulaSelect,
       payload: null,
@@ -178,9 +177,13 @@ export function MembersScreen(this: any) {
     }
   })
 
+  console.log(mapDiscipuladosUnicos,' mapDiscipuladosUnicos')
+
   const filtrandoDiscipulado = celulas && celulas.filter((item: any) => {
     return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
   })
+
+  // console.log(filtrandoDiscipulado,' filtrandoDiscipulado')
 
   const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
     return {
@@ -188,7 +191,13 @@ export function MembersScreen(this: any) {
     }
   })
 
+  // console.log(celulaAdm, 'celulaAdm')
+
   const numberCelula = celulaAdm && celulaAdm[0]?.value.split(' - ')[0]
+  const idCelulaSelect =
+  state.celulaSelect && state.celulaSelect.split(" -")[0];
+
+  // console.log(idCelulaSelect, 'idCelulaSelect')
 
   useEffect(() => {
     if (whatOffice === 'administrador') {
@@ -197,7 +206,10 @@ export function MembersScreen(this: any) {
         celulas &&
         celulas.filter((item: any) => {
 
-          return item.numero_celula == numberCelula;
+          return (
+            item.numero_celula == numberCelula ||
+            item.numero_celula == idCelulaSelect
+          )
         });
 
       if (filterMembers) {
@@ -206,6 +218,15 @@ export function MembersScreen(this: any) {
     }
   }, [numberCelula, celulas])
 
+  const newMembersList =
+    members &&
+    members.length > 0 &&
+    Object?.entries(members[0].membros).filter(
+      (member: any) =>
+        member[1].status !== "visitante" && member[1].status !== "Visitante"
+    );
+
+      
   // tratativas para o usuário pastor
 
   const filtrandoDiscipuladoPastor = celulas && celulas.filter((item: any) => {
@@ -351,8 +372,6 @@ export function MembersScreen(this: any) {
     }
   };
 
-  console.log(mapDiscipuladosUnicos, 'mapDiscipuladosUnicos')
-
   return (
     <Fragment>
       <HeaderComponent>
@@ -374,9 +393,9 @@ export function MembersScreen(this: any) {
           ) : (
             <Fragment>
               {office()}
-              {members &&
-                members.length > 0 &&
-                Object?.entries(members[0]?.membros).map((item: any) => {
+              {newMembersList &&
+                newMembersList.length > 0 &&
+                newMembersList.map((item: any) => {
                   return (
                     <Fragment>
                       <PersonLabelComponent
