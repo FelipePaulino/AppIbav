@@ -48,7 +48,7 @@ export function MembersScreen(this: any) {
 
   const serviceGet = new RequestService()
 
-  const idCelula = members && members.length > 0 && Object.entries(members[0])[0][1];
+  const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
@@ -131,7 +131,6 @@ export function MembersScreen(this: any) {
       type: FormReportActions.setDiscipuladoSelect,
       payload: value,
     });
-    console.log(value, 'valor setado')
     dispatch({
       type: FormReportActions.setCelulaSelect,
       payload: null,
@@ -177,13 +176,9 @@ export function MembersScreen(this: any) {
     }
   })
 
-  console.log(mapDiscipuladosUnicos,' mapDiscipuladosUnicos')
-
   const filtrandoDiscipulado = celulas && celulas.filter((item: any) => {
     return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
   })
-
-  // console.log(filtrandoDiscipulado,' filtrandoDiscipulado')
 
   const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
     return {
@@ -191,13 +186,8 @@ export function MembersScreen(this: any) {
     }
   })
 
-  // console.log(celulaAdm, 'celulaAdm')
-
-  const numberCelula = celulaAdm && celulaAdm[0]?.value.split(' - ')[0]
   const idCelulaSelect =
-  state.celulaSelect && state.celulaSelect.split(" -")[0];
-
-  // console.log(idCelulaSelect, 'idCelulaSelect')
+    state.celulaSelect && state.celulaSelect.split(" -")[0];
 
   useEffect(() => {
     if (whatOffice === 'administrador') {
@@ -205,28 +195,26 @@ export function MembersScreen(this: any) {
       const filterMembers =
         celulas &&
         celulas.filter((item: any) => {
-
           return (
-            item.numero_celula == numberCelula ||
             item.numero_celula == idCelulaSelect
           )
         });
 
       if (filterMembers) {
-        setMembers(filterMembers);
+          setMembers(filterMembers);
       }
     }
-  }, [numberCelula, celulas])
+  }, [celulas, state.celulaSelect])
 
   const newMembersList =
     members &&
     members.length > 0 &&
-    Object?.entries(members[0].membros).filter(
+    Object?.entries(members[0]?.membros).filter(
       (member: any) =>
         member[1].status !== "visitante" && member[1].status !== "Visitante"
     );
 
-      
+
   // tratativas para o usuário pastor
 
   const filtrandoDiscipuladoPastor = celulas && celulas.filter((item: any) => {
@@ -395,7 +383,7 @@ export function MembersScreen(this: any) {
               {office()}
               {newMembersList &&
                 newMembersList.length > 0 &&
-                newMembersList.map((item: any) => {
+                newMembersList?.map((item: any) => {
                   return (
                     <Fragment>
                       <PersonLabelComponent
