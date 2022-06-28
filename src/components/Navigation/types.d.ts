@@ -1,8 +1,8 @@
 import { AppProps } from "../../routes/types/app";
 
 export interface IDataProps {
-  data?: boolean;
-  members?: boolean;
-  visitors?: boolean;
+  setData?: any;
+  setMembers?: any;
+  setVisitors?: any;
   disabled?: boolean;
 }

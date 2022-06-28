@@ -327,11 +327,7 @@ export function SendReportScreen() {
 
   return (
     <Fragment>
-      <HeaderComponent>
-        <ComeBackComponent />
-        <NavigationComponent data />
-        {/* <NotificationComponent /> */}
-      </HeaderComponent>
+
 
       {loading ? (
         <S.Loading source={loadingGif} />

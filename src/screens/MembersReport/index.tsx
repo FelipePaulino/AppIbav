@@ -128,47 +128,41 @@ export function MembersReportScreen() {
 
   return (
     <Fragment>
-      <HeaderComponent>
-        <ComeBackComponent />
-        <NavigationComponent members />
-        {/* <NotificationComponent /> */}
-      </HeaderComponent>
-
-      {loading ? (
+      {/* {loading ? (
         <S.Loading source={loadingGif} />
-      ) : (
-        <ScrollView>
-          <S.Content>
-            {whatIsOffice !== "lider" && (
-              <S.Heading>
-                <S.Title>Célula</S.Title>
-                <S.Subtitle>{state.celulaSelect}</S.Subtitle>
-              </S.Heading>
-            )}
+      ) : ( */}
+      <ScrollView>
+        <S.Content>
+          {whatIsOffice !== "lider" && (
+            <S.Heading>
+              <S.Title>Célula</S.Title>
+              <S.Subtitle>{state.celulaSelect}</S.Subtitle>
+            </S.Heading>
+          )}
 
-            <HeadingPresentComponent />
+          <HeadingPresentComponent />
 
-            <ScrollView>
-              {newArrayMembers &&
-                newArrayMembers.map((data: any) => (
-                  <CardMembersComponent
-                    key={data}
-                    data={data}
-                    setSelectPerson={setSelectPerson}
-                  />
-                ))}
-            </ScrollView>
-            <FooterInfoComponent />
+          <ScrollView>
+            {newArrayMembers &&
+              newArrayMembers.map((data: any) => (
+                <CardMembersComponent
+                  key={data}
+                  data={data}
+                  setSelectPerson={setSelectPerson}
+                />
+              ))}
+          </ScrollView>
+          <FooterInfoComponent />
 
-            <S.Button>
-              <ButtonComponent
-                title={ButtonsText.REPORT}
-                onPress={handleOpenModal}
-              />
-            </S.Button>
-          </S.Content>
-        </ScrollView>
-      )}
+          <S.Button>
+            <ButtonComponent
+              title={ButtonsText.REPORT}
+              onPress={handleOpenModal}
+            />
+          </S.Button>
+        </S.Content>
+      </ScrollView>
+      {/* )} */}
 
       <ModalComponent
         isVisible={isModalVisible}
