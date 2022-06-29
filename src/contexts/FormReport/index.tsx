@@ -20,7 +20,7 @@ const initialData: IState = {
   textSelectCategory: "Selecione",
   textSelectCivilStatus: "Selecione",
   textRegister: "Selecione uma data",
-  redeSelect: "Selecione",
+  redeSelect: "Todos",
   discipuladoSelect: "Selecione",
 };
 

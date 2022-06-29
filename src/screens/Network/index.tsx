@@ -22,7 +22,7 @@ export default function NetworkScreenList() {
   const [celulas, setCelulas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showShearch, setShowShearch] = useState(false);
-  const [everyOne, setEveryOne] = useState('Todos')
+  const [everyOne, setEveryOne] = useState("Todos");
   const { state, dispatch } = useFormReport();
 
   const services = new RequestService();
@@ -119,7 +119,7 @@ export default function NetworkScreenList() {
                   <S.IconC name="vector-square" />
                   <SelectComponent
                     onChange={handleRedeChange}
-                    labelSelect={state.redeSelect ? state.redeSelect : everyOne}
+                    labelSelect={state.redeSelect}
                     dataOptions={mapRedesUnicas}
                     selectedOption={handleRedeChange}
                     width="75%"
@@ -137,44 +137,47 @@ export default function NetworkScreenList() {
                   <S.IconC name="network-wired" />
                   <SelectComponent
                     onChange={handleDiscipuladoChange}
-                    labelSelect={state.discipuladoSelect ? state.discipuladoSelect : 'Selecione'}
+                    labelSelect={
+                      state.discipuladoSelect
+                        ? state.discipuladoSelect
+                        : "Selecione"
+                    }
                     dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                     selectedOption={handleDiscipuladoChange}
                     width="70%"
-                    disabled={state.redeSelect === "Selecione" ? true : false}
+                    disabled={state.redeSelect === "Todos" ? true : false}
                   />
                 </S.ContentC>
               </S.Grid>
 
               <S.ContentButton>
                 <ButtonComponent
-                  title={showShearch ? "Limpar" : "Pesquisar"}
+                  title={"Pesquisar"}
                   width="50%"
                   onPress={() => setShowShearch(!showShearch)}
-                  disabled={state.redeSelect === "Selecione"}
+                  disabled={state.redeSelect === "Todos"}
                 />
               </S.ContentButton>
               {showShearch && (
                 <>
-                  {everyOne && (
-                      <>
-                        <Text>Rede</Text>
-                        <PersonLabelComponent nome={state.redeSelect} />
-                      </>
-                    )}
-                  {state.redeSelect &&
-                    !state.discipuladoSelect && (
-                      <>
-                        <Text>Discipulador</Text>
-                        {usersPerNetwork.map((item: any) => {
-                          return (
-                            <PersonLabelComponent nome={item.discipulador} />
-                          );
-                        })}
-                      </>
-                    )}
+                  {state.redeSelect === 'Todos' && (
+                    <>
+                      <Text>Rede</Text>
+                      <PersonLabelComponent nome={mapRedesUnicas[0]?.value} />
+                    </>
+                  )}
+                  {!state.discipuladoSelect && (
+                    <>
+                      <Text>Discipulador</Text>
+                      {usersPerNetwork.map((item: any) => {
+                        return (
+                          <PersonLabelComponent nome={item.discipulador} />
+                        );
+                      })}
+                    </>
+                  )}
 
-                  {state.discipuladoSelect && (
+                  {state.redeSelect === mapRedesUnicas[0]?.value && state.discipuladoSelect &&(
                     <>
                       <Text>Célula</Text>
                       {usersPerDisciples.map((item: any) => {
