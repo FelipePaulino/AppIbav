@@ -25,7 +25,8 @@ export const Background = styled(LinearGradient).attrs({
 `;
 
 export const BoxIcon = styled.View<ISvgProps>`
-  margin-right: ${({ icon }) => (icon ? "5" : "0")};
+  /* margin-right: ${({ icon }) => (icon ? "5" : "0")}px; */
+  margin-right: 5px;
 `;
 
 export const Title = styled.Text<ISizeProps>`

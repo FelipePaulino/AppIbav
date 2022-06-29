@@ -9,7 +9,6 @@ import { ComeBackComponent } from "../../components/ComeBack";
 import { PersonLabelComponent } from "../../components/PersonLabel";
 import { SelectComponent } from "../../components/Select";
 import { TitleComponent } from "../../components/Title";
-// import { NotificationComponent } from "../../components/Notification";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
