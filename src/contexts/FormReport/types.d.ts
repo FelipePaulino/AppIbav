@@ -21,7 +21,7 @@ export interface IState {
   textSelectCivilStatus: string;
   redeSelect: string;
   discipuladoSelect: string;
-  nomeLider: string
+  presencaCelula: any
 }
 
 interface IContentMembers {

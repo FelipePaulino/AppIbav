@@ -15,4 +15,6 @@ export interface IDataPros {
     status: string;
   };
   setSelectPerson?: any;
+  presenca?: any;
+  handlePresentCelula?: any;
 }

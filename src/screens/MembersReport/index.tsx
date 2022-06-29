@@ -48,6 +48,8 @@ export function MembersReportScreen() {
     state.celulaSelect && state.celulaSelect.split(" -")[0];
   const whatIsOffice = dataUser && dataUser.cargo;
 
+
+
   useEffect(() => {
     const filterMembers =
       celulas &&
@@ -85,7 +87,7 @@ export function MembersReportScreen() {
           return item;
         }
       });
-
+    console.log(selectPerson, 'selectPerson')
     if (selectPerson) {
       const tratarFalta = memberFilter.map((item: any) => {
         return {
@@ -95,6 +97,7 @@ export function MembersReportScreen() {
           culto: item.culto ? item.culto : "F",
         };
       });
+      console.log(tratarFalta[0], 'Tratar falta ')
 
       const selectPersonFalta = {
         nome: selectPerson.nome,
@@ -102,11 +105,17 @@ export function MembersReportScreen() {
         celula: selectPerson.celula ? selectPerson.celula : "F",
         culto: selectPerson.culto ? selectPerson.culto : "F",
       };
-
+      console.log(selectPersonFalta, 'selectPersonFalta')
       dispatch({
         type: FormReportActions.setMembers,
         payload: [...tratarFalta, selectPersonFalta],
       });
+
+      // dispatch({
+      //   type: FormReportActions.setPresencaCelula,
+      //   payload: selectPersonFalta.celula,
+      // });
+      console.log(selectPersonFalta.celula)
 
       setMembersIdentify([...memberFilter, selectPerson]);
     }

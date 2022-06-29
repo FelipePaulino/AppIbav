@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { SelectComponent } from '../../Select'
+import { useFormReport } from "../../../hooks/useFormReport";
+import { FormReportActions } from "../../../contexts/FormReport";
 
 import { IDataPros } from "./types";
 
@@ -29,12 +31,17 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
     }
   ]
 
-  const [presencaCelula, setPresencaCelula] = useState("-");
+  // const [presencaCelula, setPresencaCelula] = useState("-");
   const [presencaCulto, setPresencaCulto] = useState("-");
+
+  const { state, dispatch } = useFormReport();
 
   const handlePresentCelula = (value: string) => {
     setSelectPerson({ ...data, celula: value })
-    setPresencaCelula(value)
+    dispatch({
+      type: FormReportActions.setPresencaCelula,
+      payload: value,
+    });
   };
 
   const handlePresentCulto = (value: string) => {
@@ -49,11 +56,11 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
       </S.ContentName>
 
       <S.ContainerSelect>
-        <S.BoxSelect>
+        <S.BoxSelect >
           <SelectComponent
             onChange={handlePresentCelula}
             selectedOption={handlePresentCelula}
-            labelSelect={presencaCelula}
+            labelSelect={state.presencaCelula}
             dataOptions={presenca}
             small
             width="55"
