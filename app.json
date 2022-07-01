@@ -4,17 +4,18 @@
   "expo": {
     "name": "Agua Viva App",
     "slug": "aguavivarp",
-    "version": "1.0.0",
+    "version": "4.0.0",
     "scheme": "aguavivarp",
     "orientation": "portrait",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.viniciusdevitalo.aguavivarp",
-      "buildNumber": "1.0.0"
+      "buildNumber": "4.0.0"
     },
     "android": {
       "package": "com.viniciusdevitalo.aguavivarp",
-      "versionCode": 1
+      "permissions": [],
+      "versionCode": 8
     }
   }
 }
