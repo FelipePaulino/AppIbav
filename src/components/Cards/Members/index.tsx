@@ -8,6 +8,7 @@ import { IDataPros } from "./types";
 import * as S from "./styles";
 
 export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
+  console.log(data, 'data')
   const presenca = [
     {
       label: "F",
@@ -31,16 +32,16 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
     }
   ]
 
-  // const [presencaCelula, setPresencaCelula] = useState("-");
+  const [presencaCelula, setPresencaCelula] = useState("-");
   const [presencaCulto, setPresencaCulto] = useState("-");
 
   const { state, dispatch } = useFormReport();
-
+  console.log(state, 'state')
   const handlePresentCelula = (value: string) => {
     setSelectPerson({ ...data, celula: value })
     dispatch({
       type: FormReportActions.setPresencaCelula,
-      payload: value,
+      payload: [...state.presencaCelula, { ...data, celula: value }],
     });
   };
 
@@ -48,6 +49,10 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
     setSelectPerson({ ...data, culto: value })
     setPresencaCulto(value)
   };
+
+  const filterPresenca = state?.presencaCelula?.filter(item =>{
+    return item.nome === data.nome
+  })
 
   return (
     <S.Content>
@@ -60,7 +65,7 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
           <SelectComponent
             onChange={handlePresentCelula}
             selectedOption={handlePresentCelula}
-            labelSelect={state.presencaCelula}
+            labelSelect={filterPresenca[0] ? filterPresenca[0]?.celula : "-"}
             dataOptions={presenca}
             small
             width="55"

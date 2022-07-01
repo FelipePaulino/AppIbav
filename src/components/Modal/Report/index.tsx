@@ -26,7 +26,7 @@ export function ReportContentModalComponent({
   const { state } = useFormReport();
   const { user } = useUserFiltered();
 
-  const presentCLMembers = state.members.filter((item) => item.celula === "P");
+  const presentCLMembers = state.presencaCelula.filter((item) => item.celula === "P");
   const presentCTMembers = state.members.filter((item) => item.culto === "P");
   const presentCLVisitors = state.visitors.filter(
     (item) => item.celula === "P"

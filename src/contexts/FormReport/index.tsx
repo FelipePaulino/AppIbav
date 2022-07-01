@@ -22,7 +22,7 @@ const initialData: IState = {
   textRegister: "Selecione uma data",
   redeSelect: "Selecione",
   discipuladoSelect: "Selecione",
-  presencaCelula: '-'
+  presencaCelula: []
 };
 
 export const FormReportContext = createContext<IContextType | undefined>(
