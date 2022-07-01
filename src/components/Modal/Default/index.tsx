@@ -14,17 +14,6 @@ export function DefaultContentModalComponent({
 }: IModalInfosProps) {
   const { state, dispatch } = useFormReport();
 
-  useEffect(() => {
-    setTimeout(() => {
-      closeModal(false);
-
-      dispatch({
-        type: FormReportActions.setNameVisitor,
-        payload: "",
-      });
-    }, 3000);
-  }, []);
-
   return (
     <S.ContentModal>
       {type === "addVisitor" && (
@@ -42,14 +31,13 @@ export function DefaultContentModalComponent({
           <S.Description>
             Cadastro de <S.Name>{data}</S.Name> efetuado com sucesso.
           </S.Description>
-          <S.SubDescription>O cadastro foi para aprovação.</S.SubDescription>
         </S.InfoModal>
       )}
 
       {type === "edited" && (
-          <S.Description>
-            Cadastro de <S.Name>{data}</S.Name> editado com sucesso
-          </S.Description>
+        <S.Description>
+          Cadastro de <S.Name>{data}</S.Name> editado com sucesso
+        </S.Description>
       )}
       <S.Success name="verified" />
     </S.ContentModal>

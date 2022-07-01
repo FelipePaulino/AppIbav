@@ -17,10 +17,10 @@ const initialData: IState = {
   textSelectCelula: "Selecione",
   textDate: "Selecione uma data",
   civilStatusSelect: "Selecione",
-  textSelectCategory: "Selecione",
+  textSelectCategory: "*Selecione",
   textSelectCivilStatus: "Selecione",
   textRegister: "Selecione uma data",
-  redeSelect: "Todos",
+  redeSelect: "Selecione",
   discipuladoSelect: "Selecione",
 };
 

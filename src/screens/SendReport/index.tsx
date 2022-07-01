@@ -101,11 +101,11 @@ export function SendReportScreen() {
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: null,
+      payload: 'Selecione',
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: 'Selecione',
     });
   };
 
@@ -116,7 +116,7 @@ export function SendReportScreen() {
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: 'Selecione',
     });
   };
 
@@ -304,6 +304,7 @@ export function SendReportScreen() {
                   dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                   selectedOption={handleDiscipuladoChange}
                   width='300'
+                  disabled={state.redeSelect === "Selecione" ? true : false}
                 />
               </S.ContentC>
             </S.Grid>
@@ -317,6 +318,7 @@ export function SendReportScreen() {
                   dataOptions={celulaAdm}
                   selectedOption={selectedOptionCelula}
                   width='300'
+                  disabled={state.discipuladoSelect === "Selecione" ? true : false}
                 />
               </S.ContentC>
             </S.Grid>

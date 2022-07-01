@@ -12,11 +12,13 @@ export function ButtonComponent({
   heigth,
   size,
   color = "#000A3E",
+  disabled,
   ...rest
 }: IContentProps) {
+  console.log(disabled, 'disabeld')
   return (
-    <S.Content width={width} heigth={heigth} {...rest}>
-      <S.Background>
+    <S.Content width={width} heigth={heigth} {...rest} disabled={disabled} >
+      <S.Background >
         {icon && (
           <Feather name={icon} size={24} color={color} />
         )}
