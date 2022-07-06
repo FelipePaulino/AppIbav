@@ -35,6 +35,7 @@ export function MembersScreen(this: any) {
   const [modalConcluded, setModalConcluded] = useState(false);
   const [name, setName] = useState<string>();
   const [id, setId] = useState<any>();
+  const [idCelula, setIdCelula] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [celulas, setCelulas] = useState<any>()
   const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
@@ -47,7 +48,7 @@ export function MembersScreen(this: any) {
 
   const serviceGet = new RequestService()
 
-  const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
+  // const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
@@ -69,7 +70,7 @@ export function MembersScreen(this: any) {
   useEffect(() => {
     const getCelulas = async () => {
       await serviceGet.getCelulas().then((response) => {
-        setCelulas(Object.values(response))
+        setCelulas(Object.entries(response))
       })
     }
 
@@ -80,7 +81,8 @@ export function MembersScreen(this: any) {
     useEffect(() => {
       const filterMembers =
         celulas &&
-        celulas.filter((item: any) => {
+        celulas.length > 0 &&
+        celulas[1]?.filter((item: any) => {
           return item.numero_celula == identifyCelula;
         });
 
@@ -139,7 +141,8 @@ export function MembersScreen(this: any) {
   useEffect(() => {
     const filterCelulas =
       celulas &&
-      celulas.filter((celula: any) => {
+      celulas.length > 0 &&
+      celulas[1]?.filter((celula: any) => {
         return celula.discipulador === userInfo.nome;
       });
 
@@ -147,7 +150,7 @@ export function MembersScreen(this: any) {
   }, [celulas]);
 
   // tratativas para o usuário administrador
-  const redes = celulas && celulas.map((item: any) => (item.rede))
+  const redes = celulas && celulas.length > 0 && celulas[1]?.map((item: any) => (item.rede))
   const redesUnicas = redes && redes.filter(function (este: any, i: any) {
     return redes.indexOf(este) === i;
   });
@@ -158,8 +161,10 @@ export function MembersScreen(this: any) {
     }
   })
 
-  const filtrandoRedes = celulas && celulas.filter((item: any) => {
-    return item.rede === state.redeSelect
+  console.log(celulas && celulas[1], 'AQUI <=====================================================')
+
+  const filtrandoRedes = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
+    return item.rede == state?.redeSelect
   })
 
   const discipulado = filtrandoRedes && filtrandoRedes.map((item: any) =>
@@ -175,7 +180,7 @@ export function MembersScreen(this: any) {
     }
   })
 
-  const filtrandoDiscipulado = celulas && celulas.filter((item: any) => {
+  const filtrandoDiscipulado = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
   })
 
@@ -188,14 +193,19 @@ export function MembersScreen(this: any) {
   const idCelulaSelect =
     state.celulaSelect && state.celulaSelect.split(" -")[0];
 
+    useEffect(() => {
+      setIdCelula(idCelulaSelect)
+    }, [state.celulaSelect])
+
   useEffect(() => {
     if (whatOffice === 'administrador') {
 
       const filterMembers =
         celulas &&
-        celulas.filter((item: any) => {
+        celulas.length > 0 &&
+        celulas[1]?.filter((item: any) => {
           return (
-            item.numero_celula == idCelulaSelect
+            item.numero_celula == idCelula
           )
         });
 
@@ -203,20 +213,19 @@ export function MembersScreen(this: any) {
           setMembers(filterMembers);
       }
     }
-  }, [celulas, state.celulaSelect])
+  }, [celulas, state.celulaSelect, trigger])
 
   const newMembersList =
     members &&
     members.length > 0 &&
-    Object?.entries(members[0]?.membros).filter(
+    Object.entries(members[0]?.membros).filter(
       (member: any) =>
         member[1].status !== "visitante" && member[1].status !== "Visitante"
     );
 
-
   // tratativas para o usuário pastor
 
-  const filtrandoDiscipuladoPastor = celulas && celulas.filter((item: any) => {
+  const filtrandoDiscipuladoPastor = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.rede === user[0][1].rede
   })
 
@@ -234,7 +243,7 @@ export function MembersScreen(this: any) {
     }
   })
 
-  const filtrandoDiscipuladoPastorSelect = celulas && celulas.filter((item: any) => {
+  const filtrandoDiscipuladoPastorSelect = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.discipulador === state.discipuladoSelect
   })
 

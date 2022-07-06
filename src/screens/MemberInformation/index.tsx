@@ -134,7 +134,6 @@ export function MembersInformation(this: any, { route }: any) {
             <HeaderComponent>
                 <ComeBackComponent />
                 <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
-                {/* <NotificationComponent /> */}
             </HeaderComponent>
 
             <ScrollView>
