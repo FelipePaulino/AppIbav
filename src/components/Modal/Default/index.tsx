@@ -1,24 +1,21 @@
 import React, { useEffect } from "react";
 
 import { useFormReport } from "../../../hooks/useFormReport";
-import { FormReportActions } from "../../../contexts/FormReport";
-
 import { IModalInfosProps } from "./types";
 
 import * as S from "./styles";
 
 export function DefaultContentModalComponent({
-  closeModal,
   type,
   data,
 }: IModalInfosProps) {
-  const { state, dispatch } = useFormReport();
+  const { state } = useFormReport();
 
   return (
     <S.ContentModal>
       {type === "addVisitor" && (
         <S.Description>
-          Visitante <S.Name>{state.nameVisitor}</S.Name> adicionado com sucesso!
+          Visitante <S.Name>{data}</S.Name> adicionado com sucesso!
         </S.Description>
       )}
 

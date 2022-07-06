@@ -106,8 +106,8 @@ export function RegisterScreen() {
           estado_civil: state.civilStatusSelect,
         })
         .then(() => {
-          setSuccessModal(true);
           setName(name);
+          setSuccessModal(true);
 
           dispatch({
             type: FormReportActions.setTextSelectCivilStatus,
@@ -140,10 +140,11 @@ export function RegisterScreen() {
             type: FormReportActions.setCelulaSelect,
             payload: '*Selecione',
           });
-          setName("")
+
           setPhone("")
           setEmail("")
           setNumberHouse("")
+
         });
     } catch (err) { }
   };
@@ -216,7 +217,6 @@ export function RegisterScreen() {
       payload: value,
     });
   };
-
 
 
   const getAddressFromApi = useCallback(() => {
@@ -593,7 +593,10 @@ export function RegisterScreen() {
 
       <ModalComponent
         isVisible={successModal}
-        onBackdropPress={() => setSuccessModal(false)}
+        onBackdropPress={() => (
+          setName(''),
+          setSuccessModal(false)
+        )}
       >
         <DefaultContentModalComponent
           closeModal={setSuccessModal}

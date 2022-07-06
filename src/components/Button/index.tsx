@@ -15,7 +15,7 @@ export function ButtonComponent({
   disabled,
   ...rest
 }: IContentProps) {
-  console.log(disabled, 'disabeld')
+
   return (
     <S.Content width={width} heigth={heigth} {...rest} disabled={disabled} >
       <S.Background >
