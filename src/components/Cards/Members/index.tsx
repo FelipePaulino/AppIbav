@@ -8,7 +8,6 @@ import { IDataPros } from "./types";
 import * as S from "./styles";
 
 export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
-  console.log(data, 'data')
   const presenca = [
     {
       label: "F",
@@ -36,7 +35,6 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
   const [presencaCulto, setPresencaCulto] = useState("-");
 
   const { state, dispatch } = useFormReport();
-  console.log(state, 'state')
   const handlePresentCelula = (value: string) => {
     setSelectPerson({ ...data, celula: value })
     dispatch({

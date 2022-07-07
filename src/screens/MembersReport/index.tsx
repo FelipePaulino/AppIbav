@@ -87,7 +87,6 @@ export function MembersReportScreen() {
           return item;
         }
       });
-    console.log(selectPerson, 'selectPerson')
     if (selectPerson) {
       const tratarFalta = memberFilter.map((item: any) => {
         return {
@@ -97,7 +96,6 @@ export function MembersReportScreen() {
           culto: item.culto ? item.culto : "F",
         };
       });
-      console.log(tratarFalta[0], 'Tratar falta ')
 
       const selectPersonFalta = {
         nome: selectPerson.nome,
@@ -105,7 +103,6 @@ export function MembersReportScreen() {
         celula: selectPerson.celula ? selectPerson.celula : "F",
         culto: selectPerson.culto ? selectPerson.culto : "F",
       };
-      console.log(selectPersonFalta, 'selectPersonFalta')
       // dispatch({
       //   type: FormReportActions.setMembers,
       //   payload: [...tratarFalta, selectPersonFalta],
@@ -115,8 +112,6 @@ export function MembersReportScreen() {
       //   type: FormReportActions.setPresencaCelula,
       //   payload: selectPersonFalta.celula,
       // });
-      console.log(selectPerson, 'selectPerson.celula')
-
       setMembersIdentify([...memberFilter, selectPerson]);
     }
   }, [selectPerson]);
@@ -129,9 +124,6 @@ export function MembersReportScreen() {
 
   newArrayMembers && newArrayMembers.sort(compared);
 
-
-
-  console.log(newArrayMembers, 'newArrayMembers')
   return (
     <Fragment>
       <HeaderComponent>
@@ -180,8 +172,6 @@ export function MembersReportScreen() {
         isVisible={isModalVisible}
         onBackdropPress={() => setModalVisible(false)}
       >
-        {console.log(newArrayMembers, 'new')}
-        {console.log(state.presencaCelula, 'state members')}
         <ReportContentModalComponent
           handleCloseModal={setModalVisible}
           data={user && user[1]}
