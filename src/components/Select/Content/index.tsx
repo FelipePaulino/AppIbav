@@ -10,6 +10,7 @@ export function ContentSelect({
   onChange,
   selectedOption,
   dataOptions,
+  alloption,
 }: IContentSelect) {
   const selectOption = (option: any) => {
     changeModalVisibility(false);
@@ -19,9 +20,9 @@ export function ContentSelect({
 
   const option = dataOptions.map((item, index) => {
     return (
-      <S.Options key={index} onPress={() => selectOption(item.value)}>
-        <S.OptionSelect>{item.value}</S.OptionSelect>
-      </S.Options>
+        <S.Options key={index} onPress={() => selectOption(item.value)}>
+          <S.OptionSelect>{item.value}</S.OptionSelect>
+        </S.Options>
     );
   });
 
