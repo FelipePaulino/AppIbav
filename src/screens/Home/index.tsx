@@ -32,15 +32,15 @@ export function HomeScreen() {
     navigation.navigate("SendReport")
     dispatch({
       type: FormReportActions.setRedeSelect,
-      payload: null,
+      payload: 'Selecione',
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: null,
+      payload: 'Selecione',
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: 'Selecione',
     });
   }
 

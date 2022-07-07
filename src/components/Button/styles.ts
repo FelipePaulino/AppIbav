@@ -7,13 +7,12 @@ export const Content = styled.TouchableOpacity<ISizeProps>`
   height: ${({ heigth }) => (heigth ? heigth : "48")};
   width: ${({ width }) => (width ? width : "100%")};
 
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.grey : "#A60100"};
   border-radius: 10;
 `;
 
-export const Background = styled(LinearGradient).attrs({
-  colors: ["#A60100", "#EA0000"],
-})`
+export const Background = styled.View`
   align-items: center;
   justify-content: center;
   flex-direction: row;

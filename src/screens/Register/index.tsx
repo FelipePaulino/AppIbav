@@ -59,7 +59,7 @@ export function RegisterScreen() {
       const getCelulas = async () => {
         const response = await connectApi.get("/celulas.json");
 
-        setCelulas(Object.values(response.data));
+        setCelulas(Object.entries(response.data));
         setLoading(false)
       };
       getCelulas();
@@ -72,7 +72,6 @@ export function RegisterScreen() {
       celulas.filter((item: any) => {
         return celulas.numero_celula === identifyCelula;
       });
-
     if (filterMembers) {
       setMembers(filterMembers);
       AsyncStorage.setItem(
@@ -84,8 +83,11 @@ export function RegisterScreen() {
 
   const submitRegister = () => {
     const { cep, bairro, localidade, logradouro } = address;
+    const identifyId = celulas.filter((item: any) => {
+      return `${item[1].numero_celula} - ${item[1].lider}` === state.celulaSelect;
+    });
 
-    const ID_CELULAS = members && members[0][0];
+    const ID_CELULAS = identifyId[0][0];
     const endereco = `${logradouro} ${numberHouse}`;
 
     try {
@@ -102,27 +104,10 @@ export function RegisterScreen() {
           estado: state.stateSelect,
           data_de_nascimento: state.dateRegister,
           estado_civil: state.civilStatusSelect,
-          aguardando_exclusao: false,
-          aguardando_cadastro: true,
         })
         .then(() => {
+          setName(name);
           setSuccessModal(true);
-
-          setAddress({
-            uf: "",
-            ddd: "",
-            gia: "",
-            ibge: "",
-            siafi: "",
-            bairro: "",
-            logradouro: "",
-            localidade: "",
-            complemento: "",
-          });
-          setName("");
-          setEmail("");
-          setPhone("");
-          setNumberHouse("");
 
           dispatch({
             type: FormReportActions.setTextSelectCivilStatus,
@@ -136,13 +121,30 @@ export function RegisterScreen() {
 
           dispatch({
             type: FormReportActions.setTextSelectCategory,
-            payload: "Selecione",
+            payload: "*Selecione",
           });
 
           dispatch({
             type: FormReportActions.setTextRegister,
             payload: "Selecione uma data",
           });
+          dispatch({
+            type: FormReportActions.setRedeSelect,
+            payload: '*Selecione',
+          });
+          dispatch({
+            type: FormReportActions.setDiscipuladoSelect,
+            payload: '*Selecione',
+          });
+          dispatch({
+            type: FormReportActions.setCelulaSelect,
+            payload: '*Selecione',
+          });
+
+          setPhone("")
+          setEmail("")
+          setNumberHouse("")
+
         });
     } catch (err) { }
   };
@@ -216,6 +218,7 @@ export function RegisterScreen() {
     });
   };
 
+
   const getAddressFromApi = useCallback(() => {
     axios
       .get(`https://viacep.com.br/ws/${address.cep}/json/`)
@@ -258,7 +261,7 @@ export function RegisterScreen() {
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: '*Selecione',
     });
   };
 
@@ -269,15 +272,15 @@ export function RegisterScreen() {
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: null,
+      payload: '*Selecione',
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: '*Selecione',
     });
   };
 
-  const redes = celulas.map((item: any) => (item.rede))
+  const redes = celulas.map((item: any) => (item[1].rede))
   const redesUnicas = redes.filter(function (este: any, i: any) {
     return redes.indexOf(este) === i;
   });
@@ -289,11 +292,12 @@ export function RegisterScreen() {
   })
 
   const filtrandoRedes = celulas.filter((item: any) => {
-    return item.rede === state.redeSelect
+    return item[1].rede === state.redeSelect
   })
 
-  const discipulado = filtrandoRedes.map((item: any) =>
-    (item.discipulador))
+  const discipulado = filtrandoRedes.map((item: any) => {
+    return item[1].discipulador
+  })
 
   const discipuladossUnicos = discipulado.filter(function (este: any, i: any) {
     return discipulado.indexOf(este) === i;
@@ -306,12 +310,12 @@ export function RegisterScreen() {
   })
 
   const filtrandoDiscipulado = celulas.filter((item: any) => {
-    return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
+    return item[1].discipulador === state.discipuladoSelect && item[1].rede === state.redeSelect
   })
 
   const celulaAdm = filtrandoDiscipulado.map((item: any) => {
     return {
-      value: `${item.numero_celula} - ${item.lider}`
+      value: `${item[1].numero_celula} - ${item[1].lider}`
     }
   })
 
@@ -375,6 +379,7 @@ export function RegisterScreen() {
                 labelSelect={state.discipuladoSelect}
                 dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                 selectedOption={handleDiscipuladoChange}
+                disabled={state.redeSelect === '*Selecione' ? true : false}
               />
             </S.BoxSelect>
 
@@ -385,6 +390,7 @@ export function RegisterScreen() {
                 labelSelect={state.celulaSelect}
                 dataOptions={celulaAdm}
                 selectedOption={selectedOptionCelula}
+                disabled={state.discipuladoSelect === '*Selecione' ? true : false}
               />
             </S.BoxSelect>
           </Fragment>
@@ -420,7 +426,6 @@ export function RegisterScreen() {
                 placeholder={`* ${FormFields.FULL_NAME}`}
                 onChangeText={setName}
               />
-
               <InputMaskComponent
                 value={phone}
                 mask="phone"
@@ -568,13 +573,18 @@ export function RegisterScreen() {
                 </S.GridItem>
               </S.GridForm>
             </S.Form>
-
             <S.FooterFields>
               <S.Required>* Campos obrigatórios</S.Required>
               <ButtonComponent
                 title="Cadastrar"
                 onPress={submitRegister}
                 width='170px'
+                disabled={(
+                  state.celulaSelect === '*Selecione' ||
+                  state.textSelectCategory === '*Selecione' ||
+                  name === "" ||
+                  phone === "") ? true : false
+                }
               />
             </S.FooterFields>
           </S.Container>
@@ -583,7 +593,10 @@ export function RegisterScreen() {
 
       <ModalComponent
         isVisible={successModal}
-        onBackdropPress={() => setSuccessModal(false)}
+        onBackdropPress={() => (
+          setName(''),
+          setSuccessModal(false)
+        )}
       >
         <DefaultContentModalComponent
           closeModal={setSuccessModal}
