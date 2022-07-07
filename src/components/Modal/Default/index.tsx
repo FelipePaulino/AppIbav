@@ -1,35 +1,21 @@
 import React, { useEffect } from "react";
 
 import { useFormReport } from "../../../hooks/useFormReport";
-import { FormReportActions } from "../../../contexts/FormReport";
-
 import { IModalInfosProps } from "./types";
 
 import * as S from "./styles";
 
 export function DefaultContentModalComponent({
-  closeModal,
   type,
   data,
 }: IModalInfosProps) {
-  const { state, dispatch } = useFormReport();
-
-  useEffect(() => {
-    setTimeout(() => {
-      closeModal(false);
-
-      dispatch({
-        type: FormReportActions.setNameVisitor,
-        payload: "",
-      });
-    }, 3000);
-  }, []);
+  const { state } = useFormReport();
 
   return (
     <S.ContentModal>
       {type === "addVisitor" && (
         <S.Description>
-          Visitante <S.Name>{state.nameVisitor}</S.Name> adicionado com sucesso!
+          Visitante <S.Name>{data}</S.Name> adicionado com sucesso!
         </S.Description>
       )}
 
@@ -42,14 +28,13 @@ export function DefaultContentModalComponent({
           <S.Description>
             Cadastro de <S.Name>{data}</S.Name> efetuado com sucesso.
           </S.Description>
-          <S.SubDescription>O cadastro foi para aprovação.</S.SubDescription>
         </S.InfoModal>
       )}
 
       {type === "edited" && (
-          <S.Description>
-            Cadastro de <S.Name>{data}</S.Name> editado com sucesso
-          </S.Description>
+        <S.Description>
+          Cadastro de <S.Name>{data}</S.Name> editado com sucesso
+        </S.Description>
       )}
       <S.Success name="verified" />
     </S.ContentModal>

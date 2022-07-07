@@ -6,11 +6,14 @@ import MenuNavigation from "../../common/constants/navigation";
 
 import { IDataProps } from "./types";
 import { IPropsAppStack } from "../../routes/AppStack/types";
-
+import { useFormReport } from "../../hooks/useFormReport";
 import { Navigation } from "./styles";
 
 export function NavigationComponent({ data, members, visitors }: IDataProps) {
   const navigation = useNavigation<IPropsAppStack>();
+
+  const { state } = useFormReport();
+  const disableNavegation = state.celulaSelect === 'Selecione'
 
   return (
     <Fragment>

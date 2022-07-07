@@ -4,6 +4,7 @@ import { HomeScreen } from "../../screens/Home";
 import { DetailsScreen } from "../../screens/Details";
 import { MembersScreen } from "../../screens/Members";
 import { RegisterScreen } from "../../screens/Register";
+import { ListUsersScreen } from "../../screens/ListUsers";
 import { SendReportScreen } from "../../screens/SendReport";
 import { Multiplication } from "../../screens/Multiplication";
 import { UserRegisterScreen } from "../../screens/UserRegister";
@@ -15,6 +16,7 @@ import { PreRegisterAdminScreen } from "../../screens/PreRegisterAdmin";
 import { MembersInformation } from "../../screens/MemberInformation";
 
 import { INavigationAppStackProps } from "./types";
+import NetworkScreenList from "../../screens/Network";
 
 export function AppRoutes() {
   const { Navigator, Screen } =
@@ -26,6 +28,8 @@ export function AppRoutes() {
       <Screen name="Details" component={DetailsScreen} />
       <Screen name="Members" component={MembersScreen} />
       <Screen name="Register" component={RegisterScreen} />
+      <Screen name="Network" component={NetworkScreenList} />
+      <Screen name="ListUsers" component={ListUsersScreen} />
       <Screen name="SendReport" component={SendReportScreen} />
       <Screen name="Multiplication" component={Multiplication} />
       <Screen name="PreListAdmin" component={PreListAdminScreen} />

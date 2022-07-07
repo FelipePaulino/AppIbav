@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Modal from "react-native-modal";
-
 import { ContentSelect } from "./Content";
 
 import { IContentProps } from "./types";
@@ -30,7 +29,7 @@ export function SelectComponent({
       <S.LabelField>{label}</S.LabelField>
       <S.Container onPress={() => changeModalVisibility(true)} small={small} width={width}>
         <S.Field>
-          <S.Label>{labelSelect ? labelSelect : 'Selecione'}</S.Label>
+          <S.Label>{labelSelect}</S.Label>
         </S.Field>
         <S.Icons disabled={disabled}>
           {isModalVisible ? (

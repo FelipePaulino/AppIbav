@@ -50,6 +50,7 @@ export const ContainerPerson = styled(TouchableOpacity)`
 export const BoxName = styled.View``;
 
 export const TextName = styled.Text`
+  text-transform: uppercase;
   font-size: 14;
   line-height: 16;
   color: #666666;
