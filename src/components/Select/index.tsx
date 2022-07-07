@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Modal from "react-native-modal";
-
 import { ContentSelect } from "./Content";
 
 import { IContentProps } from "./types";

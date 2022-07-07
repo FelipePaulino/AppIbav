@@ -15,6 +15,8 @@ import { ComeBackComponent } from "../../components/ComeBack";
 import { PersonLabelComponent } from "../../components/PersonLabel";
 
 import * as S from "./styles";
+import { connectApi } from "../../common/services/ConnectApi";
+import axios from "axios";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -28,14 +30,23 @@ export default function NetworkScreenList() {
   const services = new RequestService();
 
   useEffect(() => {
-    const getCelulas = async () => {
-      const response = await services.getCelulas();
-
-      setCelulas(Object.values(response));
-    };
-    getCelulas();
+    axios
+      .get("https://app-ibav-f06f4-default-rtdb.firebaseio.com/users.json")
+      .then((response) => {
+        setCelulas(response?.data);
+      });
   }, []);
 
+  // const deleteMembers = (id: any) => {
+  //   try {
+  //     connectApi
+  //       .delete(`/celulas/-N2xedBHXuOIZCzJEMw2/lider.json`)
+  //       .then(() => {});
+  //   } catch (err) {
+  //     alert(err);
+  //   }
+  //   console.log(id, "id");
+  // };
   const handleRedeChange = (value: string) => {
     dispatch({
       type: FormReportActions.setRedeSelect,
@@ -62,19 +73,25 @@ export default function NetworkScreenList() {
     });
   };
 
-  const redes = celulas.map((item: any) => item.rede);
+  const redes = celulas && Object.values(celulas).map((item: any) => item.rede);
+
   const redesUnicas = redes.filter((este: any, i: any) => {
     return redes.indexOf(este) === i;
   });
 
-  const filtrandoRedes = celulas.filter((item: any) => {
-    return item.rede === state.redeSelect;
-  });
-  const discipulado = filtrandoRedes.map((item: any) => item.discipulador);
+  const discipulado =
+    celulas &&
+    Object.values(celulas).filter((items: any) => {
+      return items?.cargo === "discipulador";
+    });
 
-  const discipuladossUnicos = discipulado.filter(function (este: any, i: any) {
-    return discipulado.indexOf(este) === i;
-  });
+  const lider =
+    celulas &&
+    Object.values(celulas).filter((items: any) => {
+      return items?.cargo === "lider";
+    });
+
+  const discipuladossUnicos = discipulado.map((items: any) => items?.nome);
 
   const mapDiscipuladosUnicos = discipuladossUnicos.map((item: any) => {
     return {
@@ -87,14 +104,6 @@ export default function NetworkScreenList() {
       value: item,
     };
   });
-
-  const usersPerNetwork = celulas.filter(
-    (item: any) => item.rede === state.redeSelect
-  );
-
-  const usersPerDisciples = usersPerNetwork.filter(
-    (item: any) => item.discipulador === state.discipuladoSelect
-  );
 
   return (
     <Fragment>
@@ -122,7 +131,7 @@ export default function NetworkScreenList() {
                     labelSelect={state.redeSelect}
                     dataOptions={mapRedesUnicas}
                     selectedOption={handleRedeChange}
-                    width="75%"
+                    width="300px"
                   />
                 </S.ContentC>
               </S.Grid>
@@ -144,49 +153,39 @@ export default function NetworkScreenList() {
                     }
                     dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                     selectedOption={handleDiscipuladoChange}
-                    width="70%"
-                    disabled={state.redeSelect === "Todos" ? true : false}
+                    width="300px"
+                    disabled={
+                      state.redeSelect === "Todos" ||
+                      state.redeSelect === "Selecione"
+                        ? true
+                        : false
+                    }
                   />
                 </S.ContentC>
               </S.Grid>
-
-              <S.ContentButton>
-                <ButtonComponent
-                  title={"Pesquisar"}
-                  width="50%"
-                  onPress={() => setShowShearch(!showShearch)}
-                  disabled={state.redeSelect === "Todos"}
-                />
-              </S.ContentButton>
-              {showShearch && (
+              {state.redeSelect === "Todos" && (
                 <>
-                  {state.redeSelect === 'Todos' && (
-                    <>
-                      <Text>Rede</Text>
-                      <PersonLabelComponent nome={mapRedesUnicas[0]?.value} />
-                    </>
-                  )}
-                  {!state.discipuladoSelect && (
-                    <>
-                      <Text>Discipulador</Text>
-                      {usersPerNetwork.map((item: any) => {
-                        return (
-                          <PersonLabelComponent nome={item.discipulador} />
-                        );
-                      })}
-                    </>
-                  )}
-
-                  {state.redeSelect === mapRedesUnicas[0]?.value && state.discipuladoSelect &&(
-                    <>
-                      <Text>Célula</Text>
-                      {usersPerDisciples.map((item: any) => {
-                        return <PersonLabelComponent nome={item.lider} />;
-                      })}
-                    </>
-                  )}
+                  <Text>Rede</Text>
+                  <PersonLabelComponent nome={mapRedesUnicas[0].value} />
                 </>
               )}
+              {!state.discipuladoSelect && (
+                <>
+                  <Text>Discipulador</Text>
+                  {discipulado.map((item: any) => {
+                    return <PersonLabelComponent nome={item.nome} />;
+                  })}
+                </>
+              )}
+              {state.redeSelect &&
+                state.discipuladoSelect && (
+                  <>
+                    <Text>Célula</Text>
+                    {lider.map((item: any) => {
+                      return <PersonLabelComponent nome={item.nome} />;
+                    })}
+                  </>
+                )}
             </S.Form>
           </S.Content>
         </ScrollView>
