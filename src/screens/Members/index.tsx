@@ -7,10 +7,12 @@ import { HeaderComponent } from "../../components/Header";
 import { ButtonComponent } from "../../components/Button";
 import { ComeBackComponent } from "../../components/ComeBack";
 import { PersonLabelComponent } from "../../components/PersonLabel";
-// import { NotificationComponent } from "../../components/Notification";
+import { SelectComponent } from "../../components/Select";
+import { TitleComponent } from "../../components/Title";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
+import FormFields from "../../common/constants/form";
 import useUserFiltered from "../../hooks/useUserFiltered";
 import { GetStorage } from "../../common/constants/storage";
 import MenuNavigation from "../../common/constants/navigation";
@@ -21,9 +23,11 @@ import * as S from "./styles";
 import { ModalComponent } from "../../components/Modal";
 import { RequestContentModalComponent } from "../../components/Modal/Request";
 import { connectApi } from "../../common/services/ConnectApi";
+import { FormReportActions } from "../../contexts/FormReport";
 import { ApprovalRequest } from "../../components/Modal/ApprovalRequest";
 import RequestService from "../../common/services/RequestService";
 import { useFormReport } from "../../hooks/useFormReport";
+import { IContentProps } from "../SendReport/types";
 
 export function MembersScreen(this: any) {
   const [members, setMembers] = useState<any>([]);
@@ -31,19 +35,37 @@ export function MembersScreen(this: any) {
   const [modalConcluded, setModalConcluded] = useState(false);
   const [name, setName] = useState<string>();
   const [id, setId] = useState<any>();
+  const [idCelula, setIdCelula] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [celulas, setCelulas] = useState<any>()
+  const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
 
   const { user } = useUserFiltered();
-  const { trigger, setTrigger } = useFormReport()
+  const { state, trigger, setTrigger, dispatch } = useFormReport()
   const navigation = useNavigation<IPropsAppStack>();
 
   const identifyCelula = user && user[0][1].numero_celula;
 
   const serviceGet = new RequestService()
 
-  const idCelula =
-    members && members.length > 0 && Object.entries(members[0])[0][1];
+  // const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
+
+  const userInfo = user && user[0][1];
+  const whatOffice = userInfo && userInfo.cargo;
+
+  const selectedOptionCelula = (value: string) => {
+    dispatch({
+      type: FormReportActions.setTextSelectCelula,
+      payload: value,
+    });
+  };
+
+  const handleCelulaChange = (value: string) => {
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: value,
+    });
+  };
 
   useEffect(() => {
     const getCelulas = async () => {
@@ -53,25 +75,26 @@ export function MembersScreen(this: any) {
     }
 
     getCelulas()
-  }, [trigger])
+  }, [trigger]);
 
-  useEffect(() => {
-    const filterMembers =
-      celulas &&
-      celulas.filter((item: any) => {
-        return item[1].numero_celula == identifyCelula;
-      });
+  if (whatOffice === 'lider') {
+    useEffect(() => {
+      const filterMembers =
+        celulas &&
+        celulas.length > 0 &&
+        celulas[1]?.filter((item: any) => {
+          return item.numero_celula == identifyCelula;
+        });
 
-    if (filterMembers) {
-      setMembers(filterMembers);
-      AsyncStorage.setItem(
-        GetStorage.MEMBERS_FILTERED,
-        JSON.stringify(filterMembers)
-      );
-    }
-  }, [identifyCelula, celulas]);
-
-
+      if (filterMembers) {
+        setMembers(filterMembers);
+        AsyncStorage.setItem(
+          GetStorage.MEMBERS_FILTERED,
+          JSON.stringify(filterMembers)
+        );
+      }
+    }, [identifyCelula, celulas]);
+  }
 
   const timeModal = () => {
     setModalConcluded(true);
@@ -89,6 +112,262 @@ export function MembersScreen(this: any) {
     }
   };
 
+  const handleRedeChange = (value: string) => {
+    dispatch({
+      type: FormReportActions.setRedeSelect,
+      payload: value,
+    });
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: null,
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: null,
+    });
+  };
+
+  const handleDiscipuladoChange = (value: string) => {
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: value,
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: null,
+    });
+  };
+
+  useEffect(() => {
+    const filterCelulas =
+      celulas &&
+      celulas.length > 0 &&
+      celulas[1]?.filter((celula: any) => {
+        return celula.discipulador === userInfo.nome;
+      });
+
+    setCelulaFiltered(filterCelulas);
+  }, [celulas]);
+
+  // tratativas para o usuário administrador
+  const redes = celulas && celulas.length > 0 && celulas[1]?.map((item: any) => (item.rede))
+  const redesUnicas = redes && redes.filter(function (este: any, i: any) {
+    return redes.indexOf(este) === i;
+  });
+
+  const mapRedesUnicas = redesUnicas && redesUnicas.map((item: any) => {
+    return {
+      value: item
+    }
+  })
+
+  // console.log(celulas && celulas[1], 'AQUI <=====================================================')
+
+  const filtrandoRedes = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
+    return item.rede == state?.redeSelect
+  })
+
+  const discipulado = filtrandoRedes && filtrandoRedes.map((item: any) =>
+    (item.discipulador))
+
+  const discipuladossUnicos = discipulado && discipulado.filter(function (este: any, i: any) {
+    return discipulado.indexOf(este) === i;
+  });
+
+  const mapDiscipuladosUnicos = discipuladossUnicos && discipuladossUnicos.map((item: any) => {
+    return {
+      value: item
+    }
+  })
+
+  const filtrandoDiscipulado = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
+    return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
+  })
+
+  const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
+    return {
+      value: `${item.numero_celula} - ${item.lider}`
+    }
+  })
+
+  const idCelulaSelect =
+    state.celulaSelect && state.celulaSelect.split(" -")[0];
+
+    useEffect(() => {
+      setIdCelula(idCelulaSelect)
+    }, [state.celulaSelect])
+
+  useEffect(() => {
+    if (whatOffice === 'administrador') {
+
+      const filterMembers =
+        celulas &&
+        celulas.length > 0 &&
+        celulas[1]?.filter((item: any) => {
+          return (
+            item.numero_celula == idCelula
+          )
+        });
+
+      if (filterMembers) {
+          setMembers(filterMembers);
+      }
+    }
+  }, [celulas, state.celulaSelect, trigger])
+
+  const newMembersList =
+    members &&
+    members.length > 0 &&
+    Object.entries(members[0]?.membros).filter(
+      (member: any) =>
+        member[1].status !== "visitante" && member[1].status !== "Visitante"
+    );
+
+  // tratativas para o usuário pastor
+
+  const filtrandoDiscipuladoPastor = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
+    return item.rede === user[0][1].rede
+  })
+
+  const mapDiscipuladoPastor = filtrandoDiscipuladoPastor && filtrandoDiscipuladoPastor.map((item: any) => {
+    return item.discipulador
+  })
+
+  const discipuladossUnicosPastor = mapDiscipuladoPastor && mapDiscipuladoPastor.filter(function (este: any, i: any) {
+    return mapDiscipuladoPastor.indexOf(este) === i;
+  });
+
+  const mapDiscipuladossUnicosPastor = discipuladossUnicosPastor && discipuladossUnicosPastor.map((item: any) => {
+    return {
+      value: item
+    }
+  })
+
+  const filtrandoDiscipuladoPastorSelect = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
+    return item.discipulador === state.discipuladoSelect
+  })
+
+  const celulaPastor = filtrandoDiscipuladoPastorSelect && filtrandoDiscipuladoPastorSelect.map((item: any) => {
+    return {
+      value: `${item.numero_celula} - ${item.lider}`
+    }
+  })
+
+  const optionsCelula =
+    celulaFiltered &&
+    celulaFiltered.map((celulaIdentify: IContentProps) => {
+      return {
+        value: `${celulaIdentify?.numero_celula} - ${celulaIdentify.lider}`,
+      };
+    });
+
+  const office = () => {
+    switch (whatOffice) {
+      case "lider":
+        return (
+          <S.Grid>
+            <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+            <S.ContentC>
+              <S.IconC name="user-friends" />
+              <S.DescriptionC>{`${userInfo && userInfo.numero_celula} - ${userInfo && userInfo.rede
+                }`}</S.DescriptionC>
+            </S.ContentC>
+          </S.Grid>
+        );
+
+      case "discipulador":
+        return (
+          <S.Grid>
+            <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+            <S.ContentC>
+              <S.IconC name="user-friends" />
+              <SelectComponent
+                onChange={handleCelulaChange}
+                labelSelect={state.textSelectCelula}
+                dataOptions={optionsCelula && optionsCelula}
+                selectedOption={selectedOptionCelula}
+              />
+            </S.ContentC>
+          </S.Grid>
+        );
+      case "pastor":
+        return (
+          <>
+            <S.Grid>
+              <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+              <S.ContentC>
+                <S.IconC name="network-wired" />
+                <SelectComponent
+                  onChange={handleDiscipuladoChange}
+                  labelSelect={state.discipuladoSelect}
+                  dataOptions={mapDiscipuladossUnicosPastor}
+                  selectedOption={handleDiscipuladoChange}
+                />
+              </S.ContentC>
+            </S.Grid>
+            <S.Grid>
+              <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+              <S.ContentC>
+                <S.IconC name="user-friends" />
+                <SelectComponent
+                  onChange={handleCelulaChange}
+                  labelSelect={state.celulaSelect}
+                  dataOptions={celulaPastor}
+                  selectedOption={selectedOptionCelula}
+                />
+
+              </S.ContentC>
+            </S.Grid>
+          </>
+        );
+
+      case "administrador":
+        return (
+          <>
+            <S.Grid>
+              <TitleComponent title={`${FormFields.NETWORK}:`} small primary />
+              <S.ContentC>
+                <S.IconC name="vector-square" />
+                <SelectComponent
+                  onChange={handleRedeChange}
+                  labelSelect={state.redeSelect}
+                  dataOptions={mapRedesUnicas}
+                  selectedOption={handleRedeChange}
+                  width='300'
+                />
+              </S.ContentC>
+            </S.Grid>
+            <S.Grid>
+              <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+              <S.ContentC>
+                <S.IconC name="network-wired" />
+                <SelectComponent
+                  onChange={(handleDiscipuladoChange)}
+                  labelSelect={state.discipuladoSelect}
+                  dataOptions={state.redeSelect && mapDiscipuladosUnicos}
+                  selectedOption={handleDiscipuladoChange}
+                  width='300'
+                />
+              </S.ContentC>
+            </S.Grid>
+            <S.Grid>
+              <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+              <S.ContentC>
+                <S.IconC name="user-friends" />
+                <SelectComponent
+                  onChange={handleCelulaChange}
+                  labelSelect={state.celulaSelect}
+                  dataOptions={celulaAdm}
+                  selectedOption={selectedOptionCelula}
+                  width='300'
+                />
+              </S.ContentC>
+            </S.Grid>
+          </>
+        );
+    }
+  };
+
   return (
     <Fragment>
       <HeaderComponent>
@@ -102,7 +381,6 @@ export function MembersScreen(this: any) {
           size="12px"
           icon="user-plus"
         />
-        {/* <NotificationComponent /> */}
       </HeaderComponent>
       <ScrollView>
         <S.Container>
@@ -110,9 +388,10 @@ export function MembersScreen(this: any) {
             <S.Loading source={loadingGif} />
           ) : (
             <Fragment>
-              {members &&
-                members.length > 0 &&
-                Object.entries(members[0][1].membros).map((item: any) => {
+              {office()}
+              {newMembersList &&
+                newMembersList.length > 0 &&
+                newMembersList?.map((item: any) => {
                   return (
                     <Fragment>
                       <PersonLabelComponent
