@@ -24,12 +24,6 @@ const typeStatus = (props: any) => {
       Background: "#FF7E06",
     };
   }
-
-  if (props.status === "aa") {
-    return {
-      Background: "#D30000",
-    };
-  }
 };
 
 export const Box = styled.View`
