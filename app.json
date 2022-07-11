@@ -1,10 +1,10 @@
 {
-  "name": "Agua Viva App",
-  "displayName": "Agua Viva App",
+  "name": "IBAV RP",
+  "displayName": "IBAV RP",
   "expo": {
-    "name": "Agua Viva App",
+    "name": "IBAV RP",
     "slug": "aguavivarp",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "scheme": "aguavivarp",
     "orientation": "portrait",
     "assetBundlePatterns": ["**/*"],
@@ -14,7 +14,7 @@
     },
     "android": {
       "package": "com.viniciusdevitalo.aguavivarp",
-      "versionCode": 1
+      "versionCode": 10
     }
   }
 }
