@@ -30,6 +30,7 @@ export function SendReportScreen() {
   const [celulas, setCelulas] = useState<any>([]);
   const [showCalender, setShowCalender] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [sendModal, setSendModal] = useState(false);
   const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
 
   const { state, dispatch } = useFormReport();
@@ -411,6 +412,17 @@ export function SendReportScreen() {
         <ReportContentModalComponent
           handleCloseModal={setModalVisible}
           data={user}
+          setSendModal={setSendModal}
+        />
+      </ModalComponent>
+
+      <ModalComponent
+        isVisible={sendModal}
+        onBackdropPress={() => setSendModal(false)}
+      >
+        <DefaultContentModalComponent
+          closeModal={setSendModal}
+          type="sendReport"
         />
       </ModalComponent>
 
