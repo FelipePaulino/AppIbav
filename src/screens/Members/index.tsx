@@ -35,7 +35,7 @@ export function MembersScreen(this: any) {
   const [modalConcluded, setModalConcluded] = useState(false);
   const [name, setName] = useState<string>();
   const [id, setId] = useState<any>();
-  const [idCelula, setIdCelula] = useState<any>()
+  // const [idCelula, setIdCelula] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [celulas, setCelulas] = useState<any>()
   const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
@@ -48,7 +48,7 @@ export function MembersScreen(this: any) {
 
   const serviceGet = new RequestService()
 
-  // const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
+  const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
@@ -150,7 +150,7 @@ export function MembersScreen(this: any) {
   }, [celulas]);
 
   // tratativas para o usuário administrador
-  const redes = celulas && celulas.length > 0 && celulas[1]?.map((item: any) => (item.rede))
+  const redes = celulas && celulas?.map((item: any) => (item[1].rede))
   const redesUnicas = redes && redes.filter(function (este: any, i: any) {
     return redes.indexOf(este) === i;
   });
@@ -161,14 +161,16 @@ export function MembersScreen(this: any) {
     }
   })
 
-  // console.log(celulas && celulas[1], 'AQUI <=====================================================')
+  // console.log(celulas && celulas, 'AQUI <=====================================================')
 
-  const filtrandoRedes = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
-    return item.rede == state?.redeSelect
+  const filtrandoRedes = celulas && celulas.filter((item: any) => {
+    return item[1].rede === state.redeSelect
   })
 
+// console.log(filtrandoRedes, 'filtrando redes ====================')
+
   const discipulado = filtrandoRedes && filtrandoRedes.map((item: any) =>
-    (item.discipulador))
+    (item[1].discipulador))
 
   const discipuladossUnicos = discipulado && discipulado.filter(function (este: any, i: any) {
     return discipulado.indexOf(este) === i;
@@ -180,9 +182,12 @@ export function MembersScreen(this: any) {
     }
   })
 
+  // console.log(mapDiscipuladosUnicos && mapDiscipuladosUnicos, 'Discipulador que eu quero mostrar')
+
   const filtrandoDiscipulado = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
   })
+
 
   const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
     return {
@@ -190,12 +195,22 @@ export function MembersScreen(this: any) {
     }
   })
 
+
+  // ESTOU AQUI
   const idCelulaSelect =
     state.celulaSelect && state.celulaSelect.split(" -")[0];
 
-    useEffect(() => {
-      setIdCelula(idCelulaSelect)
-    }, [state.celulaSelect])
+  useEffect(() => {
+    const filtrandoIdCelulas = celulas && celulas.length > 0 && celulas?.filter((item: any) => {
+      return item[1].discipulador === state.discipuladoSelect && item[0]
+    })
+    // console.log(state.discipuladoSelect, 'state.discipuladoSelect')
+  }, [state.discipuladoSelect])
+
+
+  // useEffect(() => {
+  //   setIdCelula(idCelulaSelect)
+  // }, [state.celulaSelect])
 
   useEffect(() => {
     if (whatOffice === 'administrador') {
@@ -210,7 +225,7 @@ export function MembersScreen(this: any) {
         });
 
       if (filterMembers) {
-          setMembers(filterMembers);
+        setMembers(filterMembers);
       }
     }
   }, [celulas, state.celulaSelect, trigger])
@@ -261,126 +276,133 @@ export function MembersScreen(this: any) {
       };
     });
 
-  const office = () => {
-    switch (whatOffice) {
-      case "lider":
-        return (
-          <S.Grid>
-            <TitleComponent title={`${FormFields.CELULA}:`} small primary />
-            <S.ContentC>
-              <S.IconC name="user-friends" />
-              <S.DescriptionC>{`${userInfo && userInfo.numero_celula} - ${userInfo && userInfo.rede
-                }`}</S.DescriptionC>
-            </S.ContentC>
-          </S.Grid>
-        );
-
-      case "discipulador":
-        return (
-          <S.Grid>
-            <TitleComponent title={`${FormFields.CELULA}:`} small primary />
-            <S.ContentC>
-              <S.IconC name="user-friends" />
-              <SelectComponent
-                onChange={handleCelulaChange}
-                labelSelect={state.textSelectCelula}
-                dataOptions={optionsCelula && optionsCelula}
-                selectedOption={selectedOptionCelula}
-              />
-            </S.ContentC>
-          </S.Grid>
-        );
-      case "pastor":
-        return (
-          <>
+    const office = () => {
+      switch (whatOffice) {
+        case "lider":
+          return (
             <S.Grid>
-              <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+              <TitleComponent title={`${FormFields.CELULA}:`} small primary />
               <S.ContentC>
-                <S.IconC name="network-wired" />
-                <SelectComponent
-                  onChange={handleDiscipuladoChange}
-                  labelSelect={state.discipuladoSelect}
-                  dataOptions={mapDiscipuladossUnicosPastor}
-                  selectedOption={handleDiscipuladoChange}
-                />
+                <S.IconC name="user-friends" />
+                <S.DescriptionC>{`${userInfo && userInfo.numero_celula} - ${userInfo && userInfo.rede
+                  }`}</S.DescriptionC>
               </S.ContentC>
             </S.Grid>
+          );
+  
+        case "discipulador":
+          return (
             <S.Grid>
               <TitleComponent title={`${FormFields.CELULA}:`} small primary />
               <S.ContentC>
                 <S.IconC name="user-friends" />
                 <SelectComponent
                   onChange={handleCelulaChange}
-                  labelSelect={state.celulaSelect}
-                  dataOptions={celulaPastor}
+                  labelSelect={state.textSelectCelula}
+                  dataOptions={optionsCelula && optionsCelula}
                   selectedOption={selectedOptionCelula}
                 />
-
               </S.ContentC>
             </S.Grid>
-          </>
-        );
-
-      case "administrador":
-        return (
-          <>
-            <S.Grid>
-              <TitleComponent title={`${FormFields.NETWORK}:`} small primary />
-              <S.ContentC>
-                <S.IconC name="vector-square" />
-                <SelectComponent
-                  onChange={handleRedeChange}
-                  labelSelect={state.redeSelect}
-                  dataOptions={mapRedesUnicas}
-                  selectedOption={handleRedeChange}
-                  width='300'
-                />
-              </S.ContentC>
-            </S.Grid>
-            <S.Grid>
-              <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
-              <S.ContentC>
-                <S.IconC name="network-wired" />
-                <SelectComponent
-                  onChange={(handleDiscipuladoChange)}
-                  labelSelect={state.discipuladoSelect}
-                  dataOptions={state.redeSelect && mapDiscipuladosUnicos}
-                  selectedOption={handleDiscipuladoChange}
-                  width='300'
-                />
-              </S.ContentC>
-            </S.Grid>
-            <S.Grid>
-              <TitleComponent title={`${FormFields.CELULA}:`} small primary />
-              <S.ContentC>
-                <S.IconC name="user-friends" />
-                <SelectComponent
-                  onChange={handleCelulaChange}
-                  labelSelect={state.celulaSelect}
-                  dataOptions={celulaAdm}
-                  selectedOption={selectedOptionCelula}
-                  width='300'
-                />
-              </S.ContentC>
-            </S.Grid>
-          </>
-        );
-    }
-  };
+          );
+        case "pastor":
+          return (
+            <>
+              <S.Grid>
+                <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+                <S.ContentC>
+                  <S.IconC name="network-wired" />
+                  <SelectComponent
+                    onChange={handleDiscipuladoChange}
+                    labelSelect={state.discipuladoSelect}
+                    dataOptions={mapDiscipuladossUnicosPastor}
+                    selectedOption={handleDiscipuladoChange}
+                  />
+                </S.ContentC>
+              </S.Grid>
+              <S.Grid>
+                <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+                <S.ContentC>
+                  <S.IconC name="user-friends" />
+                  <SelectComponent
+                    onChange={handleCelulaChange}
+                    labelSelect={state.celulaSelect}
+                    dataOptions={celulaPastor}
+                    selectedOption={selectedOptionCelula}
+                  />
+  
+                </S.ContentC>
+              </S.Grid>
+            </>
+          );
+  
+        case "administrador":
+          return (
+            <>
+              <S.Grid>
+                <TitleComponent title={`${FormFields.NETWORK}:`} small primary />
+                <S.ContentC>
+                  <S.IconC name="vector-square" />
+                  <SelectComponent
+                    onChange={handleRedeChange}
+                    labelSelect={state.redeSelect}
+                    dataOptions={mapRedesUnicas}
+                    selectedOption={handleRedeChange}
+                    width='300'
+                  />
+                </S.ContentC>
+              </S.Grid>
+              <S.Grid>
+                <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+                <S.ContentC>
+                  <S.IconC name="network-wired" />
+                  <SelectComponent
+                    onChange={(handleDiscipuladoChange)}
+                    labelSelect={state.discipuladoSelect}
+                    dataOptions={state.redeSelect && mapDiscipuladosUnicos}
+                    selectedOption={handleDiscipuladoChange}
+                    width='300'
+                    disabled={state.redeSelect === "Selecione" ? true : false}
+                  />
+                </S.ContentC>
+              </S.Grid>
+              <S.Grid>
+                <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+                <S.ContentC>
+                  <S.IconC name="user-friends" />
+                  <SelectComponent
+                    onChange={handleCelulaChange}
+                    labelSelect={state.celulaSelect}
+                    dataOptions={celulaAdm}
+                    selectedOption={selectedOptionCelula}
+                    width='300'
+                    disabled={state.discipuladoSelect === "Selecione" ? true : false}
+                  />
+                </S.ContentC>
+              </S.Grid>
+            </>
+          );
+      }
+    };
 
   return (
     <Fragment>
       <HeaderComponent>
-        <ComeBackComponent />
-        <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
-        <ButtonComponent
-          title="Cadastrar"
-          onPress={() => { }}
-          width="136px"
-          heigth="33px"
-          size="12px"
-          icon="user-plus"
-        />
+        <S.ContentHeader>
+          <S.Division>
+            <ComeBackComponent />
+            <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
+          </S.Division>
+          <ButtonComponent
+            title="Cadastrar"
+            onPress={() => { }}
+            width="136px"
+            heigth="33px"
+            size="12px"
+            icon="user-plus"
+            color="white"
+          />
+        </S.ContentHeader>
       </HeaderComponent>
       <ScrollView>
         <S.Container>

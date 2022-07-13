@@ -22,6 +22,7 @@ const initialData: IState = {
   textRegister: "Selecione uma data",
   redeSelect: "Selecione",
   discipuladoSelect: "Selecione",
+  nomeLider: ""
 };
 
 export const FormReportContext = createContext<IContextType | undefined>(
