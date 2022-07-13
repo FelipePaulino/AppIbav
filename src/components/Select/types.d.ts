@@ -7,6 +7,7 @@ export interface IContentProps {
   disabled?: boolean;
   small?: boolean;
   width?: string;
+  allOptions?: any;
 }
 
 export interface IStyledDisabled {
