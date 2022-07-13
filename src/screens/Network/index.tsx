@@ -95,7 +95,6 @@ export default function NetworkScreenList() {
     };
   });
 
-  console.log(discipulado, "discipulado");
   return (
     <Fragment>
       <HeaderComponent>
