@@ -20,9 +20,11 @@ export function ContentSelect({
 
   const option = dataOptions.map((item, index) => {
     return (
+      <>
         <S.Options key={index} onPress={() => selectOption(item.value)}>
           <S.OptionSelect>{item.value}</S.OptionSelect>
         </S.Options>
+      </>
     );
   });
 
@@ -30,6 +32,11 @@ export function ContentSelect({
     <S.Content onPress={() => changeModalVisibility(false)}>
       <S.Container>
         <S.ContentOptions>
+          {alloption && (
+            <S.Options onPress={() => selectOption("TODOS")}>
+              <S.OptionSelect>TODOS</S.OptionSelect>
+            </S.Options>
+          )}
           <ScrollView>{option}</ScrollView>
         </S.ContentOptions>
       </S.Container>

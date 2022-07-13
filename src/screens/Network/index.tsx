@@ -37,16 +37,6 @@ export default function NetworkScreenList() {
       });
   }, []);
 
-  // const deleteMembers = (id: any) => {
-  //   try {
-  //     connectApi
-  //       .delete(`/celulas/-N2xedBHXuOIZCzJEMw2/lider.json`)
-  //       .then(() => {});
-  //   } catch (err) {
-  //     alert(err);
-  //   }
-  //   console.log(id, "id");
-  // };
   const handleRedeChange = (value: string) => {
     dispatch({
       type: FormReportActions.setRedeSelect,
@@ -88,7 +78,7 @@ export default function NetworkScreenList() {
   const lider =
     celulas &&
     Object.values(celulas).filter((items: any) => {
-      return items?.cargo === "lider";
+      return items?.cargo === "lider de celula";
     });
 
   const discipuladossUnicos = discipulado.map((items: any) => items?.nome);
@@ -105,6 +95,7 @@ export default function NetworkScreenList() {
     };
   });
 
+  console.log(discipulado, "discipulado");
   return (
     <Fragment>
       <HeaderComponent>
@@ -127,6 +118,7 @@ export default function NetworkScreenList() {
                 <S.ContentC>
                   <S.IconC name="vector-square" />
                   <SelectComponent
+                    allOptions
                     onChange={handleRedeChange}
                     labelSelect={state.redeSelect}
                     dataOptions={mapRedesUnicas}
@@ -163,29 +155,34 @@ export default function NetworkScreenList() {
                   />
                 </S.ContentC>
               </S.Grid>
-              {state.redeSelect === "Todos" && (
+              {state.redeSelect !== "Selecione" && (
                 <>
-                  <Text>Rede</Text>
-                  <PersonLabelComponent nome={mapRedesUnicas[0].value} />
+                  {state.redeSelect === "TODOS" && (
+                    <>
+                      <Text>Rede</Text>
+                      {Object.values(mapRedesUnicas).map((items) => {
+                        return <PersonLabelComponent nome={items.value} />;
+                      })}
+                    </>
+                  )}
+                  {!state.discipuladoSelect && state.redeSelect !== "TODOS" && (
+                    <>
+                      <Text>Discipulador</Text>
+                      {discipulado.map((item: any) => {
+                        return <PersonLabelComponent nome={item.nome} />;
+                      })}
+                    </>
+                  )}
+                  {state.redeSelect && state.discipuladoSelect && (
+                    <>
+                      <Text>Célula</Text>
+                      {lider.map((item: any) => {
+                        return <PersonLabelComponent nome={item.nome} />;
+                      })}
+                    </>
+                  )}
                 </>
               )}
-              {!state.discipuladoSelect && (
-                <>
-                  <Text>Discipulador</Text>
-                  {discipulado.map((item: any) => {
-                    return <PersonLabelComponent nome={item.nome} />;
-                  })}
-                </>
-              )}
-              {state.redeSelect &&
-                state.discipuladoSelect && (
-                  <>
-                    <Text>Célula</Text>
-                    {lider.map((item: any) => {
-                      return <PersonLabelComponent nome={item.nome} />;
-                    })}
-                  </>
-                )}
             </S.Form>
           </S.Content>
         </ScrollView>
