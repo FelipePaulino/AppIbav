@@ -10,4 +10,6 @@ export type IContentInputProps = TextInputProps & {
 
 export type IColorsProps = {
   primary?: boolean;
+  height?: any;
+  padding?: any;
 };
