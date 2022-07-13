@@ -36,10 +36,13 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
 
   const { state, dispatch } = useFormReport();
   const handlePresentCelula = (value: string) => {
+    const removeDuplicate = state.presencaCelula.filter((item:any) => {
+      return item.nome !== data.nome
+    })
     setSelectPerson({ ...data, celula: value })
     dispatch({
       type: FormReportActions.setPresencaCelula,
-      payload: [...state.presencaCelula, { ...data, celula: value }],
+      payload: [...removeDuplicate, { ...data, celula: value }],
     });
   };
 
@@ -48,8 +51,8 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
     setPresencaCulto(value)
   };
 
-  const filterPresenca = state?.presencaCelula?.filter(item =>{
-    return item.nome === data.nome
+  const filterPresenca = state?.presencaCelula?.filter((item:any) => {
+      return item.nome === data.nome
   })
 
   return (
