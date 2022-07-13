@@ -7,3 +7,9 @@ export interface InputProps extends TextInputProps {
   height?: any;
   padding?: any;
 }
+
+export type IColorsProps = {
+  primary?: boolean;
+  padding?: any;
+  height?: any;
+};
