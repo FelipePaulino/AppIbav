@@ -4,7 +4,8 @@
   "expo": {
     "name": "IBAV RP",
     "slug": "aguavivarp",
-    "version": "1.0.1",
+    "version": "1.0.2",
+    "icon": "./assets/image/icon.png",
     "scheme": "aguavivarp",
     "orientation": "portrait",
     "assetBundlePatterns": ["**/*"],
@@ -13,8 +14,13 @@
       "buildNumber": "1.0.0"
     },
     "android": {
+      "adaptiveIcon":{
+        "foregroundImage": "./assets/image/icon.png",
+        "backgroundColor": "#000A3E"
+      },
       "package": "com.viniciusdevitalo.aguavivarp",
-      "versionCode": 10
+      "versionCode": 12,
+      "permissions": []
     }
   }
 }
