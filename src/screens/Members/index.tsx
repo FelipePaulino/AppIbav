@@ -48,8 +48,6 @@ export function MembersScreen(this: any) {
 
   const serviceGet = new RequestService()
 
-  // const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
-
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
 
@@ -160,8 +158,6 @@ export function MembersScreen(this: any) {
       value: item
     }
   })
-
-  // console.log(celulas && celulas[1], 'AQUI <=====================================================')
 
   const filtrandoRedes = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.rede == state?.redeSelect
@@ -380,6 +376,7 @@ export function MembersScreen(this: any) {
           heigth="33px"
           size="12px"
           icon="user-plus"
+          color="white"
         />
       </HeaderComponent>
       <ScrollView>
