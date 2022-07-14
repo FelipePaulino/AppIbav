@@ -12,6 +12,7 @@ import { FooterInfoComponent } from "../../components/FooterInfo";
 import { CardMembersComponent } from "../../components/Cards/Members";
 import { HeadingPresentComponent } from "../../components/HeadingPresent";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
+import { DefaultContentModalComponent } from "../../components/Modal/Default";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -20,7 +21,6 @@ import ButtonsText from "../../common/constants/buttons";
 import { useFormReport } from "../../hooks/useFormReport";
 import useUserFiltered from "../../hooks/useUserFiltered";
 import { GetStorage } from "../../common/constants/storage";
-import { FormReportActions } from "../../contexts/FormReport";
 
 import { IDataUserProps, ISelectedUserProps } from "./types";
 
@@ -33,10 +33,11 @@ export function MembersReportScreen() {
     ISelectedUserProps | undefined
   >(undefined);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [sendModal, setSendModal] = useState(false);
 
   const { data: celulas, isFetching: loading } = useFetch("celulas.json");
   const { user } = useUserFiltered();
-  const { state, dispatch } = useFormReport();
+  const { state } = useFormReport();
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -103,15 +104,7 @@ export function MembersReportScreen() {
         celula: selectPerson.celula ? selectPerson.celula : "F",
         culto: selectPerson.culto ? selectPerson.culto : "F",
       };
-      // dispatch({
-      //   type: FormReportActions.setMembers,
-      //   payload: [...tratarFalta, selectPersonFalta],
-      // });
 
-      // dispatch({
-      //   type: FormReportActions.setPresencaCelula,
-      //   payload: selectPersonFalta.celula,
-      // });
       setMembersIdentify([...memberFilter, selectPerson]);
     }
   }, [selectPerson]);
@@ -174,8 +167,18 @@ export function MembersReportScreen() {
       >
         <ReportContentModalComponent
           handleCloseModal={setModalVisible}
-          data={user && user[1]}
-          membersPresent={state.presencaCelula}
+          data={user}
+          setSendModal={setSendModal}
+        />
+      </ModalComponent>
+
+      <ModalComponent
+        isVisible={sendModal}
+        onBackdropPress={() => setSendModal(false)}
+      >
+        <DefaultContentModalComponent
+          closeModal={setSendModal}
+          type="sendReport"
         />
       </ModalComponent>
     </Fragment>
