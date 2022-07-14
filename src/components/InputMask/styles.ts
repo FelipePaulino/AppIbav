@@ -1,12 +1,12 @@
 import styled from "styled-components/native";
-import { IColorsProps } from "../InputField/types";
+import { IColorsProps } from "../InputMask/types";
 
 export const Field = styled.View<IColorsProps>`
   border-bottom-color: ${({ theme }) => theme.colors.grey};
   border-bottom-width: 1;
 
   width: 100%;
-  height: 48;
+  height: ${({ height }) => height ? height : '48'};
 
   flex-direction: row;
   align-items: center;
@@ -19,5 +19,5 @@ export const Input = styled.TextInput<IColorsProps>`
 
   width: 80%;
 
-  padding-left: 16;
+  padding-left: ${({ padding }) => padding ? padding : '16'};
 `;
