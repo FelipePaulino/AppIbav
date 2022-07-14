@@ -1,5 +1,5 @@
 import React from "react";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 
 import { IContentProps } from "./types";
 
@@ -20,9 +20,10 @@ export function ButtonComponent({
     <S.Content width={width} heigth={heigth} {...rest} disabled={disabled} >
       <S.Background >
         {icon && (
-          <Feather name={icon} size={24} color={color} />
+          <S.BoxIcon icon>
+            <FontAwesome5 name={icon} size={18} color={color} />
+          </S.BoxIcon>
         )}
-
         <S.Title size={size}>{title}</S.Title>
       </S.Background>
     </S.Content>
