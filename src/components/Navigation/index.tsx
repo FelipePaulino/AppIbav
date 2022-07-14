@@ -13,7 +13,8 @@ export function NavigationComponent({ data, members, visitors }: IDataProps) {
   const navigation = useNavigation<IPropsAppStack>();
 
   const { state } = useFormReport();
-  const disableNavegation = state.celulaSelect === null
+  const disableNavegation = state.celulaSelect === 'Selecione'
+
   return (
     <Fragment>
       {data && (

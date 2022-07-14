@@ -1,5 +1,6 @@
 export interface IContentModal {
   handleCloseModal: any;
+  setSendModal: any;
   data?: any;
   onPressIn?: any;
   membersPresent?: IMemberOrVisitor[] | undefined;

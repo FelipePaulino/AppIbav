@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Modal from "react-native-modal";
-
 import { ContentSelect } from "./Content";
 
 import { IContentProps } from "./types";
@@ -15,7 +14,8 @@ export function SelectComponent({
   dataOptions,
   disabled,
   width,
-  small
+  small,
+  allOptions,
 }: IContentProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -26,11 +26,15 @@ export function SelectComponent({
   };
 
   return (
-    <S.Content >
+    <S.Content>
       <S.LabelField>{label}</S.LabelField>
-      <S.Container onPress={() => changeModalVisibility(true)} small={small} width={width}>
+      <S.Container
+        onPress={() => changeModalVisibility(true)}
+        small={small}
+        width={width}
+      >
         <S.Field>
-          <S.Label>{labelSelect ? labelSelect : 'Selecione'}</S.Label>
+          <S.Label>{labelSelect}</S.Label>
         </S.Field>
         <S.Icons disabled={disabled}>
           {isModalVisible ? (
@@ -46,6 +50,7 @@ export function SelectComponent({
         onBackdropPress={() => changeModalVisibility(false)}
       >
         <ContentSelect
+          alloption={allOptions}
           changeModalVisibility={changeModalVisibility}
           selectedOption={selectedOption}
           onChange={onChange}

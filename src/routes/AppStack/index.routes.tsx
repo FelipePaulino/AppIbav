@@ -17,6 +17,7 @@ import { PreRegisterAdminScreen } from "../../screens/PreRegisterAdmin";
 import { MembersInformationScreen } from "../../screens/MemberInformation";
 
 import { INavigationAppStackProps } from "./types";
+import NetworkScreenList from "../../screens/Network";
 
 export function AppRoutes() {
   const { Navigator, Screen } =
@@ -28,6 +29,7 @@ export function AppRoutes() {
       <Screen name="Details" component={DetailsScreen} />
       <Screen name="Members" component={MembersScreen} />
       <Screen name="Register" component={RegisterScreen} />
+      <Screen name="Network" component={NetworkScreenList} />
       <Screen name="ListUsers" component={ListUsersScreen} />
       <Screen name="SendReport" component={SendReportScreen} />
       <Screen name="Multiplication" component={Multiplication} />

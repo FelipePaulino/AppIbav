@@ -10,6 +10,8 @@ export const InputMaskComponent: React.FC<InputProps> = ({
   mask,
   inputMaskChange,
   primary,
+  height,
+  padding,
   ...rest
 }) => {
   function handleChange(text: string) {
@@ -30,11 +32,12 @@ export const InputMaskComponent: React.FC<InputProps> = ({
   }
 
   return (
-    <S.Field>
+    <S.Field height={height}>
       <S.Input
         onChangeText={(text) => handleChange(text)}
         primary={primary}
         {...rest}
+        padding={padding}
       />
     </S.Field>
   );

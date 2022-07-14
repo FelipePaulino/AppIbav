@@ -24,12 +24,6 @@ const typeStatus = (props: any) => {
       Background: "#FF7E06",
     };
   }
-
-  if (props.status === "aa") {
-    return {
-      Background: "#D30000",
-    };
-  }
 };
 
 export const Box = styled.View`
@@ -50,6 +44,7 @@ export const ContainerPerson = styled(TouchableOpacity)`
 export const BoxName = styled.View``;
 
 export const TextName = styled.Text`
+  text-transform: uppercase;
   font-size: 14;
   line-height: 16;
   color: #666666;

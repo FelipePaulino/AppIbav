@@ -25,15 +25,15 @@ export function PreRegisterAdminScreen() {
     navigation.navigate("Register")
     dispatch({
       type: FormReportActions.setRedeSelect,
-      payload: null,
+      payload: '*Selecione',
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: null,
+      payload: '*Selecione',
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: '*Selecione',
     });
   }
 

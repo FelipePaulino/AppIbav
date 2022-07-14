@@ -1,20 +1,30 @@
 {
-  "name": "Agua Viva App",
-  "displayName": "Agua Viva App",
+  "name": "IBAV RP",
+  "displayName": "IBAV RP",
   "expo": {
-    "name": "Agua Viva App",
+    "name": "IBAV RP",
     "slug": "aguavivarp",
-    "version": "1.0.0",
+    "version": "1.0.2",
+    "icon": "./assets/image/logo-app.png",
     "scheme": "aguavivarp",
     "orientation": "portrait",
     "assetBundlePatterns": ["**/*"],
+    "splash":{
+      "image": "./assets/image/logo-app.png",
+      "backgroundColor": "#000A3E"
+    },
     "ios": {
       "bundleIdentifier": "com.viniciusdevitalo.aguavivarp",
       "buildNumber": "1.0.0"
     },
     "android": {
+      "adaptiveIcon":{
+        "foregroundImage": "./assets/image/logo-app.png",
+        "backgroundColor": "#000A3E"
+      },
       "package": "com.viniciusdevitalo.aguavivarp",
-      "versionCode": 1
+      "versionCode": 13,
+      "permissions": []
     }
   }
 }

@@ -3,10 +3,11 @@ export interface IContentProps {
   onChange: (option: string) => void;
   selectedOption: (option: string) => void;
   labelSelect: string;
-  dataOptions: Array<IOptions>;
+  dataOptions: Array<IOptions> | string;
   disabled?: boolean;
   small?: boolean;
   width?: string;
+  allOptions?: any;
 }
 
 export interface IStyledDisabled {

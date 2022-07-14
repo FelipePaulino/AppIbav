@@ -1,10 +1,8 @@
 import { Alert } from "react-native";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 
-import { ModalComponent } from "..";
 import { TitleComponent } from "../../Title";
 import { ButtonComponent } from "../../Button";
-import { DefaultContentModalComponent } from "../Default";
 
 import useUserFiltered from "../../../hooks/useUserFiltered";
 import { useFormReport } from "../../../hooks/useFormReport";
@@ -16,13 +14,8 @@ import * as S from "./styles";
 
 export function ReportContentModalComponent({
   handleCloseModal,
-  data,
-  handleCancelForm,
-  titCelulaAdm,
-  titRedeAdm
+  setSendModal,
 }: IContentModal) {
-  const [sendModal, setSendModal] = useState(false);
-  const [modalSuccess, setModalSuccess] = useState(false);
   const { state } = useFormReport();
   const { user } = useUserFiltered();
 
@@ -52,8 +45,10 @@ export function ReportContentModalComponent({
           oferta,
           presencas,
         })
-        .then(() => setSendModal(true));
-      handleCloseModal(false);
+        .then(() => {
+          setSendModal(true);
+          handleCloseModal(false);
+        })
     } catch (err) {
       if (err) {
         Alert.alert("Ops algo deu errado ao enviar o seu formulário!");
@@ -61,7 +56,6 @@ export function ReportContentModalComponent({
       }
     }
   };
-  
   const tituloCelula = () => {
     switch (user && user[0][1].cargo) {
       case 'lider':
@@ -102,25 +96,25 @@ export function ReportContentModalComponent({
           </S.BoxTitle>
         )
 
-        case 'pastor':
-          return (
-            <S.BoxTitle>
-              <TitleComponent
-                title={`Célula: `}
-                decoration
-                primary
-                weight
-              />
-              <TitleComponent
-                title={state.celulaSelect}
-                decoration
-                primary
-                uppercase
-                weight
-              />
-            </S.BoxTitle>
-  
-          )
+      case 'pastor':
+        return (
+          <S.BoxTitle>
+            <TitleComponent
+              title={`Célula: `}
+              decoration
+              primary
+              weight
+            />
+            <TitleComponent
+              title={state.celulaSelect}
+              decoration
+              primary
+              uppercase
+              weight
+            />
+          </S.BoxTitle>
+
+        )
 
       case 'administrador':
         return (
@@ -200,40 +194,19 @@ export function ReportContentModalComponent({
           <ButtonComponent
             title="Cancelar"
             onPress={() => handleCloseModal(false)}
-            width= '150px'
-            size= '16px'
+            width='150px'
+            size='16px'
           />
 
           <ButtonComponent
             title="Confirmar"
             onPress={handleSubmitForm}
-            onPressIn={() => setModalSuccess(true)}
-            width= '150px'
-            size= '16px'
+            width='150px'
+            size='16px'
 
           />
         </S.BoxButton>
       </S.ContentModal>
-
-      <ModalComponent
-        isVisible={sendModal}
-        onBackdropPress={() => setSendModal(false)}
-      >
-        <DefaultContentModalComponent
-          closeModal={setSendModal}
-          type="sendReport"
-        />
-      </ModalComponent>
-
-      <ModalComponent
-        isVisible={modalSuccess}
-        onBackdropPress={() => setModalSuccess(false)}
-      >
-        <DefaultContentModalComponent
-          closeModal={setModalSuccess}
-          type="sendReport"
-        />
-      </ModalComponent>
     </Fragment>
   );
 }
