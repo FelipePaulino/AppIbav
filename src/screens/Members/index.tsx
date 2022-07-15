@@ -39,6 +39,8 @@ export function MembersScreen(this: any) {
   const [loading, setLoading] = useState<boolean>(false)
   const [celulas, setCelulas] = useState<any>()
   const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
+  const [teste, setTeste] = useState<any>()
+  const [teste2, setTeste2] = useState<any>()
 
   const { user } = useUserFiltered();
   const { state, trigger, setTrigger, dispatch } = useFormReport()
@@ -161,8 +163,6 @@ export function MembersScreen(this: any) {
     }
   })
 
-  // console.log(celulas && celulas, 'AQUI <=====================================================')
-
   const filtrandoRedes = celulas && celulas.filter((item: any) => {
     return item[1].rede === state.redeSelect
   })
@@ -181,12 +181,10 @@ export function MembersScreen(this: any) {
     }
   })
 
-
   const filtrandoDiscipulado = celulas && celulas.length > 0 && celulas?.filter((item: any) => {
     return item[1].discipulador === state.discipuladoSelect && item[1].rede === state.redeSelect
   })
 
-  // console.log(filtrandoDiscipulado && filtrandoDiscipulado, '<=====filtrandoDiscipulado====')
 
   const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
     return {
@@ -194,33 +192,39 @@ export function MembersScreen(this: any) {
     }
   })
 
+
+
+
   // TUDO CERTO EM CIMA
 
   // ESTOU AQUI
-  const idCelulaSelect = state.celulaSelect && state.celulaSelect.split(" -")[0];
+  // useEffect(() => {
 
-
-  useEffect(() => {
-    setIdCelulaMembers(idCelulaSelect)
-  }, [idCelulaSelect, state.celulaSelect])
+  // }, [state.celulaSelect])
 
   useEffect(() => {
     if (whatOffice === 'administrador') {
+      const idCelulaSelect = state.celulaSelect && state.celulaSelect.split(" -")[0];
+
+      setIdCelulaMembers(idCelulaSelect)
 
       const filterMembers =
         celulas &&
         celulas.filter((item: any) => {
+          console.log(item[1].numero_celula, 'item')
+          console.log(idCelulaSelect, 'idCelulaSelect')
           return (
             item[1].numero_celula == idCelulaMembers
           )
         });
-      // console.log( filterMembers, 'membros Filtrados uhuuuuuuuuuuuuuuuuuuuuuuu')
 
       if (filterMembers) {
         setMembers(filterMembers);
+        console.log(filterMembers, 'filterMembers')
+
       }
     }
-  }, [celulas, state.celulaSelect, state.celulaSelect, trigger])
+  }, [celulas, state.celulaSelect, trigger])
 
 
   const newMembersList =
@@ -230,6 +234,7 @@ export function MembersScreen(this: any) {
       (member: any) =>
         member.status !== "visitante"
     );
+
   // console.log(newMembersList, '<======================================')
 
   // tratativas para o usuário pastor
@@ -353,7 +358,7 @@ export function MembersScreen(this: any) {
                 <SelectComponent
                   onChange={(handleDiscipuladoChange)}
                   labelSelect={state.discipuladoSelect}
-                  dataOptions={state.redeSelect && mapDiscipuladosUnicos}
+                  dataOptions={mapDiscipuladosUnicos}
                   selectedOption={handleDiscipuladoChange}
                   width='300'
                   disabled={state.redeSelect === "Selecione" ? true : false}
@@ -378,6 +383,10 @@ export function MembersScreen(this: any) {
         );
     }
   };
+
+  console.log(state.discipuladoSelect, 'APP-state.discipuladoSelect')
+
+  console.log(state.celulaSelect, 'APP-state.celulaSelect')
 
   return (
     <Fragment>
@@ -405,8 +414,7 @@ export function MembersScreen(this: any) {
           ) : (
             <Fragment>
               {office()}
-              {newMembersList &&
-                newMembersList.length > 0 &&
+              {newMembersList ? (
                 newMembersList?.map((item: any) => {
                   return (
                     <Fragment>
@@ -439,7 +447,10 @@ export function MembersScreen(this: any) {
                       />
                     </Fragment>
                   );
-                })}
+                })) : (
+                <>
+                </>
+              )}
             </Fragment>
           )}
         </S.Container>
