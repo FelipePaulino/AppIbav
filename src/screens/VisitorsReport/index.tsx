@@ -16,7 +16,7 @@ import { NavigationComponent } from "../../components/Navigation";
 import { CardMembersComponent } from "../../components/Cards/Members";
 import { HeadingPresentComponent } from "../../components/HeadingPresent";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
-// import { DefaultContentModalComponent } from "../../components/Modal/Default";
+import { DefaultContentModalComponent } from "../../components/Modal/Default";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -43,6 +43,7 @@ export function VisitorsReportScreen() {
 
   const { state, dispatch } = useFormReport();
   const { data: celulas, isFetching: loading } = useFetch("celulas.json");
+  const [sendModal, setSendModal] = useState(false);
 
   // const ID_CELULA =
   //   memberStorage && memberStorage.length > 0 && memberStorage[0][0];
@@ -259,7 +260,18 @@ export function VisitorsReportScreen() {
       >
         <ReportContentModalComponent
           handleCloseModal={setModalVisible}
-          visitorsPresent={newArrayVisitors}
+          data={user}
+          setSendModal={setSendModal}
+        />
+      </ModalComponent>
+
+      <ModalComponent
+        isVisible={sendModal}
+        onBackdropPress={() => setSendModal(false)}
+      >
+        <DefaultContentModalComponent
+          closeModal={setSendModal}
+          type="sendReport"
         />
       </ModalComponent>
 
