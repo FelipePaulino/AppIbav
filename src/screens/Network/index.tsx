@@ -72,13 +72,18 @@ export default function NetworkScreenList() {
   const discipulado =
     celulas &&
     Object.values(celulas).filter((items: any) => {
-      return items?.cargo === "discipulador";
+      return (
+        items?.cargo === "discipulador" && items?.rede === state.redeSelect
+      );
     });
 
   const lider =
     celulas &&
     Object.values(celulas).filter((items: any) => {
-      return items?.cargo === "lider de celula";
+      return (
+        items?.cargo === "lider de celula" &&
+        items?.discipulado === state.discipuladoSelect
+      );
     });
 
   const discipuladossUnicos = discipulado.map((items: any) => items?.nome);
@@ -146,10 +151,7 @@ export default function NetworkScreenList() {
                     selectedOption={handleDiscipuladoChange}
                     width="300px"
                     disabled={
-                      state.redeSelect === "Todos" ||
-                      state.redeSelect === "Selecione"
-                        ? true
-                        : false
+                      state.redeSelect === "TODOS" && "Selecione" ? true : false
                     }
                   />
                 </S.ContentC>
@@ -166,18 +168,30 @@ export default function NetworkScreenList() {
                   )}
                   {!state.discipuladoSelect && state.redeSelect !== "TODOS" && (
                     <>
-                      <Text>Discipulador</Text>
-                      {discipulado.map((item: any) => {
-                        return <PersonLabelComponent nome={item.nome} />;
-                      })}
+                     {discipulado.length > 0 ? (
+                        <>
+                          <Text>Discipulador</Text>
+                          {discipulado.map((item: any) => {
+                            return <PersonLabelComponent nome={item.nome} />;
+                          })}
+                        </>
+                      ) : (
+                        <Text>Não há Discipuladores</Text>
+                      )}
                     </>
                   )}
                   {state.redeSelect && state.discipuladoSelect && (
                     <>
-                      <Text>Célula</Text>
-                      {lider.map((item: any) => {
-                        return <PersonLabelComponent nome={item.nome} />;
-                      })}
+                      {lider.length > 0 ? (
+                        <>
+                          <Text>Célula</Text>
+                          {lider.map((item: any) => {
+                            return <PersonLabelComponent nome={item.nome} />;
+                          })}
+                        </>
+                      ) : (
+                        <Text>Não há lideres</Text>
+                      )}
                     </>
                   )}
                 </>
