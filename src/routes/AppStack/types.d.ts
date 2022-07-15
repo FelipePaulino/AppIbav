@@ -13,6 +13,9 @@ export type INavigationAppStackProps = {
   MembersReport: undefined;
   VisitorsReport: undefined;
   Multiplication: undefined;
+  MultiplicationCelula: undefined;
+  MultiplicationDiscipulado: undefined;
+  MultiplicationRede: undefined;
   WaitingApprove: undefined;
   UsersInformation: undefined;
   PreRegisterAdmin: undefined;
