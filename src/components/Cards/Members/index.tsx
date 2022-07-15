@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { SelectComponent } from '../../Select'
+import { useFormReport } from "../../../hooks/useFormReport";
+import { FormReportActions } from "../../../contexts/FormReport";
 
 import { IDataPros } from "./types";
 
@@ -29,18 +31,36 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
     }
   ]
 
-  const [presencaCelula, setPresencaCelula] = useState("-");
-  const [presencaCulto, setPresencaCulto] = useState("-");
-
+  const { state, dispatch } = useFormReport();
   const handlePresentCelula = (value: string) => {
+    const removeDuplicate = state.presencaCelula.filter((item: any) => {
+      return item.nome !== data.nome
+    })
     setSelectPerson({ ...data, celula: value })
-    setPresencaCelula(value)
+    dispatch({
+      type: FormReportActions.setPresencaCelula,
+      payload: [...removeDuplicate, { ...data, celula: value }],
+    });
   };
 
   const handlePresentCulto = (value: string) => {
+    const removeDuplicate = state.presencaCulto.filter((item: any) => {
+      return item.nome !== data.nome
+    })
     setSelectPerson({ ...data, culto: value })
-    setPresencaCulto(value)
+    dispatch({
+      type: FormReportActions.setPresencaCulto,
+      payload: [...removeDuplicate, { ...data, culto: value }],
+    });
   };
+
+  const filterPresencaCelula = state?.presencaCelula?.filter((item: any) => {
+    return item.nome === data.nome
+  })
+
+  const filterPresencaCulto = state?.presencaCulto?.filter((item: any) => {
+    return item.nome === data.nome
+  })
 
   return (
     <S.Content>
@@ -49,11 +69,12 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
       </S.ContentName>
 
       <S.ContainerSelect>
-        <S.BoxSelect>
+        <S.BoxSelect >
           <SelectComponent
             onChange={handlePresentCelula}
+
             selectedOption={handlePresentCelula}
-            labelSelect={presencaCelula}
+            labelSelect={filterPresencaCelula[0] ? filterPresencaCelula[0]?.celula : "-"}
             dataOptions={presenca}
             small
             width="55"
@@ -63,7 +84,7 @@ export function CardMembersComponent({ data, setSelectPerson }: IDataPros) {
           <SelectComponent
             onChange={handlePresentCulto}
             selectedOption={handlePresentCulto}
-            labelSelect={presencaCulto}
+            labelSelect={filterPresencaCulto[0] ? filterPresencaCulto[0]?.culto : "-"}
             dataOptions={presenca}
             small
             width="55"
