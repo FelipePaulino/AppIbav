@@ -19,13 +19,14 @@ export function ReportContentModalComponent({
   const { state } = useFormReport();
   const { user } = useUserFiltered();
 
-  const presentCLMembers = state.members.filter((item) => item.celula === "P");
-  const presentCTMembers = state.members.filter((item) => item.culto === "P");
-  const presentCLVisitors = state.visitors.filter(
-    (item) => item.celula === "P"
-  );
-  const presentCTVisitors = state.visitors.filter((item) => item.culto === "P");
+  const presentCL = state.presencaCelula.filter((item: any) => item.celula === "P");
+  const presentCT = state.presencaCulto.filter((item: any) => item.culto === "P");
 
+  const presentCLMembers = presentCL.filter((item: any) => item.status !== "visitante")
+  const presentCTMembers = presentCT.filter((item: any) => item.status !== "visitante")
+
+  const presentCLVisitors = presentCL.filter((item: any) => item.status === "visitante");
+  const presentCTVisitors = presentCT.filter((item: any) => item.status === "visitante");
 
   const handleSubmitForm = () => {
     try {
