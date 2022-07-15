@@ -93,23 +93,20 @@ export function VisitorsReportScreen() {
   //   }
   // };
 
-  useEffect(() => {
 
+  useEffect(() => {
     const checkMembers = async () => {
       const members = await AsyncStorage.getItem(GetStorage.MEMBERS_FILTERED);
       if (members) {
         setMemberStorage(JSON.parse(members));
-
       }
     };
-
     checkMembers();
   }, []);
 
   useEffect(() => {
     const checkUser = async () => {
       const user = await AsyncStorage.getItem(GetStorage.USER_FILTERED);
-
       if (user) {
         setUser(JSON.parse(user));
       }
@@ -119,15 +116,22 @@ export function VisitorsReportScreen() {
 
   const dataUser = user && user[0] && user[0][1];
   const whatIsOffice = dataUser && dataUser.cargo;
+  const idCelulaSelect =
+    state.celulaSelect && state.celulaSelect.split(" -")[0];
 
-  const visitantes = celulas && Object.values(celulas[0][1].membros).filter((visitors: any) => {
+  const filterMembers = celulas && celulas.filter((item: any) => {
+    return (
+      item[1].numero_celula == idCelulaSelect
+    );
+  });
+
+  const visitantes = filterMembers && Object.values(filterMembers[0][1].membros).filter((visitors: any) => {
     return visitors.status === 'visitante'
   })
 
   const newArrayVisitors = visitorsIdentify
     ? visitorsIdentify
     : visitantes;
-
 
   useEffect(() => {
     const visitorsFilter =
