@@ -44,6 +44,9 @@ export function VisitorsReportScreen() {
   const { state, dispatch } = useFormReport();
   const { data: celulas, isFetching: loading } = useFetch("celulas.json");
 
+  // const ID_CELULA =
+  //   memberStorage && memberStorage.length > 0 && memberStorage[0][0];
+
   // useEffect(() => {
   //   setLoading(true);
   //   connectApi.get(`/celulas/${ID_CELULA}/visitantes.json`)
@@ -109,8 +112,6 @@ export function VisitorsReportScreen() {
     };
     checkUser();
   }, []);
-
-
 
   const dataUser = user && user[0] && user[0][1];
   const whatIsOffice = dataUser && dataUser.cargo;
