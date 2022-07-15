@@ -42,6 +42,22 @@ export function HomeScreen() {
       type: FormReportActions.setCelulaSelect,
       payload: 'Selecione',
     });
+    dispatch({
+      type: FormReportActions.setOffer,
+      payload: '',
+    });
+    dispatch({
+      type: FormReportActions.setTextDate,
+      payload: "Selecione uma data",
+    });
+    dispatch({
+      type: FormReportActions.setPresencaCulto,
+      payload: [],
+    });
+    dispatch({
+      type: FormReportActions.setPresencaCelula,
+      payload: [],
+    });
   }
 
   const office = () => {
