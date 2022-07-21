@@ -12,6 +12,7 @@ import { NavigationComponent } from "../../components/Navigation";
 // import { NotificationComponent } from "../../components/Notification";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
+import { InputMaskComponent } from "../../components/InputMask"
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -353,11 +354,14 @@ export function SendReportScreen() {
                   />
                   <S.ContentC>
                     <S.IconC name="file-invoice-dollar" />
-                    <InputFieldComponent
-                      primary
+                    <InputMaskComponent
                       value={state.offer}
-                      placeholderTextColor="grey"
-                      onChangeText={handleOfferChange}
+                      mask="currency"
+                      maxLength={14}
+                      inputMaskChange={(value: string) => handleOfferChange(value)}
+                      primary
+                      padding={1}
+                      height={30}
                     />
                   </S.ContentC>
                 </S.Grid>

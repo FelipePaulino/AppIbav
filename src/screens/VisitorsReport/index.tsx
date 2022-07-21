@@ -16,7 +16,7 @@ import { NavigationComponent } from "../../components/Navigation";
 import { CardMembersComponent } from "../../components/Cards/Members";
 import { HeadingPresentComponent } from "../../components/HeadingPresent";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
-// import { DefaultContentModalComponent } from "../../components/Modal/Default";
+import { DefaultContentModalComponent } from "../../components/Modal/Default";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -43,6 +43,7 @@ export function VisitorsReportScreen() {
 
   const { state, dispatch } = useFormReport();
   const { data: celulas, isFetching: loading } = useFetch("celulas.json");
+  const [sendModal, setSendModal] = useState(false);
 
   // const ID_CELULA =
   //   memberStorage && memberStorage.length > 0 && memberStorage[0][0];
@@ -92,23 +93,20 @@ export function VisitorsReportScreen() {
   //   }
   // };
 
-  useEffect(() => {
 
+  useEffect(() => {
     const checkMembers = async () => {
       const members = await AsyncStorage.getItem(GetStorage.MEMBERS_FILTERED);
       if (members) {
         setMemberStorage(JSON.parse(members));
-
       }
     };
-
     checkMembers();
   }, []);
 
   useEffect(() => {
     const checkUser = async () => {
       const user = await AsyncStorage.getItem(GetStorage.USER_FILTERED);
-
       if (user) {
         setUser(JSON.parse(user));
       }
@@ -118,15 +116,22 @@ export function VisitorsReportScreen() {
 
   const dataUser = user && user[0] && user[0][1];
   const whatIsOffice = dataUser && dataUser.cargo;
+  const idCelulaSelect =
+    state.celulaSelect && state.celulaSelect.split(" -")[0];
 
-  const visitantes = celulas && Object.values(celulas[0][1].membros).filter((visitors: any) => {
+  const filterMembers = celulas && celulas.filter((item: any) => {
+    return (
+      item[1].numero_celula == idCelulaSelect
+    );
+  });
+
+  const visitantes = filterMembers && Object.values(filterMembers[0][1].membros).filter((visitors: any) => {
     return visitors.status === 'visitante'
   })
 
   const newArrayVisitors = visitorsIdentify
     ? visitorsIdentify
     : visitantes;
-
 
   useEffect(() => {
     const visitorsFilter =
@@ -259,7 +264,18 @@ export function VisitorsReportScreen() {
       >
         <ReportContentModalComponent
           handleCloseModal={setModalVisible}
-          visitorsPresent={newArrayVisitors}
+          data={user}
+          setSendModal={setSendModal}
+        />
+      </ModalComponent>
+
+      <ModalComponent
+        isVisible={sendModal}
+        onBackdropPress={() => setSendModal(false)}
+      >
+        <DefaultContentModalComponent
+          closeModal={setSendModal}
+          type="sendReport"
         />
       </ModalComponent>
 

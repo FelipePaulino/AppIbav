@@ -14,7 +14,8 @@ export function SelectComponent({
   dataOptions,
   disabled,
   width,
-  small
+  small,
+  allOptions,
 }: IContentProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -25,9 +26,13 @@ export function SelectComponent({
   };
 
   return (
-    <S.Content >
+    <S.Content>
       <S.LabelField>{label}</S.LabelField>
-      <S.Container onPress={() => changeModalVisibility(true)} small={small} width={width}>
+      <S.Container
+        onPress={() => changeModalVisibility(true)}
+        small={small}
+        width={width}
+      >
         <S.Field>
           <S.Label>{labelSelect}</S.Label>
         </S.Field>
@@ -45,6 +50,7 @@ export function SelectComponent({
         onBackdropPress={() => changeModalVisibility(false)}
       >
         <ContentSelect
+          alloption={allOptions}
           changeModalVisibility={changeModalVisibility}
           selectedOption={selectedOption}
           onChange={onChange}

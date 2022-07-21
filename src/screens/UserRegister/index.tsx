@@ -84,7 +84,7 @@ export function UserRegisterScreen() {
     usersMinister &&
     usersMinister.map((pastor: IDataUser) => {
       return {
-        value: `${pastor?.rede} - ${pastor.nome}`,
+        value: `${pastor?.rede}`,
       };
     });
 
@@ -185,6 +185,7 @@ export function UserRegisterScreen() {
         connectApi
           .post("/users.json", {
             cargo: "discipulador",
+            rede: selectNetwork,
             cep: address.cep,
             nome: formValues.name,
             bairro: address.bairro,
@@ -203,6 +204,8 @@ export function UserRegisterScreen() {
         connectApi
           .post("/users.json", {
             cargo: "lider de celula",
+            rede: selectNetwork,
+            discipulado: selectDisciples,
             cep: address.cep,
             nome: formValues.name,
             bairro: address.bairro,

@@ -24,7 +24,6 @@ export function ButtonComponent({
             <FontAwesome5 name={icon} size={18} color={color} />
           </S.BoxIcon>
         )}
-
         <S.Title size={size}>{title}</S.Title>
       </S.Background>
     </S.Content>
