@@ -151,8 +151,9 @@ export function MembersScreen(this: any) {
     setCelulaFiltered(filterCelulas);
   }, [celulas]);
 
-  // tratativas para o usuário administrador
+  // Tratativas para o usuário administrador
   const redes = celulas && celulas?.map((item: any) => (item[1].rede))
+
   const redesUnicas = redes && redes.filter(function (este: any, i: any) {
     return redes.indexOf(este) === i;
   });
@@ -170,7 +171,6 @@ export function MembersScreen(this: any) {
   const discipulado = filtrandoRedes && filtrandoRedes.map((item: any) =>
     (item[1].discipulador))
 
-
   const discipuladossUnicos = discipulado && discipulado.filter(function (este: any, i: any) {
     return discipulado.indexOf(este) === i;
   });
@@ -185,46 +185,29 @@ export function MembersScreen(this: any) {
     return item[1].discipulador === state.discipuladoSelect && item[1].rede === state.redeSelect
   })
 
-
   const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
     return {
       value: `${item[1].numero_celula} - ${item[1].lider}`
     }
   })
 
-
-
-
-  // TUDO CERTO EM CIMA
-
-  // ESTOU AQUI
-  // useEffect(() => {
-
-  // }, [state.celulaSelect])
-
-  useEffect(() => {
-    if (whatOffice === 'administrador') {
+  if (whatOffice === 'administrador') {
+    useEffect(() => {
       const idCelulaSelect = state.celulaSelect && state.celulaSelect.split(" -")[0];
-
-      setIdCelulaMembers(idCelulaSelect)
 
       const filterMembers =
         celulas &&
         celulas.filter((item: any) => {
-          console.log(item[1].numero_celula, 'item')
-          console.log(idCelulaSelect, 'idCelulaSelect')
           return (
-            item[1].numero_celula == idCelulaMembers
+            item[1].numero_celula == idCelulaSelect
           )
         });
 
       if (filterMembers) {
         setMembers(filterMembers);
-        console.log(filterMembers, 'filterMembers')
-
       }
-    }
-  }, [celulas, state.celulaSelect, trigger])
+    }, [celulas, state.celulaSelect, trigger])
+  }
 
 
   const newMembersList =
@@ -235,9 +218,7 @@ export function MembersScreen(this: any) {
         member.status !== "visitante"
     );
 
-  // console.log(newMembersList, '<======================================')
-
-  // tratativas para o usuário pastor
+  // Tratativas para o usuário pastor
 
   const filtrandoDiscipuladoPastor = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.rede === user[0][1].rede
@@ -383,10 +364,6 @@ export function MembersScreen(this: any) {
         );
     }
   };
-
-  console.log(state.discipuladoSelect, 'APP-state.discipuladoSelect')
-
-  console.log(state.celulaSelect, 'APP-state.celulaSelect')
 
   return (
     <Fragment>
