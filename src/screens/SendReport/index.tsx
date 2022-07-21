@@ -13,6 +13,8 @@ import { NavigationComponent } from "../../components/Navigation";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
 import { InputMaskComponent } from "../../components/InputMask"
+import { IPropsAppStack } from "../../routes/AppStack/types";
+import { useNavigation } from "@react-navigation/native";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -36,7 +38,7 @@ export function SendReportScreen() {
 
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
-
+  const navigation = useNavigation<IPropsAppStack>();
   const handleOpenModal = () => {
     setModalVisible(true);
   };
@@ -422,10 +424,12 @@ export function SendReportScreen() {
 
       <ModalComponent
         isVisible={sendModal}
-        onBackdropPress={() => setSendModal(false)}
+        onBackdropPress={() => {
+          setSendModal(false)
+          navigation.navigate("Home")
+        }}
       >
         <DefaultContentModalComponent
-          closeModal={setSendModal}
           type="sendReport"
         />
       </ModalComponent>
