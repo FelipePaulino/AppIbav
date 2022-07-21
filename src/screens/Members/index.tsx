@@ -209,7 +209,6 @@ export function MembersScreen(this: any) {
     }, [celulas, state.celulaSelect, trigger])
   }
 
-
   const newMembersList =
     members &&
     members.length > 0 &&
