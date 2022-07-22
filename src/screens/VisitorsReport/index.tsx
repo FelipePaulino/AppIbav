@@ -17,6 +17,8 @@ import { CardMembersComponent } from "../../components/Cards/Members";
 import { HeadingPresentComponent } from "../../components/HeadingPresent";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
+import { IPropsAppStack } from "../../routes/AppStack/types";
+import { useNavigation } from "@react-navigation/native";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -44,6 +46,7 @@ export function VisitorsReportScreen() {
   const { state, dispatch } = useFormReport();
   const { data: celulas, isFetching: loading } = useFetch("celulas.json");
   const [sendModal, setSendModal] = useState(false);
+  const navigation = useNavigation<IPropsAppStack>();
 
   // const ID_CELULA =
   //   memberStorage && memberStorage.length > 0 && memberStorage[0][0];
@@ -252,6 +255,14 @@ export function VisitorsReportScreen() {
               <ButtonComponent
                 title={ButtonsText.REPORT}
                 onPress={handleOpenModalReport}
+                disabled={(
+                  state.celulaSelect === 'Selecione' ||
+                  state.textDate === 'Selecione uma data' ||
+                  state.offer === '' ||
+                  state.presencaCelula.length === 0 ||
+                  state.presencaCulto.length === 0
+                ) ? true : false
+                }
               />
             </S.Button>
           </S.Content>
@@ -271,10 +282,12 @@ export function VisitorsReportScreen() {
 
       <ModalComponent
         isVisible={sendModal}
-        onBackdropPress={() => setSendModal(false)}
+        onBackdropPress={() => {
+          setSendModal(false)
+          navigation.navigate("Home")
+        }}
       >
         <DefaultContentModalComponent
-          closeModal={setSendModal}
           type="sendReport"
         />
       </ModalComponent>

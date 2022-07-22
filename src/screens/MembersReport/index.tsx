@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 import { ModalComponent } from "../../components/Modal";
 import { ButtonComponent } from "../../components/Button";
@@ -13,6 +14,7 @@ import { CardMembersComponent } from "../../components/Cards/Members";
 import { HeadingPresentComponent } from "../../components/HeadingPresent";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
+import { IPropsAppStack } from "../../routes/AppStack/types";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
@@ -49,7 +51,7 @@ export function MembersReportScreen() {
     state.celulaSelect && state.celulaSelect.split(" -")[0];
   const whatIsOffice = dataUser && dataUser.cargo;
 
-
+  const navigation = useNavigation<IPropsAppStack>();
 
   useEffect(() => {
     const filterMembers =
@@ -155,6 +157,14 @@ export function MembersReportScreen() {
               <ButtonComponent
                 title={ButtonsText.REPORT}
                 onPress={handleOpenModal}
+                disabled={(
+                  state.celulaSelect === 'Selecione' ||
+                  state.textDate === 'Selecione uma data' ||
+                  state.offer === '' ||
+                  state.presencaCelula.length === 0 ||
+                  state.presencaCulto.length === 0
+                ) ? true : false
+                }
               />
             </S.Button>
           </S.Content>
@@ -174,10 +184,12 @@ export function MembersReportScreen() {
 
       <ModalComponent
         isVisible={sendModal}
-        onBackdropPress={() => setSendModal(false)}
+        onBackdropPress={() => {
+          setSendModal(false)
+          navigation.navigate("Home")
+        }}
       >
         <DefaultContentModalComponent
-          closeModal={setSendModal}
           type="sendReport"
         />
       </ModalComponent>

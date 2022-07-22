@@ -15,6 +15,18 @@ export const Navigation = styled.Text`
   font-size: ${({ theme }) => theme.fonts.fontSize.small};
 `;
 
+export const ContentHeader = styled.View`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`
+
+export const Division = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+
 export const Content = styled.View`
   flex: 1;
   align-items: center;

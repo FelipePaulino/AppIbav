@@ -35,10 +35,12 @@ export function MembersScreen(this: any) {
   const [modalConcluded, setModalConcluded] = useState(false);
   const [name, setName] = useState<string>();
   const [id, setId] = useState<any>();
-  const [idCelula, setIdCelula] = useState<any>()
+  const [idCelulaMembers, setIdCelulaMembers] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [celulas, setCelulas] = useState<any>()
   const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
+  const [teste, setTeste] = useState<any>()
+  const [teste2, setTeste2] = useState<any>()
 
   const { user } = useUserFiltered();
   const { state, trigger, setTrigger, dispatch } = useFormReport()
@@ -47,6 +49,8 @@ export function MembersScreen(this: any) {
   const identifyCelula = user && user[0][1].numero_celula;
 
   const serviceGet = new RequestService()
+
+  const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
@@ -147,8 +151,9 @@ export function MembersScreen(this: any) {
     setCelulaFiltered(filterCelulas);
   }, [celulas]);
 
-  // tratativas para o usuário administrador
-  const redes = celulas && celulas.length > 0 && celulas[1]?.map((item: any) => (item.rede))
+  // Tratativas para o usuário administrador
+  const redes = celulas && celulas?.map((item: any) => (item[1].rede))
+
   const redesUnicas = redes && redes.filter(function (este: any, i: any) {
     return redes.indexOf(este) === i;
   });
@@ -159,12 +164,12 @@ export function MembersScreen(this: any) {
     }
   })
 
-  const filtrandoRedes = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
-    return item.rede == state?.redeSelect
+  const filtrandoRedes = celulas && celulas.filter((item: any) => {
+    return item[1].rede === state.redeSelect
   })
 
   const discipulado = filtrandoRedes && filtrandoRedes.map((item: any) =>
-    (item.discipulador))
+    (item[1].discipulador))
 
   const discipuladossUnicos = discipulado && discipulado.filter(function (este: any, i: any) {
     return discipulado.indexOf(este) === i;
@@ -176,50 +181,43 @@ export function MembersScreen(this: any) {
     }
   })
 
-  const filtrandoDiscipulado = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
-    return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
+  const filtrandoDiscipulado = celulas && celulas.length > 0 && celulas?.filter((item: any) => {
+    return item[1].discipulador === state.discipuladoSelect && item[1].rede === state.redeSelect
   })
 
   const celulaAdm = filtrandoDiscipulado && filtrandoDiscipulado.map((item: any) => {
     return {
-      value: `${item.numero_celula} - ${item.lider}`
+      value: `${item[1].numero_celula} - ${item[1].lider}`
     }
   })
 
-  const idCelulaSelect =
-    state.celulaSelect && state.celulaSelect.split(" -")[0];
-
+  if (whatOffice === 'administrador') {
     useEffect(() => {
-      setIdCelula(idCelulaSelect)
-    }, [state.celulaSelect])
-
-  useEffect(() => {
-    if (whatOffice === 'administrador') {
+      const idCelulaSelect = state.celulaSelect && state.celulaSelect.split(" -")[0];
 
       const filterMembers =
         celulas &&
-        celulas.length > 0 &&
-        celulas[1]?.filter((item: any) => {
+        celulas.filter((item: any) => {
           return (
-            item.numero_celula == idCelula
+            item[1].numero_celula == idCelulaSelect
           )
         });
 
       if (filterMembers) {
-          setMembers(filterMembers);
+        setMembers(filterMembers);
       }
-    }
-  }, [celulas, state.celulaSelect, trigger])
+    }, [celulas, state.celulaSelect, trigger])
+  }
 
   const newMembersList =
     members &&
     members.length > 0 &&
-    Object.entries(members[0]?.membros).filter(
+    Object.entries(members[0][1].membros).filter(
       (member: any) =>
-        member[1].status !== "visitante" && member[1].status !== "Visitante"
+        member.status !== "visitante"
     );
 
-  // tratativas para o usuário pastor
+  // Tratativas para o usuário pastor
 
   const filtrandoDiscipuladoPastor = celulas && celulas.length > 0 && celulas[1]?.filter((item: any) => {
     return item.rede === user[0][1].rede
@@ -340,9 +338,10 @@ export function MembersScreen(this: any) {
                 <SelectComponent
                   onChange={(handleDiscipuladoChange)}
                   labelSelect={state.discipuladoSelect}
-                  dataOptions={state.redeSelect && mapDiscipuladosUnicos}
+                  dataOptions={mapDiscipuladosUnicos}
                   selectedOption={handleDiscipuladoChange}
                   width='300'
+                  disabled={state.redeSelect === "Selecione" ? true : false}
                 />
               </S.ContentC>
             </S.Grid>
@@ -356,6 +355,7 @@ export function MembersScreen(this: any) {
                   dataOptions={celulaAdm}
                   selectedOption={selectedOptionCelula}
                   width='300'
+                  disabled={state.discipuladoSelect === "Selecione" ? true : false}
                 />
               </S.ContentC>
             </S.Grid>
@@ -367,17 +367,21 @@ export function MembersScreen(this: any) {
   return (
     <Fragment>
       <HeaderComponent>
-        <ComeBackComponent />
-        <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
-        <ButtonComponent
-          title="Cadastrar"
-          onPress={() => { }}
-          width="136px"
-          heigth="33px"
-          size="12px"
-          icon="user-plus"
-          color="white"
-        />
+        <S.ContentHeader>
+          <S.Division>
+            <ComeBackComponent />
+            <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
+          </S.Division>
+          <ButtonComponent
+            title="Cadastrar"
+            onPress={() => { }}
+            width="136px"
+            heigth="33px"
+            size="12px"
+            icon="user-plus"
+            color="white"
+          />
+        </S.ContentHeader>
       </HeaderComponent>
       <ScrollView>
         <S.Container>
@@ -386,8 +390,7 @@ export function MembersScreen(this: any) {
           ) : (
             <Fragment>
               {office()}
-              {newMembersList &&
-                newMembersList.length > 0 &&
+              {newMembersList ? (
                 newMembersList?.map((item: any) => {
                   return (
                     <Fragment>
@@ -420,7 +423,10 @@ export function MembersScreen(this: any) {
                       />
                     </Fragment>
                   );
-                })}
+                })) : (
+                <>
+                </>
+              )}
             </Fragment>
           )}
         </S.Container>
