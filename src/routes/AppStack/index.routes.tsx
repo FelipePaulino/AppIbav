@@ -7,6 +7,9 @@ import { RegisterScreen } from "../../screens/Register";
 import { ListUsersScreen } from "../../screens/ListUsers";
 import { SendReportScreen } from "../../screens/SendReport";
 import { Multiplication } from "../../screens/Multiplication";
+import { MultiplicationCelula } from "../../screens/MutiplicationCelula";
+import { MultiplicationDiscipulado } from "../../screens/MutiplicationDiscipulado";
+import { MultiplicationRede } from "../../screens/MutiplicationRede";
 import { UserRegisterScreen } from "../../screens/UserRegister";
 import { PreListAdminScreen } from "../../screens/PreListAdmin";
 import { MembersReportScreen } from "../../screens/MembersReport";
@@ -33,6 +36,9 @@ export function AppRoutes() {
       <Screen name="ListUsers" component={ListUsersScreen} />
       <Screen name="SendReport" component={SendReportScreen} />
       <Screen name="Multiplication" component={Multiplication} />
+      <Screen name="MultiplicationCelula" component={MultiplicationCelula} />
+      <Screen name="MultiplicationDiscipulado" component={MultiplicationDiscipulado} />
+      <Screen name="MultiplicationRede" component={MultiplicationRede} />
       <Screen name="PreListAdmin" component={PreListAdminScreen} />
       <Screen name="UserRegister" component={UserRegisterScreen} />
       <Screen name="MembersReport" component={MembersReportScreen} />
