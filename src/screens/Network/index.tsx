@@ -94,7 +94,7 @@ export default function NetworkScreenList() {
     celulas &&
     Object.entries(celulas).filter((items: any) => {
       return (
-        items[1]?.cargo === "lider de celula" &&
+        items[1]?.cargo === "lider" &&
         items[1]?.discipulado === state.discipuladoSelect
       );
     });
