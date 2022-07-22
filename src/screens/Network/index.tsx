@@ -83,12 +83,6 @@ export default function NetworkScreenList() {
     });
   };
 
-  const redes = celulas && Object.values(celulas).map((item: any) => item.rede);
-
-  // const redesUnicas = redes.filter((este: any, i: any) => {
-  //   return redes.indexOf(este) === i;
-  // });
-
   const rede =
     celulas &&
     Object.entries(celulas).filter((items: any) => {
