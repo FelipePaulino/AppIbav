@@ -52,6 +52,14 @@ export function MembersScreen(this: any) {
 
   const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
 
+  // console.log(idCelula, '<<<<<<<<')
+
+  // Continuar Daqui
+
+  if(idCelula !== false) {
+
+  }
+
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
 
