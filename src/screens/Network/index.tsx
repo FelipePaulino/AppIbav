@@ -10,6 +10,9 @@ import RequestService from "../../common/services/RequestService";
 import { TitleComponent } from "../../components/Title";
 import { HeaderComponent } from "../../components/Header";
 import { SelectComponent } from "../../components/Select";
+import { ModalComponent } from "../../components/Modal";
+import { ApprovalRequest } from "../../components/Modal/ApprovalRequest";
+import { RequestContentModalComponent } from "../../components/Modal/Request";
 import { ButtonComponent } from "../../components/Button";
 import { ComeBackComponent } from "../../components/ComeBack";
 import { PersonLabelComponent } from "../../components/PersonLabel";
@@ -21,21 +24,38 @@ import axios from "axios";
 const loadingGif = require("../../assets/loader-two.gif");
 
 export default function NetworkScreenList() {
+  const [id, setId] = useState("");
   const [celulas, setCelulas] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState<string>();
+  const [confirmModal, setConfirmModal] = useState(false);
   const [showShearch, setShowShearch] = useState(false);
+  const [modalConcluded, setModalConcluded] = useState(false);
   const [everyOne, setEveryOne] = useState("Todos");
-  const { state, dispatch } = useFormReport();
+  const { state, dispatch, setTrigger, trigger } = useFormReport();
 
-  const services = new RequestService();
+  const service = new RequestService();
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://app-ibav-f06f4-default-rtdb.firebaseio.com/users.json")
+  //     .then((response) => {
+  //       setCelulas(response?.data);
+  //     });
+  // }, []);
 
   useEffect(() => {
-    axios
-      .get("https://app-ibav-f06f4-default-rtdb.firebaseio.com/users.json")
-      .then((response) => {
-        setCelulas(response?.data);
-      });
-  }, []);
+    const getUsers = async () => {
+      await service
+        .getUsers()
+        .then((response) => {
+          setCelulas(response);
+        })
+        .finally(() => setLoading(false));
+    };
+
+    getUsers();
+  }, [trigger]);
 
   const handleRedeChange = (value: string) => {
     dispatch({
@@ -65,28 +85,35 @@ export default function NetworkScreenList() {
 
   const redes = celulas && Object.values(celulas).map((item: any) => item.rede);
 
-  const redesUnicas = redes.filter((este: any, i: any) => {
-    return redes.indexOf(este) === i;
-  });
+  // const redesUnicas = redes.filter((este: any, i: any) => {
+  //   return redes.indexOf(este) === i;
+  // });
+
+  const rede =
+    celulas &&
+    Object.entries(celulas).filter((items: any) => {
+      return items[1]?.cargo === "pastor";
+    });
 
   const discipulado =
     celulas &&
-    Object.values(celulas).filter((items: any) => {
+    Object.entries(celulas).filter((items: any) => {
       return (
-        items?.cargo === "discipulador" && items?.rede === state.redeSelect
+        items[1]?.cargo === "discipulador" &&
+        items[1]?.rede === state.redeSelect
       );
     });
 
   const lider =
     celulas &&
-    Object.values(celulas).filter((items: any) => {
+    Object.entries(celulas).filter((items: any) => {
       return (
-        items?.cargo === "lider de celula" &&
-        items?.discipulado === state.discipuladoSelect
+        items[1]?.cargo === "lider de celula" &&
+        items[1]?.discipulado === state.discipuladoSelect
       );
     });
 
-  const discipuladossUnicos = discipulado.map((items: any) => items?.nome);
+  const discipuladossUnicos = discipulado.map((items: any) => items[1]?.nome);
 
   const mapDiscipuladosUnicos = discipuladossUnicos.map((item: any) => {
     return {
@@ -94,11 +121,31 @@ export default function NetworkScreenList() {
     };
   });
 
+  const redesUnicas = rede.map((items: any) => items[1]?.rede);
+
   const mapRedesUnicas = redesUnicas.map((item: any) => {
     return {
       value: item,
     };
   });
+
+  const timeModal = () => {
+    setModalConcluded(true);
+  };
+
+  const deleteMember = async () => {
+    try {
+      await axios.delete(
+        `https://app-ibav-f06f4-default-rtdb.firebaseio.com/users/${id}.json`,
+        {}
+      );
+      setConfirmModal(false);
+      setTimeout(timeModal, 300);
+      setTrigger(!trigger);
+    } catch (err) {
+      alert("Houve algum problema ao excluir esse usuário");
+    }
+  };
 
   return (
     <Fragment>
@@ -161,18 +208,36 @@ export default function NetworkScreenList() {
                   {state.redeSelect === "TODOS" && (
                     <>
                       <Text>Rede</Text>
-                      {Object.values(mapRedesUnicas).map((items) => {
-                        return <PersonLabelComponent nome={items.value} />;
+                      {rede.map((items: any) => {
+                        return (
+                          <PersonLabelComponent
+                            nome={items[1].rede}
+                            delMember={() => {
+                              setConfirmModal(true),
+                                setName(items[1].rede),
+                                setId(items[0]);
+                            }}
+                          />
+                        );
                       })}
                     </>
                   )}
                   {!state.discipuladoSelect && state.redeSelect !== "TODOS" && (
                     <>
-                     {discipulado.length > 0 ? (
+                      {discipulado.length > 0 ? (
                         <>
                           <Text>Discipulador</Text>
                           {discipulado.map((item: any) => {
-                            return <PersonLabelComponent nome={item.nome} />;
+                            return (
+                              <PersonLabelComponent
+                                nome={item[1].nome}
+                                delMember={() => {
+                                  setConfirmModal(true),
+                                    setName(item[1].nome),
+                                    setId(item[0]);
+                                }}
+                              />
+                            );
                           })}
                         </>
                       ) : (
@@ -186,7 +251,16 @@ export default function NetworkScreenList() {
                         <>
                           <Text>Célula</Text>
                           {lider.map((item: any) => {
-                            return <PersonLabelComponent nome={item.nome} />;
+                            return (
+                              <PersonLabelComponent
+                                nome={item[1].nome}
+                                delMember={() => {
+                                  setConfirmModal(true),
+                                    setName(item[1].nome),
+                                    setId(item[0]);
+                                }}
+                              />
+                            );
                           })}
                         </>
                       ) : (
@@ -197,6 +271,25 @@ export default function NetworkScreenList() {
                 </>
               )}
             </S.Form>
+            <ModalComponent
+              isVisible={confirmModal}
+              onBackdropPress={() => setConfirmModal(false)}
+            >
+              <RequestContentModalComponent
+                name={name}
+                cancel={() => setConfirmModal(false)}
+                confirm={() => {
+                  deleteMember();
+                }}
+              />
+            </ModalComponent>
+
+            <ModalComponent
+              isVisible={modalConcluded}
+              onBackdropPress={() => setModalConcluded(false)}
+            >
+              <ApprovalRequest name={name} />
+            </ModalComponent>
           </S.Content>
         </ScrollView>
       )}
