@@ -403,6 +403,14 @@ export function SendReportScreen() {
                   <ButtonComponent
                     title={ButtonsText.REPORT}
                     onPress={handleOpenModal}
+                    disabled={(
+                      state.celulaSelect === 'Selecione' ||
+                      state.textDate === 'Selecione uma data' ||
+                      state.offer === '' ||
+                      state.presencaCelula.length === 0 ||
+                      state.presencaCulto.length === 0
+                    ) ? true : false
+                    }
                   />
                 </S.ContentButton>
               </S.Form>
@@ -410,7 +418,6 @@ export function SendReportScreen() {
           )}
         </ScrollView>
       )}
-
       <ModalComponent
         isVisible={isModalVisible}
         onBackdropPress={() => setModalVisible(false)}

@@ -203,7 +203,7 @@ export function UserRegisterScreen() {
       } else {
         connectApi
           .post("/users.json", {
-            cargo: "lider de celula",
+            cargo: "lider",
             rede: selectNetwork,
             discipulado: selectDisciples,
             cep: address.cep,
