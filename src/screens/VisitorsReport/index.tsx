@@ -255,6 +255,14 @@ export function VisitorsReportScreen() {
               <ButtonComponent
                 title={ButtonsText.REPORT}
                 onPress={handleOpenModalReport}
+                disabled={(
+                  state.celulaSelect === 'Selecione' ||
+                  state.textDate === 'Selecione uma data' ||
+                  state.offer === '' ||
+                  state.presencaCelula.length === 0 ||
+                  state.presencaCulto.length === 0
+                ) ? true : false
+                }
               />
             </S.Button>
           </S.Content>
