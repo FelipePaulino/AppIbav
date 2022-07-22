@@ -36,14 +36,6 @@ export default function NetworkScreenList() {
 
   const service = new RequestService();
 
-  // useEffect(() => {
-  //   axios
-  //     .get("https://app-ibav-f06f4-default-rtdb.firebaseio.com/users.json")
-  //     .then((response) => {
-  //       setCelulas(response?.data);
-  //     });
-  // }, []);
-
   useEffect(() => {
     const getUsers = async () => {
       await service
