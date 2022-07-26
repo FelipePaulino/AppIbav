@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import FormFields from "../../common/constants/form";
 import { useFormReport } from "../../hooks/useFormReport";
@@ -13,25 +14,24 @@ import { SelectComponent } from "../../components/Select";
 import { ModalComponent } from "../../components/Modal";
 import { ApprovalRequest } from "../../components/Modal/ApprovalRequest";
 import { RequestContentModalComponent } from "../../components/Modal/Request";
-import { ButtonComponent } from "../../components/Button";
 import { ComeBackComponent } from "../../components/ComeBack";
 import { PersonLabelComponent } from "../../components/PersonLabel";
 
+import { IPropsAppStack } from "../../routes/AppStack/types";
 import * as S from "./styles";
-import { connectApi } from "../../common/services/ConnectApi";
 import axios from "axios";
 
 const loadingGif = require("../../assets/loader-two.gif");
 
 export default function NetworkScreenList() {
+  const navigation = useNavigation<IPropsAppStack>();
+
   const [id, setId] = useState("");
   const [celulas, setCelulas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState<string>();
   const [confirmModal, setConfirmModal] = useState(false);
-  const [showShearch, setShowShearch] = useState(false);
   const [modalConcluded, setModalConcluded] = useState(false);
-  const [everyOne, setEveryOne] = useState("Todos");
   const { state, dispatch, setTrigger, trigger } = useFormReport();
 
   const service = new RequestService();
@@ -136,8 +136,10 @@ export default function NetworkScreenList() {
   return (
     <Fragment>
       <HeaderComponent>
-        <ComeBackComponent />
-        <S.Navigation>{MenuNavigation.NETWORK}</S.Navigation>
+        <S.ContainerNav>
+          <ComeBackComponent />
+          <S.Navigation>{MenuNavigation.NETWORK}</S.Navigation>
+        </S.ContainerNav>
       </HeaderComponent>
 
       {loading ? (
@@ -203,6 +205,24 @@ export default function NetworkScreenList() {
                                 setName(items[1].rede),
                                 setId(items[0]);
                             }}
+                            onPress={() =>
+                              navigation.navigate("MemberInformation", {
+                                nome: `${items[1].nome}`,
+                                telefone: `${items[1].telefone}`,
+                                email: `${items[1].email}`,
+                                endereco: `${items[1].endereco}`,
+                                bairro: `${items[1].bairro}`,
+                                cep: `${items[1].cep}`,
+                                cidade: `${items[1].cidade}`,
+                                estado: `${items[1].estado}`,
+                                estado_civil: `${items[1].estado_civil}`,
+                                data_de_nascimento: `${items[1].data_de_nascimento}`,
+                                status: `${items[1].status}`,
+                                numero_casa: `${items[1].numero_casa}`,
+                                id: `${items[0]}`,
+                                active: setTrigger
+                              })
+                            }
                           />
                         );
                       })}
@@ -222,6 +242,24 @@ export default function NetworkScreenList() {
                                     setName(item[1].nome),
                                     setId(item[0]);
                                 }}
+                                onPress={() =>
+                                  navigation.navigate("MemberInformation", {
+                                    nome: `${item[1].nome}`,
+                                    telefone: `${item[1].telefone}`,
+                                    email: `${item[1].email}`,
+                                    endereco: `${item[1].endereco}`,
+                                    bairro: `${item[1].bairro}`,
+                                    cep: `${item[1].cep}`,
+                                    cidade: `${item[1].cidade}`,
+                                    estado: `${item[1].estado}`,
+                                    estado_civil: `${item[1].estado_civil}`,
+                                    data_de_nascimento: `${item[1].data_de_nascimento}`,
+                                    status: `${item[1].status}`,
+                                    numero_casa: `${item[1].numero_casa}`,
+                                    id: `${item[0]}`,
+                                    active: setTrigger
+                                  })
+                                }
                               />
                             );
                           })}
@@ -245,6 +283,24 @@ export default function NetworkScreenList() {
                                     setName(item[1].nome),
                                     setId(item[0]);
                                 }}
+                                onPress={() =>
+                                  navigation.navigate("MemberInformation", {
+                                    nome: `${item[1].nome}`,
+                                    telefone: `${item[1].telefone}`,
+                                    email: `${item[1].email}`,
+                                    endereco: `${item[1].endereco}`,
+                                    bairro: `${item[1].bairro}`,
+                                    cep: `${item[1].cep}`,
+                                    cidade: `${item[1].cidade}`,
+                                    estado: `${item[1].estado}`,
+                                    estado_civil: `${item[1].estado_civil}`,
+                                    data_de_nascimento: `${item[1].data_de_nascimento}`,
+                                    status: `${item[1].status}`,
+                                    numero_casa: `${item[1].numero_casa}`,
+                                    id: `${item[0]}`,
+                                    active: setTrigger
+                                  })
+                                }
                               />
                             );
                           })}
