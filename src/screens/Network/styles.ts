@@ -3,6 +3,10 @@ import styled from "styled-components/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 
+export const ContainerNav = styled.View`
+  flex-direction: row;
+`;
+
 export const Navigation = styled.Text`
   color: ${({ theme }) => theme.colors.light};
   text-transform: uppercase;
