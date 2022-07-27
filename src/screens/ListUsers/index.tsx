@@ -41,10 +41,12 @@ export function ListUsersScreen() {
     };
 
     getUsers();
+
   }, [trigger]);
 
   const timeModal = () => {
     setModalConcluded(true);
+
   };
 
   const deleteMember = async () => {
@@ -57,6 +59,14 @@ export function ListUsersScreen() {
       alert("Houve algum problema ao excluir esse usuário");
     }
   };
+
+ const names = users && Object.entries(users)?.sort(function (a: any, b: any) {
+    if (a[1].nome < b[1].nome) {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
 
   return (
     <Fragment>
@@ -74,11 +84,10 @@ export function ListUsersScreen() {
             <S.Loading source={loadingGif} />
           ) : (
             <Fragment>
-              {users &&
-                Object.entries(users).map((user: any) => {
+              {names.map((user: any) => {
                   return (
                     <PersonLabelComponent
-                      nome={user[1].nome}
+                      nome={user[1]?.nome}
                       onPress={() =>
                         navigation.navigate("UsersInformation", {
                           nome: `${user[1].nome}`,
