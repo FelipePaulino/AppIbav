@@ -12,7 +12,6 @@ import { SelectComponent } from "../../components/Select";
 import { ButtonComponent } from "../../components/Button";
 import { ComeBackComponent } from "../../components/ComeBack";
 import { InputFieldComponent } from "../../components/InputField";
-// import { NotificationComponent } from "../../components/Notification";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
 
 import MenuNavigation from "../../common/constants/navigation";
@@ -45,15 +44,11 @@ export function MembersInformationScreen(this: any, { route }: any) {
     const [members, setMembers] = useState<any>([]);
 
     const { user } = useUserFiltered();
-    const { trigger, setTrigger } = useFormReport()
-
+    const { trigger, setTrigger, celulaId } = useFormReport()
 
     const identifyCelula = user && user[0][1].numero_celula;
 
     const serviceGet = new RequestService()
-
-    const idCelula =
-        members && members.length > 0 && Object.entries(members[0])[0][1];
 
     useEffect(() => {
         const getCelulas = async () => {
@@ -109,7 +104,7 @@ export function MembersInformationScreen(this: any, { route }: any) {
 
     const submitRegister = () => {
         try {
-            connectApi.put(`/celulas/${idCelula}/membros/${id}.json`, {
+            connectApi.put(`/celulas/${celulaId}/membros/${id}.json`, {
                 nome: name,
                 status: status,
                 telefone: phone,
@@ -277,7 +272,6 @@ export function MembersInformationScreen(this: any, { route }: any) {
                 onBackdropPress={() => setSuccessModal(false)}
             >
                 <DefaultContentModalComponent
-                    closeModal={setSuccessModal}
                     data={name}
                     type="edited"
                 />

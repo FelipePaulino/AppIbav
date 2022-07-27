@@ -35,15 +35,12 @@ export function MembersScreen(this: any) {
   const [modalConcluded, setModalConcluded] = useState(false);
   const [name, setName] = useState<string>();
   const [id, setId] = useState<any>();
-  const [idCelulaMembers, setIdCelulaMembers] = useState<any>()
   const [loading, setLoading] = useState<boolean>(false)
   const [celulas, setCelulas] = useState<any>()
   const [celulaFiltered, setCelulaFiltered] = useState<any>([]);
-  const [teste, setTeste] = useState<any>()
-  const [teste2, setTeste2] = useState<any>()
 
   const { user } = useUserFiltered();
-  const { state, trigger, setTrigger, dispatch } = useFormReport()
+  const { state, trigger, celulaId, setTrigger, setCelulaId, dispatch } = useFormReport()
   const navigation = useNavigation<IPropsAppStack>();
 
   const identifyCelula = user && user[0][1].numero_celula;
@@ -51,6 +48,13 @@ export function MembersScreen(this: any) {
   const serviceGet = new RequestService()
 
   const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
+
+
+  useEffect(() => {
+    if (idCelula !== false) {
+      setCelulaId(idCelula)
+    }
+  }, [idCelula])
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;

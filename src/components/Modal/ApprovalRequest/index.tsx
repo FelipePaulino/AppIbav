@@ -9,7 +9,7 @@ export function ApprovalRequest({ name }: any) {
                 <S.ContainerText>
                     <S.TextDelete>A<S.BoldDeleteText> EXCLUSÃO </S.BoldDeleteText>do cadastro de</S.TextDelete>
                     <S.BoldTextBlue>{name}</S.BoldTextBlue>
-                    <S.TextRed>foi enviado para aprovação</S.TextRed>
+                    <S.TextDelete>foi efetuado com sucesso</S.TextDelete>
                     <S.IconBox>
                         <S.Icon name="checkcircle" size={24} color="black" />
                     </S.IconBox>
