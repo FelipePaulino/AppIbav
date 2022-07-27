@@ -125,11 +125,11 @@ export function MembersScreen(this: any) {
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: null,
+      payload: 'Selecione',
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: 'Selecione',
     });
   };
 
@@ -140,7 +140,7 @@ export function MembersScreen(this: any) {
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: null,
+      payload: 'Selecione',
     });
   };
 
@@ -342,7 +342,7 @@ export function MembersScreen(this: any) {
                 <SelectComponent
                   onChange={(handleDiscipuladoChange)}
                   labelSelect={state.discipuladoSelect}
-                  dataOptions={mapDiscipuladosUnicos}
+                  dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                   selectedOption={handleDiscipuladoChange}
                   width='300'
                   disabled={state.redeSelect === "Selecione" ? true : false}
