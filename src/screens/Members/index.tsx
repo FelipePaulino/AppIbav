@@ -378,7 +378,7 @@ export function MembersScreen(this: any) {
           </S.Division>
           <ButtonComponent
             title="Cadastrar"
-            onPress={() => { }}
+            onPress={() => navigation.navigate("Register")}
             width="136px"
             heigth="33px"
             size="12px"
