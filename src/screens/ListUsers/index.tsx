@@ -127,7 +127,10 @@ export function ListUsersScreen() {
         isVisible={modalConcluded}
         onBackdropPress={() => setModalConcluded(false)}
       >
-        <ApprovalRequest name={name} />
+        <ApprovalRequest 
+        name={name} 
+        deleteSucess
+        />
       </ModalComponent>
     </Fragment>
   );

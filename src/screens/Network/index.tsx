@@ -274,7 +274,10 @@ export default function NetworkScreenList() {
               isVisible={modalConcluded}
               onBackdropPress={() => setModalConcluded(false)}
             >
-              <ApprovalRequest name={name} />
+              <ApprovalRequest
+                name={name}
+                deleteSucess
+              />
             </ModalComponent>
           </S.Content>
         </ScrollView>
