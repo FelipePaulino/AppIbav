@@ -41,6 +41,8 @@ export interface IContextType {
   dispatch: (action: IActions) => void;
   trigger: boolean,
   setTrigger: (action: boolean) => void;
+  celulaId: undefined | string,
+  setCelulaId: (action: any) => void;
 }
 
 export interface IProvider {

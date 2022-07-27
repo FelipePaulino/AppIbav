@@ -132,7 +132,8 @@ const formReportReducer = (state: IState, action: IActions) => {
 export const FormProvider = ({ children }: IProvider) => {
   const [trigger, setTrigger] = useState(false)
   const [state, dispatch] = useReducer(formReportReducer, initialData);
-  const value = { state, dispatch, trigger, setTrigger };
+  const [celulaId, setCelulaId] = useState()
+  const value = { state, dispatch, trigger, setTrigger, celulaId, setCelulaId };
 
   return (
     <FormReportContext.Provider value={value}>
