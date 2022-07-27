@@ -3,14 +3,19 @@ import styled from "styled-components/native";
 
 export const ComeBack = styled.View`
   flex-direction: row;
+  align-items: center;
 `;
 
-export const TitlePage = styled.Text`
-  color: ${({ theme }) => theme.colors.light};
-  text-transform: uppercase;
+export const ContentHeader = styled.View`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`
 
-  font-size: 14;
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+export const Navigation = styled.Text`
+  color: ${({ theme }) => theme.colors.light};
+  font-size: ${({ theme }) => theme.fonts.fontSize.small};
 `;
 
 export const Container = styled.View`

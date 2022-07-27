@@ -17,6 +17,7 @@ const loadingGif = require("../../assets/loader-two.gif");
 import { IPropsAppStack } from "../../routes/AppStack/types";
 
 import * as S from "./styles";
+import { ButtonComponent } from "../../components/Button";
 
 export function ListUsersScreen() {
   const [id, setId] = useState("");
@@ -71,10 +72,21 @@ export function ListUsersScreen() {
   return (
     <Fragment>
       <HeaderComponent>
+        <S.ContentHeader>
         <S.ComeBack>
           <ComeBackComponent />
-          <S.TitlePage>{MenuNavigation.USERS}</S.TitlePage>
+          <S.Navigation>{MenuNavigation.USERS}</S.Navigation>
         </S.ComeBack>
+        <ButtonComponent
+            title="Cadastrar"
+            onPress={() => navigation.navigate("UserRegister")}
+            width="136px"
+            heigth="33px"
+            size="12px"
+            icon="user-plus"
+            color="white"
+          />
+          </S.ContentHeader>
         {/* <NotificationComponent /> */}
       </HeaderComponent>
 
