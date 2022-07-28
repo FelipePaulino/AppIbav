@@ -106,7 +106,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
     setBirthday(newDate);
   };
 
-  const timeModal = () => {
+  const handleOpenModal = () => {
     setSuccessModal(true);
   };
 
@@ -126,7 +126,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
         estado_civil: civilStatus,
       });
       setTrigger(!trigger);
-      setTimeout(timeModal, 300);
+      handleOpenModal()
     } catch (err) {
       alert(err);
     }
