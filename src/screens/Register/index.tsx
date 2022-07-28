@@ -234,6 +234,7 @@ export function RegisterScreen() {
           logradouro: data.logradouro,
           localidade: data.localidade,
           complemento: data.complemento,
+          cep: data.cep,
         });
       })
       .catch((err) => console.log("Erro:", err));
@@ -599,7 +600,6 @@ export function RegisterScreen() {
         )}
       >
         <DefaultContentModalComponent
-          closeModal={setSuccessModal}
           data={name}
           type="register"
         />
