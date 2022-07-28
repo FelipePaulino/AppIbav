@@ -66,5 +66,5 @@ export const TextStatus = styled.Text`
 `;
 
 export const Icon = styled(FontAwesome5)`
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-size: ${({ theme }) => theme.fonts.fontSize.small};
 `;

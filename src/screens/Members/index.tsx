@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -215,11 +215,12 @@ export function MembersScreen(this: any) {
 
   const newMembersList =
     members &&
-    members.length > 0 &&
-    Object.entries(members[0][1].membros).filter(
-      (member: any) =>
-        member.status !== "visitante"
-    );
+      members.length > 0 &&
+      members[0][1].membros ? Object.entries(members[0][1].membros).filter(
+        (member: any) =>
+          member.status !== "visitante"
+      ) : [];
+
 
   // Tratativas para o usuário pastor
 
@@ -394,43 +395,46 @@ export function MembersScreen(this: any) {
           ) : (
             <Fragment>
               {office()}
-              {newMembersList ? (
-                newMembersList?.map((item: any) => {
-                  return (
-                    <Fragment>
-                      <PersonLabelComponent
-                        nome={item[1].nome}
-                        status={item[1].status}
-                        onPress={() =>
-                          navigation.navigate("MemberInformation", {
-                            nome: `${item[1].nome}`,
-                            telefone: `${item[1].telefone}`,
-                            email: `${item[1].email}`,
-                            endereco: `${item[1].endereco}`,
-                            bairro: `${item[1].bairro}`,
-                            cep: `${item[1].cep}`,
-                            cidade: `${item[1].cidade}`,
-                            estado: `${item[1].estado}`,
-                            estado_civil: `${item[1].estado_civil}`,
-                            data_de_nascimento: `${item[1].data_de_nascimento}`,
-                            status: `${item[1].status}`,
-                            numero_casa: `${item[1].numero_casa}`,
-                            id: `${item[0]}`,
-                            active: setTrigger
-                          })
-                        }
-                        delMember={() => {
-                          setSendModal(true),
-                            setName(item[1].nome),
-                            setId(item[0]);
-                        }}
-                      />
-                    </Fragment>
-                  );
-                })) : (
+              {state.celulaSelect !== "Selecione" &&
                 <>
+                  {newMembersList.length > 0 ? (
+                    newMembersList?.map((item: any) => {
+                      return (
+                        <Fragment>
+                          <PersonLabelComponent
+                            nome={item[1].nome}
+                            status={item[1].status}
+                            onPress={() =>
+                              navigation.navigate("MemberInformation", {
+                                nome: `${item[1].nome}`,
+                                telefone: `${item[1].telefone}`,
+                                email: `${item[1].email}`,
+                                endereco: `${item[1].endereco}`,
+                                bairro: `${item[1].bairro}`,
+                                cep: `${item[1].cep}`,
+                                cidade: `${item[1].cidade}`,
+                                estado: `${item[1].estado}`,
+                                estado_civil: `${item[1].estado_civil}`,
+                                data_de_nascimento: `${item[1].data_de_nascimento}`,
+                                status: `${item[1].status}`,
+                                numero_casa: `${item[1].numero_casa}`,
+                                id: `${item[0]}`,
+                                active: setTrigger
+                              })
+                            }
+                            delMember={() => {
+                              setSendModal(true),
+                                setName(item[1].nome),
+                                setId(item[0]);
+                            }}
+                          />
+                        </Fragment>
+                      );
+                    })) : (
+                    <Text>Não há celulas</Text>
+                  )}
                 </>
-              )}
+              }
             </Fragment>
           )}
         </S.Container>
