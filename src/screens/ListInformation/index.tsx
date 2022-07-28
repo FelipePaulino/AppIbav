@@ -11,7 +11,7 @@ import { connectApi } from "../../common/services/ConnectApi";
 import MenuNavigation from "../../common/constants/navigation";
 import RequestService from "../../common/services/RequestService";
 import {
-  officeMembers,
+  selectCategory,
   selectCivilStatus,
   selectState,
 } from "../../common/utils/selects";
@@ -126,8 +126,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
         estado_civil: civilStatus,
       });
       setTrigger(!trigger);
-        setTimeout(timeModal, 300);
-        navigation.navigate("ListUsers")
+      setTimeout(timeModal, 300);
     } catch (err) {
       alert(err);
     }
@@ -266,7 +265,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
                   labelSelect={
                     status === "undefined" ? FormFields.CATEGORY : status
                   }
-                  dataOptions={officeMembers}
+                  dataOptions={selectCategory}
                 />
               </S.GridItem>
             </S.GridForm>
@@ -287,7 +286,10 @@ export function UsersInformationScreen(this: any, { route }: any) {
 
       <ModalComponent
         isVisible={successModal}
-        onBackdropPress={() => setSuccessModal(false)}
+        onBackdropPress={() => {
+          setSuccessModal(false)
+          navigation.navigate("ListUsers")
+        }}
       >
         <DefaultContentModalComponent
           data={name}
