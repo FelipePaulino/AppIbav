@@ -36,7 +36,6 @@ import * as S from "./styles";
 
 export function RegisterScreen() {
   const [address, setAddress] = useState(initialValuesRequestCep);
-
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -144,6 +143,7 @@ export function RegisterScreen() {
           setPhone("")
           setEmail("")
           setNumberHouse("")
+          setAddress(initialValuesRequestCep)
 
         });
     } catch (err) { }
