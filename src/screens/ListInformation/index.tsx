@@ -11,7 +11,7 @@ import { connectApi } from "../../common/services/ConnectApi";
 import MenuNavigation from "../../common/constants/navigation";
 import RequestService from "../../common/services/RequestService";
 import {
-  selectCategory,
+  officeMembers,
   selectCivilStatus,
   selectState,
 } from "../../common/utils/selects";
@@ -266,7 +266,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
                   labelSelect={
                     status === "undefined" ? FormFields.CATEGORY : status
                   }
-                  dataOptions={selectCategory}
+                  dataOptions={officeMembers}
                 />
               </S.GridItem>
             </S.GridForm>
@@ -290,7 +290,6 @@ export function UsersInformationScreen(this: any, { route }: any) {
         onBackdropPress={() => setSuccessModal(false)}
       >
         <DefaultContentModalComponent
-          closeModal={setSuccessModal}
           data={name}
           type="edited"
         />
