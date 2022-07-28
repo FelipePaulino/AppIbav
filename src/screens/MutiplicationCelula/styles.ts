@@ -17,7 +17,6 @@ export const TitlePage = styled.Text`
 export const TextText = styled.Text`
   color: #000
   text-transform: uppercase;
-  font-size: 14;
 `;
 
 export const Grid = styled.View`

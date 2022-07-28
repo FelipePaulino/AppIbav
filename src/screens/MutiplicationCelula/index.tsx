@@ -4,6 +4,7 @@ import { ComeBackComponent } from "../../components/ComeBack";
 import MenuNavigation from "../../common/constants/navigation";
 import { SelectComponent } from "../../components/Select";
 import { TitleComponent } from "../../components/Title";
+import { InputFieldComponent } from "../../components/InputField";
 import * as S from "./styles";
 import { TextSelect } from "../../components/Date/styles";
 import { useFormReport } from "../../hooks/useFormReport";
@@ -14,7 +15,11 @@ import useUserFiltered from "../../hooks/useUserFiltered";
 export function MultiplicationCelula() {
   const [celulas, setCelulas] = useState<any>([]);
   const [celulasSelected, setCelulaSelected] = useState<any>();
+  const [listMembersCelula, setListMembersCelula] = useState<any>([]);
   const [listCelula, setListCelula] = useState<any>([]);
+  const [memberSelected, setMemberSelected] = useState<any>();
+  const [newCelula, setNewCelula] = useState<any>();
+
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
 
@@ -63,6 +68,10 @@ export function MultiplicationCelula() {
       type: FormReportActions.setCelulaSelect,
       payload: value,
     });
+  };
+
+  const handleMember = (value: string) => {
+    setMemberSelected(value);
   };
 
   const selectedOptionCelula = (value: string) => {
@@ -119,7 +128,15 @@ export function MultiplicationCelula() {
     });
     setListCelula(listMembers[0]?.membros);
   }, [celulasSelected]);
-  
+
+  useEffect(() => {
+    const newArraytoSelectCelula =
+      listCelula &&
+      Object.values(listCelula).map((item: any) => {
+        return { value: item.nome };
+      });
+    setListMembersCelula(newArraytoSelectCelula);
+  }, [listCelula]);
   return (
     <>
       <HeaderComponent>
@@ -159,6 +176,7 @@ export function MultiplicationCelula() {
         <TitleComponent title={`Celula`} small primary />
         <S.ContentC>
           <S.IconC name="user-friends" />
+          {console.log(celulaAdm, "celulaAdm")}
           <SelectComponent
             onChange={handleCelulaChange}
             labelSelect={state.celulaSelect}
@@ -169,11 +187,26 @@ export function MultiplicationCelula() {
           />
         </S.ContentC>
       </S.Grid>
+      <InputFieldComponent
+        primary
+        value={newCelula ?? ""}
+        placeholder=""
+        onChangeText={(value) => setNewCelula(value)}
+        label="Célula Nova"
+      />
+      <TitleComponent title={`Novo líder`} small primary />
+      <SelectComponent
+        onChange={handleMember}
+        labelSelect={memberSelected ?? "Selecione"}
+        dataOptions={listMembersCelula ?? "Selecione"}
+        selectedOption={handleMember}
+        width="300"
+        disabled={state.celulaSelect === "Selecione" ? true : false}
+      />
       <S.Grid>
         {listCelula &&
           Object.values(listCelula).map((item: any) => {
-            console.log(item, "item");
-            return <S.TextText>{item.nome}</S.TextText>;
+            return <S.TextText key={item.nome}>{item.nome}</S.TextText>;
           })}
       </S.Grid>
     </>
