@@ -13,7 +13,6 @@ export const TitlePage = styled.Text`
   font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
 `;
 
-
 export const TextText = styled.Text`
   color: #000
   text-transform: uppercase;
@@ -36,4 +35,9 @@ export const IconC = styled(FontAwesome5)`
   color: ${({ theme }) => theme.colors.red};
   font-size: ${({ theme }) => theme.fonts.fontSize.medium};
   margin-right: 20;
+`;
+
+export const Paragraph = styled.Text`
+  color: #999;
+  font-size: 10;
 `;
