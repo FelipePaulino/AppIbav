@@ -20,6 +20,7 @@ export type INavigationAppStackProps = {
   UsersInformation: undefined;
   PreRegisterAdmin: undefined;
   MemberInformation: undefined;
-};
+  SeeReports: undefined;
+}
 
 export type IPropsAppStack = NativeStackScreenProps<INavigationAppStackProps>;
