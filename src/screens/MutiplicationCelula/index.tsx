@@ -29,6 +29,8 @@ export function MultiplicationCelula() {
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
 
+  
+
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
 
