@@ -541,6 +541,13 @@ export function UserRegisterScreen() {
                 title="Cadastrar"
                 onPress={registerUser}
                 width="170px"
+                disabled={(
+                formValues.network === "" || 
+                formValues.email === "" ||
+                FormFields.PASSWORD === "" ||
+                formValues.name === "" ||
+                formValues.phone === ""
+                )}
               />
             </S.FooterFields>
           </Fragment>
