@@ -81,13 +81,12 @@ export function RegisterScreen() {
   }, [identifyCelula, celulas]);
 
   const submitRegister = () => {
-    const { cep, bairro, localidade, logradouro } = address;
+    const { cep, bairro, localidade, logradouro, uf } = address;
     const identifyId = celulas.filter((item: any) => {
       return `${item[1].numero_celula} - ${item[1].lider}` === state.celulaSelect;
     });
 
     const ID_CELULAS = identifyId[0][0];
-    const endereco = `${logradouro} ${numberHouse}`;
 
     try {
       connectApi
@@ -96,11 +95,12 @@ export function RegisterScreen() {
           status: state.categorySelect,
           telefone: phone,
           email,
-          endereco,
+          endereco: logradouro,
+          n_end: numberHouse,
           cep,
           bairro,
           cidade: localidade,
-          estado: state.stateSelect,
+          estado: uf,
           data_de_nascimento: state.dateRegister,
           estado_civil: state.civilStatusSelect,
         })

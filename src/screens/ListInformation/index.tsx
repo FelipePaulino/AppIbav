@@ -106,7 +106,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
     setBirthday(newDate);
   };
 
-  const timeModal = () => {
+  const handleOpenModal = () => {
     setSuccessModal(true);
   };
 
@@ -126,8 +126,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
         estado_civil: civilStatus,
       });
       setTrigger(!trigger);
-        setTimeout(timeModal, 300);
-        navigation.navigate("ListUsers")
+      handleOpenModal()
     } catch (err) {
       alert(err);
     }
@@ -287,7 +286,10 @@ export function UsersInformationScreen(this: any, { route }: any) {
 
       <ModalComponent
         isVisible={successModal}
-        onBackdropPress={() => setSuccessModal(false)}
+        onBackdropPress={() => {
+          setSuccessModal(false)
+          navigation.navigate("ListUsers")
+        }}
       >
         <DefaultContentModalComponent
           data={name}
