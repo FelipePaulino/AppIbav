@@ -8,6 +8,11 @@ export const Container = styled.View`
   justify-content: space-between;
 `;
 
+export const Division = styled.View`
+  flex-direction: row;
+  align-items: center;
+`
+
 export const Navigation = styled.Text`
   color: ${({ theme }) => theme.colors.light};
   font-size: ${({ theme }) => theme.fonts.fontSize.small};
