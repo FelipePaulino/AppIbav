@@ -6,37 +6,35 @@ import { LogoComponent } from "../../components/Logo";
 import { TitleComponent } from "../../components/Title";
 import { HeaderComponent } from "../../components/Header";
 import { ComeBackComponent } from "../../components/ComeBack";
-// import { NotificationComponent } from "../../components/Notification";
 import { SelectedMenuComponent } from "../../components/SelectedMenu";
 
+import { useAuth } from "../../hooks/useAuth";
 import { useFormReport } from "../../hooks/useFormReport";
-import { handleSignOut } from "../../common/utils/firebase";
 import { IPropsAppStack } from "../../routes/AppStack/types";
 import { FormReportActions } from "../../contexts/FormReport";
-
 
 import * as S from "./styles";
 
 export function PreRegisterAdminScreen() {
   const { dispatch } = useFormReport();
+  const { signOut } = useAuth();
   const navigation = useNavigation<IPropsAppStack>();
 
   const clean = () => {
-    navigation.navigate("Register")
+    navigation.navigate("Register");
     dispatch({
       type: FormReportActions.setRedeSelect,
-      payload: '*Selecione',
+      payload: "*Selecione",
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: '*Selecione',
+      payload: "*Selecione",
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: '*Selecione',
+      payload: "*Selecione",
     });
-  }
-
+  };
 
   return (
     <Fragment>
@@ -47,9 +45,7 @@ export function PreRegisterAdminScreen() {
         </S.HeadingIcons>
 
         <S.Buttons>
-          {/* <NotificationComponent /> */}
-
-          <TouchableOpacity onPress={() => handleSignOut()}>
+          <TouchableOpacity onPress={signOut}>
             <S.Logout name="logout" />
           </TouchableOpacity>
         </S.Buttons>

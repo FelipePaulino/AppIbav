@@ -6,15 +6,14 @@ import { LogoComponent } from "../../components/Logo";
 import { TitleComponent } from "../../components/Title";
 import { HeaderComponent } from "../../components/Header";
 import { ComeBackComponent } from "../../components/ComeBack";
-// import { NotificationComponent } from "../../components/Notification";
 import { SelectedMenuComponent } from "../../components/SelectedMenu";
 
 import { IPropsAppStack } from "../../routes/AppStack/types";
-
+import { useAuth } from "../../hooks/useAuth";
 import * as S from "./styles";
-import { handleSignOut } from "../../common/utils/firebase";
 
 export function PreListAdminScreen() {
+  const { signOut } = useAuth();
   const navigation = useNavigation<IPropsAppStack>();
 
   return (
@@ -26,9 +25,7 @@ export function PreListAdminScreen() {
         </S.HeadingIcons>
 
         <S.Buttons>
-          {/* <NotificationComponent /> */}
-
-          <TouchableOpacity onPress={() => handleSignOut()}>
+          <TouchableOpacity onPress={signOut}>
             <S.Logout name="logout" />
           </TouchableOpacity>
         </S.Buttons>
