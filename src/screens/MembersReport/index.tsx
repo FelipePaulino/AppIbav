@@ -14,6 +14,7 @@ import { CardMembersComponent } from "../../components/Cards/Members";
 import { HeadingPresentComponent } from "../../components/HeadingPresent";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
+import { FormReportActions } from "../../contexts/FormReport";
 import { IPropsAppStack } from "../../routes/AppStack/types";
 
 const loadingGif = require("../../assets/loader-two.gif");
@@ -39,7 +40,7 @@ export function MembersReportScreen() {
 
   const { data: celulas, isFetching: loading } = useFetch("celulas.json");
   const { user } = useUserFiltered();
-  const { state } = useFormReport();
+  const { state, dispatch } = useFormReport();
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -106,6 +107,11 @@ export function MembersReportScreen() {
         celula: selectPerson.celula ? selectPerson.celula : "F",
         culto: selectPerson.culto ? selectPerson.culto : "F",
       };
+
+      dispatch({
+        type: FormReportActions.setMembers,
+        payload: [...tratarFalta, selectPersonFalta],
+      });
 
       setMembersIdentify([...memberFilter, selectPerson]);
     }

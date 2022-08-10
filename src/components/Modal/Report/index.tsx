@@ -41,7 +41,9 @@ export function ReportContentModalComponent({
       connectApi
         .post("/relatorios.json", {
           data,
-          numero_celula,
+          celula: state.celulaSelect,
+          rede: state.redeSelect,
+          discipulado: state.discipuladoSelect,
           observacoes,
           oferta,
           presencas,
