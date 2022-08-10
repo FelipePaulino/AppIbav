@@ -43,7 +43,7 @@ export function UserRegisterScreen() {
   const [address, setAddress] = useState(initialValuesRequestCep);
   const [selectNetwork, setSelectNetwork] = useState("Selecionar");
   const [selectDisciples, setSelectDisciples] = useState("Selecionar");
-  const [formValues, setFormValues] = useState(initialValueRegisterUser);
+  const [formValues, setFormValues] = useState<any>(initialValueRegisterUser);
   const [confirmRegisterModal, setConfirmRegisterModal] = useState(false);
 
   const { state: stateReducer, dispatch } = useFormReport();
@@ -120,6 +120,7 @@ export function UserRegisterScreen() {
           logradouro: data.logradouro,
           localidade: data.localidade,
           complemento: data.complemento,
+          cep: data.cep,
         });
       })
       .catch((err) => console.log("Erro:", err));
@@ -180,7 +181,20 @@ export function UserRegisterScreen() {
             estado_civil: formValues.stateCivil,
             data_de_nascimento: stateReducer.textRegister,
           })
-          .then(() => setConfirmRegisterModal(true));
+          .then(() => {
+            setConfirmRegisterModal(true)
+            setConfirmRegisterModal(true)
+            setFormValues(initialValueRegisterUser)
+            setAddress(initialValuesRequestCep)
+            setOffice("");
+            setSelectNetwork("Selecionar");
+            setSelectDisciples("Selecionar");
+        
+            dispatch({
+              type: FormReportActions.setTextRegister,
+              payload: "",
+            });
+          });
       } else if (office === "discipulador") {
         connectApi
           .post("/users.json", {
@@ -199,7 +213,20 @@ export function UserRegisterScreen() {
             numero_casa: formValues.numberHouse,
             data_de_nascimento: stateReducer.textRegister,
           })
-          .then(() => setConfirmRegisterModal(true));
+          .then(() => {
+            setConfirmRegisterModal(true)
+            setConfirmRegisterModal(true)
+            setFormValues(initialValueRegisterUser)
+            setAddress(initialValuesRequestCep)
+            setOffice("");
+            setSelectNetwork("Selecionar");
+            setSelectDisciples("Selecionar");
+        
+            dispatch({
+              type: FormReportActions.setTextRegister,
+              payload: "",
+            });
+          });
       } else {
         connectApi
           .post("/users.json", {
@@ -220,7 +247,21 @@ export function UserRegisterScreen() {
             numero_celula: formValues.numberCelula,
             data_de_nascimento: stateReducer.textRegister,
           })
-          .then(() => setConfirmRegisterModal(true));
+          .then(() => {
+            setConfirmRegisterModal(true)
+            setFormValues(initialValueRegisterUser)
+            setAddress(initialValuesRequestCep)
+            setSelectNetwork("Selecionar")
+            setOffice("");
+
+            setSelectNetwork("Selecionar");
+            setSelectDisciples("Selecionar");
+        
+            dispatch({
+              type: FormReportActions.setTextRegister,
+              payload: "",
+            });
+          });
       }
     } catch (err) {
       throw new Error("Ops, algo deu errado!");
@@ -500,6 +541,13 @@ export function UserRegisterScreen() {
                 title="Cadastrar"
                 onPress={registerUser}
                 width="170px"
+                disabled={(
+                formValues.network === "" || 
+                formValues.email === "" ||
+                FormFields.PASSWORD === "" ||
+                formValues.name === "" ||
+                formValues.phone === ""
+                )}
               />
             </S.FooterFields>
           </Fragment>

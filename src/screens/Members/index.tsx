@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { ScrollView, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { format } from 'date-fns'
 
 import { HeaderComponent } from "../../components/Header";
 import { ButtonComponent } from "../../components/Button";
@@ -415,7 +416,7 @@ export function MembersScreen(this: any) {
                                 cidade: `${item[1].cidade}`,
                                 estado: `${item[1].estado}`,
                                 estado_civil: `${item[1].estado_civil}`,
-                                data_de_nascimento: `${item[1].data_de_nascimento}`,
+                                data_de_nascimento: `${format(new Date(item[1].data_de_nascimento), 'dd/MM/yyyy')}`,
                                 status: `${item[1].status}`,
                                 numero_casa: `${item[1].numero_casa}`,
                                 id: `${item[0]}`,
