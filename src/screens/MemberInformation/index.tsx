@@ -127,8 +127,10 @@ export function MembersInformationScreen(this: any, { route }: any) {
     return (
         <>
             <HeaderComponent>
-                <ComeBackComponent />
-                <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
+                <S.Division>
+                    <ComeBackComponent />
+                    <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
+                </S.Division>
                 {/* <NotificationComponent /> */}
             </HeaderComponent>
 
