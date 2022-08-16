@@ -11,6 +11,16 @@ class RequestService {
     }
   }
 
+  async getReports() {
+    const response = await connectApi.get("/relatorios.json");
+
+    if (response.data) {
+      return response.data;
+    } else {
+      throw new Error("Algo deu errado na conexão do get");
+    }
+  }
+
   async getUsers() {
     const response = await connectApi.get("/users.json");
 

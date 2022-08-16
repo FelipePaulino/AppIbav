@@ -145,7 +145,7 @@ export function HomeScreen() {
                   <SelectedMenuComponent
                     icon={<S.ReportView name="copy" />}
                     title="Ver Relatórios Entregues"
-                    onPress={() => navigation.navigate("WaitingApprove")}
+                    onPress={() => navigation.navigate("SeeReports")}
                   />
                   <SelectedMenuComponent
                     icon={<S.MultiplicationIcon name="multiplication" />}
