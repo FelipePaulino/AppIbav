@@ -3,7 +3,7 @@ import { HeaderComponent } from "../../components/Header";
 import { ComeBackComponent } from "../../components/ComeBack";
 import { ButtonComponent } from '../../components/Button'
 import MenuNavigation from "../../common/constants/navigation";
-import { Text } from 'react-native'
+import { ScrollView, Text } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import RequestService from "../../common/services/RequestService";
 
@@ -34,21 +34,22 @@ export function SeeReports() {
           </S.TitlePage>
         </S.ComeBack>
       </HeaderComponent>
+      <ScrollView>
+        <S.Container>
+          <ButtonComponent title='FILTRAR' width='150px' icon="filter" color="white" />
 
-      <S.Container>
-        <ButtonComponent title='FILTRAR' width='150px' icon="filter" color="white" />
-
-        <S.ListContainer>
-          {reports.map((item: any) => {
-            return (
-              <S.List>
-                <Text>{item.numero_celula}-{item.lider} - {item.data}</Text>
-                <FontAwesome5 name='eye' color='#000A3E' />
-              </S.List>
-            )
-          })}
-        </S.ListContainer>
-      </S.Container>
+          <S.ListContainer>
+            {reports?.map((item: any) => {
+              return (
+                <S.List>
+                  <Text>{item.celula} - {item.data}</Text>
+                  <FontAwesome5 name='eye' color='#000A3E' />
+                </S.List>
+              )
+            })}
+          </S.ListContainer>
+        </S.Container>
+      </ScrollView>
 
     </Fragment>
   );
