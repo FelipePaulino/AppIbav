@@ -22,7 +22,8 @@ export interface IState {
   redeSelect: string;
   discipuladoSelect: string;
   presencaCelula: any;
-  presencaCulto: any
+  presencaCulto: any;
+  reportsId: string;
 }
 
 interface IContentMembers {

@@ -21,6 +21,16 @@ class RequestService {
     }
   }
 
+  async getSingleReport(id: string) {
+    const response = await connectApi.get(`relatorios/${id}.json`);
+
+    if (response.data) {
+      return response.data;
+    } else {
+      throw new Error("Algo deu errado na conexão do get");
+    }
+  }
+
   async getUsers() {
     const response = await connectApi.get("/users.json");
 
@@ -33,7 +43,7 @@ class RequestService {
 
   async deleteUser(id: string) {
     await connectApi.delete(`/users/${id}.json`);
-  };
+  }
 }
 
 export default RequestService;

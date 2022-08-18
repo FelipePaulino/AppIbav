@@ -23,7 +23,8 @@ const initialData: IState = {
   redeSelect: "Selecione",
   discipuladoSelect: "Selecione",
   presencaCelula: [],
-  presencaCulto: []
+  presencaCulto: [],
+  reportsId: '',
 };
 
 export const FormReportContext = createContext<IContextType | undefined>(
@@ -53,7 +54,8 @@ export enum FormReportActions {
   setTextSelectCivilStatus,
   setDiscipuladoSelect,
   setPresencaCelula,
-  setPresencaCulto
+  setPresencaCulto,
+  setReportsId
 }
 
 const formReportReducer = (state: IState, action: IActions) => {
@@ -123,6 +125,9 @@ const formReportReducer = (state: IState, action: IActions) => {
 
     case FormReportActions.setPresencaCulto:
       return { ...state, presencaCulto: action.payload };
+
+      case FormReportActions.setReportsId:
+        return { ...state, reportsId: action.payload };
 
     default:
       return state;

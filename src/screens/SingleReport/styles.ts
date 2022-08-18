@@ -33,3 +33,28 @@ export const List = styled.View`
 
 export const Loading = styled(Image)``;
 
+export const Heading = styled.View`
+  align-items: center;
+  margin-bottom: 20;
+  margin-top: 20;
+`;
+
+export const Title = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+
+  text-transform: uppercase;
+
+  color: ${({ theme }) => theme.colors.blue};
+`;
+
+export const Subtitle = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.fontSize.small};
+  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+
+  text-transform: uppercase;
+  margin-top: -10;
+  color: ${({ theme }) => theme.colors.grey};
+`;
+
+

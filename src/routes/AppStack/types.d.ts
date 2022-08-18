@@ -21,6 +21,7 @@ export type INavigationAppStackProps = {
   PreRegisterAdmin: undefined;
   MemberInformation: undefined;
   SeeReports: undefined;
+  SingleReport: undefined;
 }
 
 export type IPropsAppStack = NativeStackScreenProps<INavigationAppStackProps>;
