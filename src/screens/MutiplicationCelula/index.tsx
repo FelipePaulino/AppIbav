@@ -20,7 +20,9 @@ import { firebaseConfig } from "../../config/firebase";
 
 export function MultiplicationCelula() {
   const [celulas, setCelulas] = useState<any>([]);
+  const [celulasWithId, setCelulasWithId] = useState<any>([]);
   const [celulasSelected, setCelulaSelected] = useState<any>();
+  const [idCelulaSelected, setIdCelulaSelected] = useState<any>();
   const [listMembersCelula, setListMembersCelula] = useState<any>([]);
   const [listCelula, setListCelula] = useState<any>([]);
   const [memberSelected, setMemberSelected] = useState<any>();
@@ -29,7 +31,7 @@ export function MultiplicationCelula() {
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
 
-  
+
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
@@ -38,7 +40,7 @@ export function MultiplicationCelula() {
     if (whatOffice !== "lider") {
       const getCelulas = async () => {
         const response = await connectApi.get("/celulas.json");
-
+        setCelulasWithId(Object.entries(response.data))
         setCelulas(Object.values(response.data));
       };
       getCelulas();
@@ -105,7 +107,6 @@ export function MultiplicationCelula() {
   const filtrandoRedes = celulas.filter((item: any) => {
     return item.rede === state.redeSelect;
   });
-
   const discipulado = filtrandoRedes.map((item: any) => item.discipulador);
 
   const discipuladossUnicos = discipulado.filter(function (este: any, i: any) {
@@ -127,13 +128,20 @@ export function MultiplicationCelula() {
   const celulaAdm = filtrandoDiscipulado.map((item: any) => {
     return {
       value: `${item.numero_celula} - ${item.lider}`,
+      pastor: item.pastor,
+      numero_celula: item.numero_celula,
     };
   });
+
 
   useEffect(() => {
     const listMembers: any = Object.values(celulas).filter((item: any) => {
       return celulasSelected === `${item.numero_celula} - ${item.lider}`;
     });
+    const objectCelulaSelected = celulasWithId.filter((item: any) => {
+      return item[1].numero_celula === listMembers[0].numero_celula
+    })
+    objectCelulaSelected[0] && setIdCelulaSelected(objectCelulaSelected[0][0])
     setListCelula(listMembers[0]?.membros);
   }, [celulasSelected]);
 
@@ -145,7 +153,8 @@ export function MultiplicationCelula() {
       });
     setListMembersCelula(newArraytoSelectCelula);
   }, [listCelula]);
-  const [checked, setChecked] = React.useState(false);
+
+
   const memberMultiply = (member: any) => {
     const newMember = { ...member, checked: !member?.checked };
     const transformClick = Object.values(listMembersCelula).filter(
@@ -164,28 +173,74 @@ export function MultiplicationCelula() {
   //Object.values(listMembersCelula).sort(compared);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  
-  const cadastro = () => {
+  const removeMembersCelulaOld = (objectCelulaElse: any) => {
+    connectApi.patch(`/celulas/${idCelulaSelected}/.json`, {
+      membros: objectCelulaElse,
+    }).then(() => {
+
+    }).catch(() => {
+    })
+  }
+
+  const createNewCelula = (lider: any, celula: any) => {
+    const objectCelulaElse = Object.values(listMembersCelula).filter(
+      (item: any) => {
+        return !item.checked;
+      }
+    );
+    connectApi
+      .post(`/celulas.json`, {
+        discipulador: state.discipuladoSelect,
+        lider: lider[0].value,
+        numero_celula: newCelula,
+        pastor: celulaAdm[0].pastor,
+        rede: state.redeSelect,
+        membros: celula,
+      }).then(() => {
+        removeMembersCelulaOld(objectCelulaElse)
+
+      }).catch(() => {
+      })
+  }
+
+
+
+
+  const multiply = () => {
     const objectNewLider = Object.values(listMembersCelula).filter(
       (item: any) => {
         return item.nome === memberSelected;
       }
     );
+
+    const objectNewCelula = Object.values(listMembersCelula).filter(
+      (item: any) => {
+        return item.checked;
+      }
+    );
+
+
+
     let str
     str = memberSelected;
-    str = memberSelected.replace(/[ÀÁÂÃÄÅ]/g,"A");
-    str = memberSelected.replace(/[àáâãäå]/g,"a");
-    str = memberSelected.replace(/[ÈÉÊË]/g,"E");
-    memberSelected.replace(/[^a-z0-9]/gi,'');
-    console.log(objectNewLider, 'objectNewLider')
+    str = str.replace(/[ÀÁÂÃÄÅ]/g, "A");
+    str = str.replace(/[àáâãäå]/g, "a");
+    str = str.replace(/[ÈÉÊË]/g, "E");
+    str = str.replace(/[^a-z0-9]/gi, '');
+    str = str.split(' ').join('')
+    str = str?.toLowerCase()
     const email = `${str}@aguaviva.com.br`
     const password = `${str}123456`
     createUserWithEmailAndPassword(auth, email, password);
     credentialsPost(objectNewLider, email, password);
+    createNewCelula(objectNewLider, objectNewCelula)
+
   };
 
-    
-  const credentialsPost = (objectNewLider:any, email:any, password: any) => {
+
+
+
+  const credentialsPost = (objectNewLider: any, email: any, password: any) => {
     try {
       connectApi
         .post("/users.json", {
@@ -196,13 +251,14 @@ export function MultiplicationCelula() {
           numero_celula: newCelula,
           rede: state.redeSelect,
           senha: password,
+          pastor: celulaAdm[0].pastor,
         })
-     .then(() => alert("deu bom"));
-    } 
+        .then(() => alert("deu bom"));
+    }
     catch (err) {
       throw new Error("Ops, algo deu errado!");
     }
-  } 
+  }
 
   return (
     <>
@@ -244,7 +300,6 @@ export function MultiplicationCelula() {
           <TitleComponent title={`Celula`} small primary />
           <S.ContentC>
             <S.IconC name="user-friends" />
-            {console.log(celulaAdm, "celulaAdm")}
             <SelectComponent
               onChange={handleCelulaChange}
               labelSelect={state.celulaSelect}
@@ -294,7 +349,7 @@ export function MultiplicationCelula() {
                 );
               })}
         </S.Grid>
-        <ButtonComponent title="Multiplicar" onPress={cadastro} width="90%" />
+        <ButtonComponent title="Multiplicar" onPress={multiply} width="90%" />
       </ScrollView>
     </>
   );
