@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as S from './styles';
 import { IPersonProps } from './types';
 
@@ -11,13 +11,20 @@ export function PersonLabelComponent({
 
   return (
     <S.Box>
-        <S.ContainerPerson onPress={onPress}>
-                <S.TextName>{nome}</S.TextName>
-                <S.BoxStatus status={status}>
-                  <S.TextStatus >{status}</S.TextStatus>
-                </S.BoxStatus>
-        </S.ContainerPerson>
-        <S.Icon name="trash" onPress={delMember}/>
+      <S.ContainerPerson>
+        <S.TextName>{nome}</S.TextName>
+        <S.BoxStatus status={status}>
+          <S.TextStatus>{status}</S.TextStatus>
+        </S.BoxStatus>
+      </S.ContainerPerson>
+      <S.IconContent>
+        <S.SpacingIcon>
+          <S.IconEdit name="pencil" onPress={onPress} />
+        </S.SpacingIcon>
+        <S.SpacingIcon>
+          <S.Icon name="trash" onPress={delMember} />
+        </S.SpacingIcon>
+      </S.IconContent>
     </S.Box>
   );
 }
