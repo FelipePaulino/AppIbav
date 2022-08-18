@@ -29,22 +29,22 @@ export function HomeScreen() {
 
   const { dispatch } = useFormReport();
   const clean = () => {
-    navigation.navigate("SendReport")
+    navigation.navigate("SendReport");
     dispatch({
       type: FormReportActions.setRedeSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setOffer,
-      payload: '',
+      payload: "",
     });
     dispatch({
       type: FormReportActions.setTextDate,
@@ -58,7 +58,7 @@ export function HomeScreen() {
       type: FormReportActions.setPresencaCelula,
       payload: [],
     });
-  }
+  };
 
   const office = () => {
     switch (whatIsOffice) {
