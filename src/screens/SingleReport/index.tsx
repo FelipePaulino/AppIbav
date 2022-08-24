@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { HeaderComponent } from "../../components/Header";
 import { ComeBackComponent } from "../../components/ComeBack";
-import { ButtonComponent } from "../../components/Button";
 import MenuNavigation from "../../common/constants/navigation";
-import { ScrollView, Text, TouchableOpacity } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { ScrollView, Text } from "react-native";
 import RequestService from "../../common/services/RequestService";
 import { useFormReport } from "../../hooks/useFormReport";
-import { FormReportActions } from "../../contexts/FormReport";
+import { HeadingPresentComponent } from "../../components/HeadingPresent";
 
 import * as S from "../SingleReport/styles";
 
@@ -17,7 +15,7 @@ export function SingleReport() {
   const [report, setReport] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { state, dispatch } = useFormReport();
+  const { state } = useFormReport();
 
   const serviceGet = new RequestService();
 
@@ -35,13 +33,15 @@ export function SingleReport() {
     getSingleReports();
   }, []);
 
-  console.log(report, "report");
-
-  const actionReportId = (id: string) => {
-    dispatch({
-      type: FormReportActions.setReportsId,
-      payload: id,
-    });
+  const category = (value: string) => {
+    switch (value) {
+      case "visitante":
+        return "V";
+      case "membro":
+        return "ME";
+      case "frequentador assiduo":
+        return "FA";
+    }
   };
 
   return (
@@ -56,19 +56,49 @@ export function SingleReport() {
         {loading ? (
           <S.Loading source={loadingGif}></S.Loading>
         ) : (
-          <>
+          <S.Container>
             <S.Heading>
               <S.Title>Célula</S.Title>
-              <S.Subtitle>{report?.celula}</S.Subtitle>
+              <S.Celula>{report?.celula}</S.Celula>
             </S.Heading>
-            <S.Title>Dados</S.Title>
-            <Text>Rede: {report?.rede}</Text>
-            <Text>Discipulado: {report?.discipulado}</Text>
-            <Text>Data: {report?.data}</Text>
-            <Text>Oferta: R${report?.oferta}</Text>
-            <Text>Observações: {report?.observacoes}</Text>
-            <S.Title>Presenças</S.Title>
-          </>
+            <S.Subtitle>Dados</S.Subtitle>
+            <S.BoxText>
+              <S.TextBold>Rede: </S.TextBold>
+              <S.TextCapitalize>{report?.rede}</S.TextCapitalize>
+            </S.BoxText>
+            <S.BoxText>
+              <S.TextBold>Discipulado: </S.TextBold>
+              <S.TextCapitalize>{report?.discipulado}</S.TextCapitalize>
+            </S.BoxText>
+            <S.BoxText>
+              <S.TextBold>Data:</S.TextBold>
+              <Text> {report?.data}</Text>
+            </S.BoxText>
+            <S.BoxText>
+              <S.TextBold>Oferta:</S.TextBold>
+              <Text> R${report?.oferta}</Text>
+            </S.BoxText>
+            <S.BoxText>
+              <S.TextBold>Observações:</S.TextBold>
+              <Text> {report?.observacoes}</Text>
+            </S.BoxText>
+            <S.SubtitlePresents>Presenças</S.SubtitlePresents>
+            <HeadingPresentComponent cat width="50%" />
+            {report?.presencas.map((person: any) => {
+              return (
+                <S.ContentPresent>
+                  <S.ContentName>
+                    <S.InfoName>{person.nome}</S.InfoName>
+                  </S.ContentName>
+                  <S.ContainerPresents>
+                    <Text>{category(person.status)}</Text>
+                    <Text>{person.celula}</Text>
+                    <S.Presents>{person.culto}</S.Presents>
+                  </S.ContainerPresents>
+                </S.ContentPresent>
+              );
+            })}
+          </S.Container>
         )}
       </ScrollView>
     </Fragment>
