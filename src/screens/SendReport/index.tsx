@@ -12,7 +12,7 @@ import { NavigationComponent } from "../../components/Navigation";
 // import { NotificationComponent } from "../../components/Notification";
 import { ReportContentModalComponent } from "../../components/Modal/Report";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
-import { InputMaskComponent } from "../../components/InputMask"
+import { InputMaskComponent } from "../../components/InputMask";
 import { IPropsAppStack } from "../../routes/AppStack/types";
 import { useNavigation } from "@react-navigation/native";
 
@@ -105,11 +105,11 @@ export function SendReportScreen() {
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
   };
 
@@ -120,7 +120,7 @@ export function SendReportScreen() {
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
   };
 
@@ -149,22 +149,21 @@ export function SendReportScreen() {
   }, [celulas]);
 
   // tratativas para o usuário administrador
-  const redes = celulas.map((item: any) => (item.rede))
+  const redes = celulas.map((item: any) => item.rede);
   const redesUnicas = redes.filter(function (este: any, i: any) {
     return redes.indexOf(este) === i;
   });
 
   const mapRedesUnicas = redesUnicas.map((item: any) => {
     return {
-      value: item
-    }
-  })
+      value: item,
+    };
+  });
 
   const filtrandoRedes = celulas.filter((item: any) => {
-    return item.rede === state.redeSelect
-  })
-  const discipulado = filtrandoRedes.map((item: any) =>
-    (item.discipulador))
+    return item.rede === state.redeSelect;
+  });
+  const discipulado = filtrandoRedes.map((item: any) => item.discipulador);
 
   const discipuladossUnicos = discipulado.filter(function (este: any, i: any) {
     return discipulado.indexOf(este) === i;
@@ -172,47 +171,55 @@ export function SendReportScreen() {
 
   const mapDiscipuladosUnicos = discipuladossUnicos.map((item: any) => {
     return {
-      value: item
-    }
-  })
+      value: item,
+    };
+  });
 
   const filtrandoDiscipulado = celulas.filter((item: any) => {
-    return item.discipulador === state.discipuladoSelect && item.rede === state.redeSelect
-  })
+    return (
+      item.discipulador === state.discipuladoSelect &&
+      item.rede === state.redeSelect
+    );
+  });
   const celulaAdm = filtrandoDiscipulado.map((item: any) => {
     return {
-      value: `${item.numero_celula} - ${item.lider}`
-    }
-  })
+      value: `${item.numero_celula} - ${item.lider}`,
+    };
+  });
   //
 
   // tratativas para o usuário pastor
   const filtrandoDiscipuladoPastor = celulas.filter((item: any) => {
-    return item.rede === user[0][1].rede
-  })
+    return item.rede === user[0][1].rede;
+  });
 
   const mapDiscipuladoPastor = filtrandoDiscipuladoPastor.map((item: any) => {
-    return item.discipulador
-  })
+    return item.discipulador;
+  });
 
-  const discipuladossUnicosPastor = mapDiscipuladoPastor.filter(function (este: any, i: any) {
+  const discipuladossUnicosPastor = mapDiscipuladoPastor.filter(function (
+    este: any,
+    i: any
+  ) {
     return mapDiscipuladoPastor.indexOf(este) === i;
   });
 
-  const mapDiscipuladossUnicosPastor = discipuladossUnicosPastor.map((item: any) => {
-    return {
-      value: item
+  const mapDiscipuladossUnicosPastor = discipuladossUnicosPastor.map(
+    (item: any) => {
+      return {
+        value: item,
+      };
     }
-  })
+  );
   const filtrandoDiscipuladoPastorSelect = celulas.filter((item: any) => {
-    return item.discipulador === state.discipuladoSelect
-  })
+    return item.discipulador === state.discipuladoSelect;
+  });
 
   const celulaPastor = filtrandoDiscipuladoPastorSelect.map((item: any) => {
     return {
-      value: `${item.numero_celula} - ${item.lider}`
-    }
-  })
+      value: `${item.numero_celula} - ${item.lider}`,
+    };
+  });
   //
   const optionsCelula =
     celulaFiltered &&
@@ -230,8 +237,9 @@ export function SendReportScreen() {
             <TitleComponent title={`${FormFields.CELULA}:`} small primary />
             <S.ContentC>
               <S.IconC name="user-friends" />
-              <S.DescriptionC>{`${userInfo && userInfo.numero_celula} - ${userInfo && userInfo.rede
-                }`}</S.DescriptionC>
+              <S.DescriptionC>{`${userInfo && userInfo.numero_celula} - ${
+                userInfo && userInfo.rede
+              }`}</S.DescriptionC>
             </S.ContentC>
           </S.Grid>
         );
@@ -255,7 +263,11 @@ export function SendReportScreen() {
         return (
           <>
             <S.Grid>
-              <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+              <TitleComponent
+                title={`${FormFields.DISCIPLESHIP}:`}
+                small
+                primary
+              />
               <S.ContentC>
                 <S.IconC name="network-wired" />
                 <SelectComponent
@@ -276,7 +288,6 @@ export function SendReportScreen() {
                   dataOptions={celulaPastor}
                   selectedOption={selectedOptionCelula}
                 />
-
               </S.ContentC>
             </S.Grid>
           </>
@@ -294,20 +305,24 @@ export function SendReportScreen() {
                   labelSelect={state.redeSelect}
                   dataOptions={mapRedesUnicas}
                   selectedOption={handleRedeChange}
-                  width='300'
+                  width="300"
                 />
               </S.ContentC>
             </S.Grid>
             <S.Grid>
-              <TitleComponent title={`${FormFields.DISCIPLESHIP}:`} small primary />
+              <TitleComponent
+                title={`${FormFields.DISCIPLESHIP}:`}
+                small
+                primary
+              />
               <S.ContentC>
                 <S.IconC name="network-wired" />
                 <SelectComponent
-                  onChange={(handleDiscipuladoChange)}
+                  onChange={handleDiscipuladoChange}
                   labelSelect={state.discipuladoSelect}
                   dataOptions={state.redeSelect && mapDiscipuladosUnicos}
                   selectedOption={handleDiscipuladoChange}
-                  width='300'
+                  width="300"
                   disabled={state.redeSelect === "Selecione" ? true : false}
                 />
               </S.ContentC>
@@ -321,8 +336,10 @@ export function SendReportScreen() {
                   labelSelect={state.celulaSelect}
                   dataOptions={celulaAdm}
                   selectedOption={selectedOptionCelula}
-                  width='300'
-                  disabled={state.discipuladoSelect === "Selecione" ? true : false}
+                  width="300"
+                  disabled={
+                    state.discipuladoSelect === "Selecione" ? true : false
+                  }
                 />
               </S.ContentC>
             </S.Grid>
@@ -345,7 +362,6 @@ export function SendReportScreen() {
         <ScrollView>
           {userInfo && (
             <S.Content>
-
               <S.Form behavior="position" enabled>
                 {office()}
                 <S.Grid>
@@ -360,7 +376,9 @@ export function SendReportScreen() {
                       value={state.offer}
                       mask="currency"
                       maxLength={14}
-                      inputMaskChange={(value: string) => handleOfferChange(value)}
+                      inputMaskChange={(value: string) =>
+                        handleOfferChange(value)
+                      }
                       primary
                       padding={1}
                       height={30}
@@ -369,11 +387,7 @@ export function SendReportScreen() {
                 </S.Grid>
 
                 <S.Grid>
-                  <TitleComponent
-                    title={`${FormFields.DATE}:`}
-                    small
-                    primary
-                  />
+                  <TitleComponent title={`${FormFields.DATE}:`} small primary />
                   <S.ContentC>
                     <DateComponent
                       text={state.textDate}
@@ -403,13 +417,14 @@ export function SendReportScreen() {
                   <ButtonComponent
                     title={ButtonsText.REPORT}
                     onPress={handleOpenModal}
-                    disabled={(
-                      state.celulaSelect === 'Selecione' ||
-                      state.textDate === 'Selecione uma data' ||
-                      state.offer === '' ||
+                    disabled={
+                      state.celulaSelect === "Selecione" ||
+                      state.textDate === "Selecione uma data" ||
+                      state.offer === "" ||
                       state.presencaCelula.length === 0 ||
                       state.presencaCulto.length === 0
-                    ) ? true : false
+                        ? true
+                        : false
                     }
                   />
                 </S.ContentButton>
@@ -432,15 +447,12 @@ export function SendReportScreen() {
       <ModalComponent
         isVisible={sendModal}
         onBackdropPress={() => {
-          setSendModal(false)
-          navigation.navigate("Home")
+          setSendModal(false);
+          navigation.navigate("Home");
         }}
       >
-        <DefaultContentModalComponent
-          type="sendReport"
-        />
+        <DefaultContentModalComponent type="sendReport" />
       </ModalComponent>
-
     </Fragment>
   );
 }
