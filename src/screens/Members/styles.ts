@@ -27,16 +27,6 @@ export const Division = styled.View`
   align-items: center;
 `
 
-export const Content = styled.View`
-  flex: 1;
-  align-items: center;
-  max-width: 350;
-  width: 100%;
-  margin-top: 32;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
 export const Names = styled.View`
   align-items: center;
   width: 100%;
@@ -72,12 +62,16 @@ export const RegisterIcon = styled(FontAwesome5)`
   font-size: ${({ theme }) => theme.fonts.fontSize.small};
 `;
 
-export const Container = styled.View`
-  margin-top: 20;
-  margin-bottom: 20;
-  margin-right: 20;
-  margin-left: 20;
+export const Content = styled.View`
+  max-width: 350;
+  width: 100%;
+  height: 100%;
+
+  margin-top: 32;
+  margin-left: auto;
+  margin-right: auto;
 `;
+
 
 export const Loading = styled(Image)``;
 
