@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import theme from "../../styles/theme";
 
 export const Content = styled.View`
   max-height: 100;
@@ -6,7 +7,7 @@ export const Content = styled.View`
 
   justify-content: center;
 
-  background-color: ${({ theme }) => theme.colors.blue};
+  background-color: ${theme.colors.blue};
 
   padding: 0 16px;
 `;

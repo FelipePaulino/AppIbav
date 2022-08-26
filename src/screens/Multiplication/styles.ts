@@ -4,11 +4,12 @@ import { Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import theme from "../../styles/theme";
 
 export const Logout = styled(MaterialIcons)`
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-size: ${theme.fonts.fontSize.medium};
 
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 `;
 
 export const HeadingIcons = styled.View`
@@ -38,7 +39,7 @@ export const Names = styled.View`
   align-items: center;
   width: 100%;
 
-  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-color: ${theme.colors.grey};
   border-bottom-width: 1;
 `;
 
@@ -59,27 +60,27 @@ export const ContentOptions = styled.View`
 `;
 
 export const SendReportIcon = styled(Ionicons)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const MembersIcon = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const RegisterIcon = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const UserGridIcon = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const Loading = styled(Image)``;

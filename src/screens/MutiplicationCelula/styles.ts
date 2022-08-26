@@ -1,20 +1,21 @@
 import styled from "styled-components/native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import theme from "../../styles/theme";
 
 export const ComeBack = styled.View`
   flex-direction: row;
 `;
 
 export const TitlePage = styled.Text`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
   text-transform: uppercase;
 
   font-size: 14;
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  font-family: ${theme.fonts.fontFamily.bold};
 `;
 
 export const TextText = styled.Text`
-  color: #000
+  color: #000;
   text-transform: uppercase;
 `;
 
@@ -32,8 +33,8 @@ export const ContentC = styled.View`
 `;
 
 export const IconC = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.red};
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  color: ${theme.colors.red};
+  font-size: ${theme.fonts.fontSize.medium};
   margin-right: 20;
 `;
 

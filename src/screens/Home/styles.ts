@@ -5,9 +5,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import theme from "../../styles/theme";
 
 export const Material = styled(MaterialIcons)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 `;
 
 export const Buttons = styled.View`
@@ -29,15 +30,15 @@ export const Content = styled.View`
 `;
 
 export const Name = styled.Text`
-  color: ${({ theme }) => theme.colors.grey};
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  color: ${theme.colors.grey};
+  font-family: ${theme.fonts.fontFamily.bold};
+  font-size: ${theme.fonts.fontSize.medium};
   text-transform: uppercase;
 `;
 
 export const Office = styled.Text`
-  color: ${({ theme }) => theme.colors.red};
-  font-size: ${({ theme }) => theme.fonts.fontSize.small};
+  color: ${theme.colors.red};
+  font-size: ${theme.fonts.fontSize.small};
   margin-top: -10;
 `;
 
@@ -47,7 +48,7 @@ export const Names = styled.View`
 
   padding-bottom: 12;
 
-  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-color: ${theme.colors.grey};
   border-bottom-width: 1;
 `;
 
@@ -60,18 +61,18 @@ export const Info = styled.View`
 `;
 
 export const InfoTextTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${theme.colors.blue};
 
   font-size: 16;
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  font-family: ${theme.fonts.fontFamily.bold};
   text-transform: uppercase;
 `;
 
 export const InfoTextSubtitle = styled.Text`
-  color: ${({ theme }) => theme.colors.grey};
+  color: ${theme.colors.grey};
 
   font-size: 16;
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  font-family: ${theme.fonts.fontFamily.bold};
   text-transform: uppercase;
 
   margin-top: -8;
@@ -87,33 +88,33 @@ export const ContentOptions = styled.View`
 `;
 
 export const SendReportIcon = styled(Ionicons)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const MembersIcon = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const RegisterIcon = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const ReportView = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const MultiplicationIcon = styled(MaterialCommunityIcons)`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.large};
+  font-size: ${theme.fonts.fontSize.large};
 `;
 
 export const Loading = styled(Image)``;

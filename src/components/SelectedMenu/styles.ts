@@ -1,5 +1,6 @@
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
+import theme from "../../styles/theme";
 
 export const Content = styled(TouchableOpacity)`
   align-items: center;
@@ -9,7 +10,7 @@ export const Content = styled(TouchableOpacity)`
 export const BackgroundIcon = styled.View`
   border-radius: 64;
 
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: ${theme.colors.red};
 
   height: 65;
   width: 65;
@@ -26,5 +27,5 @@ export const Title = styled.Text`
 
   margin-top: 5;
 
-  color: ${({ theme }) => theme.colors.grey};
+  color: ${theme.colors.grey};
 `;

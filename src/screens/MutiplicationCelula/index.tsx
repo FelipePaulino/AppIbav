@@ -29,7 +29,7 @@ export function MultiplicationCelula() {
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
 
-  
+
 
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
@@ -164,7 +164,7 @@ export function MultiplicationCelula() {
   //Object.values(listMembersCelula).sort(compared);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  
+
   const cadastro = () => {
     const objectNewLider = Object.values(listMembersCelula).filter(
       (item: any) => {
@@ -173,10 +173,10 @@ export function MultiplicationCelula() {
     );
     let str
     str = memberSelected;
-    str = memberSelected.replace(/[ÀÁÂÃÄÅ]/g,"A");
-    str = memberSelected.replace(/[àáâãäå]/g,"a");
-    str = memberSelected.replace(/[ÈÉÊË]/g,"E");
-    memberSelected.replace(/[^a-z0-9]/gi,'');
+    str = memberSelected.replace(/[ÀÁÂÃÄÅ]/g, "A");
+    str = memberSelected.replace(/[àáâãäå]/g, "a");
+    str = memberSelected.replace(/[ÈÉÊË]/g, "E");
+    memberSelected.replace(/[^a-z0-9]/gi, '');
     console.log(objectNewLider, 'objectNewLider')
     const email = `${str}@aguaviva.com.br`
     const password = `${str}123456`
@@ -184,8 +184,8 @@ export function MultiplicationCelula() {
     credentialsPost(objectNewLider, email, password);
   };
 
-    
-  const credentialsPost = (objectNewLider:any, email:any, password: any) => {
+
+  const credentialsPost = (objectNewLider: any, email: any, password: any) => {
     try {
       connectApi
         .post("/users.json", {
@@ -197,12 +197,12 @@ export function MultiplicationCelula() {
           rede: state.redeSelect,
           senha: password,
         })
-     .then(() => alert("deu bom"));
-    } 
+        .then(() => alert("deu bom"));
+    }
     catch (err) {
       throw new Error("Ops, algo deu errado!");
     }
-  } 
+  }
 
   return (
     <>

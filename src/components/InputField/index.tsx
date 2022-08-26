@@ -16,7 +16,7 @@ export function InputFieldComponent({
     <Fragment>
       {label && <S.Label>{label}</S.Label>}
       <S.Field primary={primary}>
-        <S.Input primary={primary} value={value} {...rest} />
+        <S.Input primary={primary} value={value} {...rest} onFocus={() => true} />
 
         {icon && <Feather name={icon} size={24} color="#000A3E" />}
       </S.Field>
