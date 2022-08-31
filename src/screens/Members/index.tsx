@@ -405,7 +405,7 @@ export function MembersScreen(this: any) {
         </S.ContentHeader>
       </HeaderComponent>
       <ScrollView>
-        <S.Container>
+        <S.Content>
           {loading ? (
             <S.Loading source={loadingGif} />
           ) : (
@@ -447,13 +447,13 @@ export function MembersScreen(this: any) {
                         </Fragment>
                       );
                     })) : (
-                    <Text>Não há celulas</Text>
+                    <Text>Não há membros</Text>
                   )}
                 </>
               }
             </Fragment>
           )}
-        </S.Container>
+        </S.Content>
       </ScrollView>
       <ModalComponent
         isVisible={sendModal}

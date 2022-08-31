@@ -16,7 +16,7 @@ export function RequestContentModalComponent({
         <S.ContainerText>
           <S.TextDelete>Você realmente deseja<S.BoldDeleteText> EXCLUIR</S.BoldDeleteText></S.TextDelete>
           <S.TextDelete>o cadastro de</S.TextDelete>
-          <S.BoldTextBlue>{name} ? </S.BoldTextBlue>
+          <S.BoldTextBlue>{name}?</S.BoldTextBlue>
           <S.TextDelete>essa ação não tem volta.</S.TextDelete>
         </S.ContainerText>
         <S.ContainerButton>
