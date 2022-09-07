@@ -1,5 +1,10 @@
 import styled from "styled-components/native";
-import { Image } from "react-native";
+import { Image, Animated } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
+
+interface Props {
+  open?: boolean
+}
 
 export const ComeBack = styled.View`
   flex-direction: row;
@@ -30,6 +35,58 @@ export const List = styled.View`
   border-bottom-width: 1;
   padding-bottom: 5px;
 `;
+// margin-right: ${({ icon }) => (icon ? "5" : "0")};
+export const ContainerFilter = styled(Animated.View) <Props>`
+  width: 80%;
+  background-color: white;
+  padding-top: 80px;
+  padding-left: 25px;
+
+  position: absolute;
+  height: 100%;
+  z-index: 1;
+  /* transform: ${({ open }) => (open ? 'translate(0px)' : "translate(-400px)")}; */
+`;
+
+export const BgDark = styled.View<Props>`
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  position: absolute;
+  height: 100%;
+  z-index: 1;
+`;
+
+export const Title = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.blue};
+  margin-bottom: 24px;
+`;
+
+export const BoxClose = styled.View`
+  position: absolute;
+  right: 15px;
+  top: -20px;
+`;
+
+export const ContentC = styled.View`
+  flex-direction: row;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+  width: 900px;
+  height: 40;
+`;
+
+export const Grid = styled.View`
+  margin-bottom: 32;
+`;
 
 export const Loading = styled(Image)``;
+
+
+
+
+
 
