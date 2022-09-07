@@ -18,6 +18,7 @@ import { VisitorsReportScreen } from "../../screens/VisitorsReport";
 import { UsersInformationScreen } from "../../screens/ListInformation";
 import { PreRegisterAdminScreen } from "../../screens/PreRegisterAdmin";
 import { MembersInformationScreen } from "../../screens/MemberInformation";
+import { EditNetwork } from "../../screens/EditNetwork";
 import { SeeReports } from "../../screens/SeeReports";
 import { SingleReport } from "../../screens/SingleReport";
 import { INavigationAppStackProps } from "./types";
@@ -38,7 +39,10 @@ export function AppRoutes() {
       <Screen name="SendReport" component={SendReportScreen} />
       <Screen name="Multiplication" component={Multiplication} />
       <Screen name="MultiplicationCelula" component={MultiplicationCelula} />
-      <Screen name="MultiplicationDiscipulado" component={MultiplicationDiscipulado} />
+      <Screen
+        name="MultiplicationDiscipulado"
+        component={MultiplicationDiscipulado}
+      />
       <Screen name="MultiplicationRede" component={MultiplicationRede} />
       <Screen name="PreListAdmin" component={PreListAdminScreen} />
       <Screen name="UserRegister" component={UserRegisterScreen} />
@@ -48,6 +52,7 @@ export function AppRoutes() {
       <Screen name="PreRegisterAdmin" component={PreRegisterAdminScreen} />
       <Screen name="UsersInformation" component={UsersInformationScreen} />
       <Screen name="MemberInformation" component={MembersInformationScreen} />
+      <Screen name="EditNetwork" component={EditNetwork} />
       <Screen name="SeeReports" component={SeeReports} />
       <Screen name="SingleReport" component={SingleReport} />
     </Navigator>

@@ -206,21 +206,9 @@ export default function NetworkScreenList() {
                                 setId(items[0]);
                             }}
                             onPress={() =>
-                              navigation.navigate("MemberInformation", {
-                                nome: `${items[1].nome}`,
-                                telefone: `${items[1].telefone}`,
-                                email: `${items[1].email}`,
-                                endereco: `${items[1].endereco}`,
-                                bairro: `${items[1].bairro}`,
-                                cep: `${items[1].cep}`,
-                                cidade: `${items[1].cidade}`,
-                                estado: `${items[1].estado}`,
-                                estado_civil: `${items[1].estado_civil}`,
-                                data_de_nascimento: `${items[1].data_de_nascimento}`,
-                                status: `${items[1].status}`,
-                                numero_casa: `${items[1].numero_casa}`,
-                                id: `${items[0]}`,
-                                active: setTrigger
+                              navigation.navigate("EditNetwork", {
+                                rede: `${items[1].rede}`,
+                                active: setTrigger,
                               })
                             }
                           />
@@ -243,7 +231,7 @@ export default function NetworkScreenList() {
                                     setId(item[0]);
                                 }}
                                 onPress={() =>
-                                  navigation.navigate("MemberInformation", {
+                                  navigation.navigate("EditNetwork", {
                                     nome: `${item[1].nome}`,
                                     telefone: `${item[1].telefone}`,
                                     email: `${item[1].email}`,
@@ -257,7 +245,7 @@ export default function NetworkScreenList() {
                                     status: `${item[1].status}`,
                                     numero_casa: `${item[1].numero_casa}`,
                                     id: `${item[0]}`,
-                                    active: setTrigger
+                                    active: setTrigger,
                                   })
                                 }
                               />
@@ -284,7 +272,7 @@ export default function NetworkScreenList() {
                                     setId(item[0]);
                                 }}
                                 onPress={() =>
-                                  navigation.navigate("MemberInformation", {
+                                  navigation.navigate("EditNetwork", {
                                     nome: `${item[1].nome}`,
                                     telefone: `${item[1].telefone}`,
                                     email: `${item[1].email}`,
@@ -298,7 +286,7 @@ export default function NetworkScreenList() {
                                     status: `${item[1].status}`,
                                     numero_casa: `${item[1].numero_casa}`,
                                     id: `${item[0]}`,
-                                    active: setTrigger
+                                    active: setTrigger,
                                   })
                                 }
                               />

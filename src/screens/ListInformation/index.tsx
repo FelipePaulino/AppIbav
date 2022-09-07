@@ -126,7 +126,7 @@ export function UsersInformationScreen(this: any, { route }: any) {
         estado_civil: civilStatus,
       });
       setTrigger(!trigger);
-      handleOpenModal()
+      handleOpenModal();
     } catch (err) {
       alert(err);
     }
@@ -287,14 +287,11 @@ export function UsersInformationScreen(this: any, { route }: any) {
       <ModalComponent
         isVisible={successModal}
         onBackdropPress={() => {
-          setSuccessModal(false)
-          navigation.navigate("ListUsers")
+          setSuccessModal(false);
+          navigation.navigate("ListUsers");
         }}
       >
-        <DefaultContentModalComponent
-          data={name}
-          type="edited"
-        />
+        <DefaultContentModalComponent data={name} type="edited" />
       </ModalComponent>
     </>
   );

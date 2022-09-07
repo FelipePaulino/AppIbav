@@ -20,6 +20,7 @@ export type INavigationAppStackProps = {
   UsersInformation: undefined;
   PreRegisterAdmin: undefined;
   MemberInformation: undefined;
+  EditNetwork: undefined;
   SeeReports: undefined;
   SingleReport: undefined;
 }

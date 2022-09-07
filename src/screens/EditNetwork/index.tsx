@@ -5,7 +5,7 @@ import RequestService from "../../common/services/RequestService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GetStorage } from "../../common/constants/storage";
 
-import { DateComponent } from "../../components/Date";
+import { TitleComponent } from "../../components/Title";
 import { ModalComponent } from "../../components/Modal";
 import { HeaderComponent } from "../../components/Header";
 import { SelectComponent } from "../../components/Select";
@@ -17,21 +17,17 @@ import { DefaultContentModalComponent } from "../../components/Modal/Default";
 import MenuNavigation from "../../common/constants/navigation";
 import FormFields from "../../common/constants/form";
 
-import * as S from "./styles";
-import {
-  selectCategory,
-  selectCivilStatus,
-  selectState,
-} from "../../common/utils/selects";
+import * as S from "./style";
 import { connectApi } from "../../common/services/ConnectApi";
 import { useFormReport } from "../../hooks/useFormReport";
 
-export function MembersInformationScreen(this: any, { route }: any) {
+export function EditNetwork(this: any, { route }: any) {
   const [successModal, setSuccessModal] = useState(false);
   const [showCalender, setShowCalender] = useState(false);
 
   const [cep, setCep] = useState(route.params?.cep || "");
   const [name, setName] = useState(route.params?.nome || "");
+  const [rede, setRede] = useState(route.params?.rede || "");
   const [city, setCity] = useState(route.params?.cidade || "");
   const [email, setEmail] = useState(route.params?.email || "");
   const [state, setState] = useState(route.params?.estado || "");
@@ -50,7 +46,7 @@ export function MembersInformationScreen(this: any, { route }: any) {
   const [date, setDate] = useState(new Date());
   const [celulas, setCelulas] = useState<any>();
   const [members, setMembers] = useState<any>([]);
-
+  const [loading, setLoading] = useState(false);
   const { user } = useUserFiltered();
   const { trigger, setTrigger, celulaId } = useFormReport();
 
@@ -59,14 +55,17 @@ export function MembersInformationScreen(this: any, { route }: any) {
   const serviceGet = new RequestService();
 
   useEffect(() => {
-    const getCelulas = async () => {
-      await serviceGet.getCelulas().then((response) => {
-        setCelulas(Object.entries(response));
-      });
+    const getUsers = async () => {
+      await serviceGet
+        .getUsers()
+        .then((response) => {
+          setCelulas(Object.entries(response));
+        })
+        .finally(() => setLoading(false));
     };
 
-    getCelulas();
-  }, []);
+    getUsers();
+  }, [trigger]);
 
   useEffect(() => {
     const filterMembers =
@@ -84,10 +83,17 @@ export function MembersInformationScreen(this: any, { route }: any) {
     }
   }, [identifyCelula, celulas]);
 
+  const EditPastor = celulas.filter((item: any) => {
+    return item[1].cargo === "pastor";
+  });
+
+  console.log(
+    EditPastor.map((item: any) => item[1].nome),
+    "EditPastor"
+  );
   const showMode = () => {
     setShowCalender(true);
   };
-
   const handleDateChange = (event: Event, selectedDate: any) => {
     const currentDate = selectedDate || state.dateRegister;
 
@@ -147,133 +153,67 @@ export function MembersInformationScreen(this: any, { route }: any) {
             <S.GridItemFull>
               <InputFieldComponent
                 primary
-                value={name === "undefined" ? FormFields.FULL_NAME : name}
+                value={rede === "undefined" ? FormFields.FULL_NAME : rede}
                 placeholder={`* ${FormFields.FULL_NAME}`}
                 onChangeText={(value) => setName(value)}
-                label="*Nome Completo"
+                label="Rede"
               />
             </S.GridItemFull>
+
+            <S.Grid>
+              <TitleComponent title="Pastor" small primary />
+              <S.ContentC>
+                <S.IconC name="vector-square" />
+                <SelectComponent
+                  width="300px"
+                  onChange={() => console.log("ok")}
+                  labelSelect={"Selecione"}
+                  dataOptions={[]}
+                  selectedOption={() => console.log("ok")}
+                />
+              </S.ContentC>
+            </S.Grid>
+
+            <S.Grid>
+              <TitleComponent title="Discipulado" small primary />
+              <S.ContentC>
+                <S.IconC name="network-wired" />
+                <SelectComponent
+                  width="300px"
+                  onChange={() => console.log("ok")}
+                  labelSelect={"Selecione"}
+                  dataOptions={[]}
+                  selectedOption={() => console.log("ok")}
+                />
+              </S.ContentC>
+            </S.Grid>
 
             <S.GridItemFull>
               <InputFieldComponent
                 primary
-                value={phone === "undefined" ? FormFields.PHONE : phone}
-                placeholder={`* ${FormFields.PHONE}`}
-                onChangeText={(value) => setPhone(value)}
-                label="*Telefone"
+                value={rede === "undefined" ? FormFields.FULL_NAME : rede}
+                placeholder={`* ${FormFields.FULL_NAME}`}
+                onChangeText={(value) => setName(value)}
+                label="Celula"
               />
             </S.GridItemFull>
 
-            <S.GridItemFull>
-              <InputFieldComponent
-                primary
-                value={email === "undefined" ? FormFields.EMAIL : email}
-                placeholder={FormFields.EMAIL}
-                onChangeText={(value) => setEmail(value)}
-                label="*Email"
-              />
-            </S.GridItemFull>
-
-            <S.GridForm>
-              <S.GridItem>
-                <InputFieldComponent
-                  primary
-                  value={address && address}
-                  placeholder={FormFields.ADDRESS}
-                  onChangeText={(value) => setAddress(value)}
-                  label="Endereço"
-                />
-              </S.GridItem>
-
-              <S.GridItem>
-                <InputFieldComponent
-                  primary
-                  value={cep === "undefined" ? FormFields.CEP : cep}
-                  placeholder={FormFields.CEP}
-                  onChangeText={(value) => setCep(value)}
-                  label="Cep"
-                />
-              </S.GridItem>
-            </S.GridForm>
-
-            <S.GridForm>
-              <S.GridItem>
-                <InputFieldComponent
-                  primary
-                  value={
-                    district === "undefined" ? FormFields.DISTRICT : district
-                  }
-                  placeholder={FormFields.DISTRICT}
-                  onChangeText={(value) => setDistrict(value)}
-                  label="Bairro"
-                />
-              </S.GridItem>
-
-              <S.GridItem>
-                <InputFieldComponent
-                  primary
-                  value={city === "undefined" ? FormFields.CITY : city}
-                  placeholder={FormFields.CITY}
-                  onChangeText={(value) => setCity(value)}
-                  label="Cidade"
-                />
-              </S.GridItem>
-            </S.GridForm>
-
-            <S.GridForm>
-              <S.GridItem>
+            <S.Grid>
+              <TitleComponent title="Lider" small primary />
+              <S.ContentC>
+                <S.IconC name="user" />
                 <SelectComponent
-                  label="Estado"
-                  onChange={(labelSelect) => setState(labelSelect)}
-                  selectedOption={(labelSelect) => setState(labelSelect)}
-                  labelSelect={state === "undefined" ? FormFields.STATE : state}
-                  dataOptions={selectState}
+                  width="300px"
+                  onChange={() => console.log("ok")}
+                  labelSelect={"Selecione"}
+                  dataOptions={[]}
+                  selectedOption={() => console.log("ok")}
                 />
-              </S.GridItem>
-
-              <S.GridItem>
-                <SelectComponent
-                  label="Estado Civil"
-                  onChange={(labelSelect) => setCivilStatus(labelSelect)}
-                  selectedOption={(labelSelect) => setCivilStatus(labelSelect)}
-                  labelSelect={
-                    civilStatus === "undefined"
-                      ? FormFields.CIVIL_STATUS
-                      : civilStatus
-                  }
-                  dataOptions={selectCivilStatus}
-                />
-              </S.GridItem>
-            </S.GridForm>
-
-            <S.GridForm>
-              <S.GridItem>
-                <DateComponent
-                  text={birthday}
-                  open={showMode}
-                  showCalender={showCalender}
-                  dataDados={date}
-                  onChange={handleDateChange}
-                  label="Data de Nascimento"
-                />
-              </S.GridItem>
-
-              <S.GridItem>
-                <SelectComponent
-                  label="Categoria"
-                  onChange={(labelSelect) => setStatus(labelSelect)}
-                  selectedOption={(labelSelect) => setStatus(labelSelect)}
-                  labelSelect={
-                    status === "undefined" ? FormFields.CATEGORY : status
-                  }
-                  dataOptions={selectCategory}
-                />
-              </S.GridItem>
-            </S.GridForm>
+              </S.ContentC>
+            </S.Grid>
           </S.Form>
 
           <S.FooterFields>
-            <S.Required>* Campos obrigatórios</S.Required>
             <ButtonComponent
               title="SALVAR INFORMAÇÕES"
               onPress={submitRegister}
