@@ -228,7 +228,7 @@ export function SeeReports() {
               </S.Grid>
 
               <S.Grid>
-                <TitleComponent title="Período" small primary />
+                <TitleComponent title="Período:" small primary />
                 <S.ContentC>
                   <DateComponent
                     text={state.textDate}
