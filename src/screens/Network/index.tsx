@@ -274,18 +274,9 @@ export default function NetworkScreenList() {
                                 onPress={() =>
                                   navigation.navigate("EditNetwork", {
                                     nome: `${item[1].nome}`,
-                                    telefone: `${item[1].telefone}`,
-                                    email: `${item[1].email}`,
-                                    endereco: `${item[1].endereco}`,
-                                    bairro: `${item[1].bairro}`,
-                                    cep: `${item[1].cep}`,
-                                    cidade: `${item[1].cidade}`,
-                                    estado: `${item[1].estado}`,
-                                    estado_civil: `${item[1].estado_civil}`,
-                                    data_de_nascimento: `${item[1].data_de_nascimento}`,
-                                    status: `${item[1].status}`,
-                                    numero_casa: `${item[1].numero_casa}`,
-                                    id: `${item[0]}`,
+                                    rede: `${item[1].rede}`,
+                                    discipulado: `${item[1].discipulado}`,
+                                    numero_celula: `${item[1].numero_celula}`,
                                     active: setTrigger,
                                   })
                                 }

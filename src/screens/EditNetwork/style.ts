@@ -11,6 +11,11 @@ export const Grid = styled.View`
   margin-bottom: 32;
 `;
 
+export const TitleInput = styled.Text`
+  margin: 10px 0;
+  font-size: 14;
+`;
+
 export const ContentC = styled.View`
   flex-direction: row;
   align-items: flex-end;
@@ -95,7 +100,7 @@ export const GridItemSmall = styled.View`
 
 export const FooterFields = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   padding-left: 15;
   padding-right: 15;
   margin-bottom: 15;

@@ -4,6 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import { IContentInputProps } from "./types";
 
 import * as S from "./styles";
+import { Text } from "react-native";
 
 export function InputFieldComponent({
   icon,

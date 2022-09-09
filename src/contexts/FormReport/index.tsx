@@ -24,7 +24,7 @@ const initialData: IState = {
   discipuladoSelect: "Selecione",
   presencaCelula: [],
   presencaCulto: [],
-  reportsId: '',
+  reportsId: "",
 };
 
 export const FormReportContext = createContext<IContextType | undefined>(
@@ -53,9 +53,10 @@ export enum FormReportActions {
   setTextSelectCategory,
   setTextSelectCivilStatus,
   setDiscipuladoSelect,
+  setLiderSelect,
   setPresencaCelula,
   setPresencaCulto,
-  setReportsId
+  setReportsId,
 }
 
 const formReportReducer = (state: IState, action: IActions) => {
@@ -120,14 +121,17 @@ const formReportReducer = (state: IState, action: IActions) => {
     case FormReportActions.setDiscipuladoSelect:
       return { ...state, discipuladoSelect: action.payload };
 
+    case FormReportActions.setLiderSelect:
+      return { ...state, discipuladoSelect: action.payload };
+
     case FormReportActions.setPresencaCelula:
       return { ...state, presencaCelula: action.payload };
 
     case FormReportActions.setPresencaCulto:
       return { ...state, presencaCulto: action.payload };
 
-      case FormReportActions.setReportsId:
-        return { ...state, reportsId: action.payload };
+    case FormReportActions.setReportsId:
+      return { ...state, reportsId: action.payload };
 
     default:
       return state;
@@ -135,9 +139,9 @@ const formReportReducer = (state: IState, action: IActions) => {
 };
 
 export const FormProvider = ({ children }: IProvider) => {
-  const [trigger, setTrigger] = useState(false)
+  const [trigger, setTrigger] = useState(false);
   const [state, dispatch] = useReducer(formReportReducer, initialData);
-  const [celulaId, setCelulaId] = useState()
+  const [celulaId, setCelulaId] = useState();
   const value = { state, dispatch, trigger, setTrigger, celulaId, setCelulaId };
 
   return (

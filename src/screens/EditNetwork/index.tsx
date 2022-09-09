@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import useUserFiltered from "../../hooks/useUserFiltered";
 import RequestService from "../../common/services/RequestService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GetStorage } from "../../common/constants/storage";
+import { FormReportActions } from "../../contexts/FormReport";
 
 import { TitleComponent } from "../../components/Title";
 import { ModalComponent } from "../../components/Modal";
@@ -30,7 +31,7 @@ export function EditNetwork(this: any, { route }: any) {
   const [rede, setRede] = useState(route.params?.rede || "");
   const [city, setCity] = useState(route.params?.cidade || "");
   const [email, setEmail] = useState(route.params?.email || "");
-  const [state, setState] = useState(route.params?.estado || "");
+  // const [state, setState] = useState(route.params?.estado || "");
   const [status, setStatus] = useState(route.params?.status || "");
   const [phone, setPhone] = useState(route.params?.telefone || "");
   const [address, setAddress] = useState(route.params?.endereco || "");
@@ -42,13 +43,15 @@ export function EditNetwork(this: any, { route }: any) {
     route.params?.estado_civil || ""
   );
   const [id, setId] = useState(route.params?.id);
-
+  const [newNumberCelula, setNewNumberCelula] = useState<string>(
+    route.params?.numero_celula || ""
+  );
   const [date, setDate] = useState(new Date());
   const [celulas, setCelulas] = useState<any>();
   const [members, setMembers] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const { user } = useUserFiltered();
-  const { trigger, setTrigger, celulaId } = useFormReport();
+  const { trigger, setTrigger, celulaId, state, dispatch } = useFormReport();
 
   const identifyCelula = user && user[0][1].numero_celula;
 
@@ -67,30 +70,90 @@ export function EditNetwork(this: any, { route }: any) {
     getUsers();
   }, [trigger]);
 
-  useEffect(() => {
-    const filterMembers =
-      celulas &&
-      celulas.filter((item: any) => {
-        return item[1].numero_celula == identifyCelula;
-      });
+  // console.log(celulas, "celulas");
+  // useEffect(() => {
+  //   const filterMembers =
+  //     celulas &&
+  //     celulas?.filter((item: any) => {
+  //       return item[1]?.numero_celula == identifyCelula;
+  //     });
 
-    if (filterMembers) {
-      setMembers(filterMembers);
-      AsyncStorage.setItem(
-        GetStorage.MEMBERS_FILTERED,
-        JSON.stringify(filterMembers)
-      );
-    }
-  }, [identifyCelula, celulas]);
+  //   if (filterMembers) {
+  //     setMembers(filterMembers);
+  //     AsyncStorage.setItem(
+  //       GetStorage.MEMBERS_FILTERED,
+  //       JSON.stringify(filterMembers)
+  //     );
+  //   }
+  // }, [identifyCelula, celulas]);
 
-  const EditPastor = celulas.filter((item: any) => {
-    return item[1].cargo === "pastor";
+  const EditPastor = celulas?.filter((item: any) => {
+    return item[1]?.cargo === "pastor";
   });
 
-  console.log(
-    EditPastor.map((item: any) => item[1].nome),
-    "EditPastor"
-  );
+  const mapEditarPastor = EditPastor?.map((item: any) => {
+    return {
+      value: item[1].nome,
+    };
+  });
+
+  const editDiscipulador = celulas?.filter((item: any) => {
+    return item[1]?.cargo === "discipulador";
+  });
+
+  const mapEditarDiscipulador = editDiscipulador?.map((item: any) => {
+    return {
+      value: item[1].nome,
+    };
+  });
+
+  const editLider = celulas?.filter((item: any) => {
+    return item[1]?.cargo === "lider";
+  });
+
+  const mapEditarLider = editLider?.map((item: any) => {
+    return {
+      value: item[1].nome,
+    };
+  });
+
+  const handleRedeChange = (value: string) => {
+    dispatch({
+      type: FormReportActions.setRedeSelect,
+      payload: value,
+    });
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: null,
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: null,
+    });
+  };
+
+  const handleLiderChange = (value: string) => {
+    dispatch({
+      type: FormReportActions.setLiderSelect,
+      payload: value,
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: null,
+    });
+  };
+
+  const handleDiscipuladoChange = (value: string) => {
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: value,
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: null,
+    });
+  };
+
   const showMode = () => {
     setShowCalender(true);
   };
@@ -144,7 +207,6 @@ export function EditNetwork(this: any, { route }: any) {
           <ComeBackComponent />
           <S.Navigation>{MenuNavigation.MEMBERS}</S.Navigation>
         </S.Division>
-        {/* <NotificationComponent /> */}
       </HeaderComponent>
 
       <ScrollView>
@@ -161,29 +223,29 @@ export function EditNetwork(this: any, { route }: any) {
             </S.GridItemFull>
 
             <S.Grid>
-              <TitleComponent title="Pastor" small primary />
+              <S.TitleInput>Pastor</S.TitleInput>
               <S.ContentC>
                 <S.IconC name="vector-square" />
                 <SelectComponent
                   width="300px"
-                  onChange={() => console.log("ok")}
-                  labelSelect={"Selecione"}
-                  dataOptions={[]}
-                  selectedOption={() => console.log("ok")}
+                  onChange={handleRedeChange}
+                  labelSelect={state.redeSelect ?? "Selecione"}
+                  dataOptions={mapEditarPastor}
+                  selectedOption={handleRedeChange}
                 />
               </S.ContentC>
             </S.Grid>
 
             <S.Grid>
-              <TitleComponent title="Discipulado" small primary />
+              <S.TitleInput>Discipulado</S.TitleInput>
               <S.ContentC>
                 <S.IconC name="network-wired" />
                 <SelectComponent
                   width="300px"
-                  onChange={() => console.log("ok")}
-                  labelSelect={"Selecione"}
-                  dataOptions={[]}
-                  selectedOption={() => console.log("ok")}
+                  onChange={handleDiscipuladoChange}
+                  labelSelect={state.discipuladoSelect ?? "Selecione"}
+                  dataOptions={mapEditarDiscipulador}
+                  selectedOption={handleDiscipuladoChange}
                 />
               </S.ContentC>
             </S.Grid>
@@ -191,23 +253,27 @@ export function EditNetwork(this: any, { route }: any) {
             <S.GridItemFull>
               <InputFieldComponent
                 primary
-                value={rede === "undefined" ? FormFields.FULL_NAME : rede}
-                placeholder={`* ${FormFields.FULL_NAME}`}
-                onChangeText={(value) => setName(value)}
+                value={
+                  newNumberCelula === "undefined"
+                    ? FormFields.FULL_NAME
+                    : newNumberCelula
+                }
+                placeholder="número da célula"
+                onChangeText={(value) => setNewNumberCelula(value)}
                 label="Celula"
               />
             </S.GridItemFull>
 
             <S.Grid>
-              <TitleComponent title="Lider" small primary />
+              <S.TitleInput>Lider</S.TitleInput>
               <S.ContentC>
-                <S.IconC name="user" />
+                <S.IconC name="user-alt" />
                 <SelectComponent
                   width="300px"
-                  onChange={() => console.log("ok")}
-                  labelSelect={"Selecione"}
-                  dataOptions={[]}
-                  selectedOption={() => console.log("ok")}
+                  onChange={handleLiderChange}
+                  labelSelect={state.liderSelect ?? "Selecione"}
+                  dataOptions={mapEditarLider}
+                  selectedOption={handleLiderChange}
                 />
               </S.ContentC>
             </S.Grid>
