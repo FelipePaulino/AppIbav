@@ -36,6 +36,7 @@ export function SeeReports() {
       await serviceGet.getReports().then((response) => {
         setLoading(false);
         setReports(Object.entries(response));
+        setFilter(Object.entries(response));
       });
     };
 
@@ -150,6 +151,36 @@ export function SeeReports() {
     });
   };
 
+  console.log(reports, "reports");
+
+  const submitFilter = () => {
+    if (
+      state.redeSelect !== "Selecione" &&
+      state.discipuladoSelect === "Selecione"
+    ) {
+      const filterRede = reports.filter((item: any) => {
+        return item[1].rede === state.redeSelect;
+      });
+      setFilter(filterRede);
+    } else if (
+      state.discipuladoSelect !== "Selecione" &&
+      state.celulaSelect === "Selecione"
+    ) {
+      const filterDiscipulado = reports.filter((item: any) => {
+        return item[1].discipulado === state.discipuladoSelect;
+      });
+      setFilter(filterDiscipulado);
+    } else if (state.celulaSelect !== "Selecione") {
+      const filterCelula = reports.filter((item: any) => {
+        return item[1].celula === state.celulaSelect;
+      });
+      setFilter(filterCelula);
+    }
+    setShowFilter(false);
+  };
+
+  console.log(state.date, "filter");
+
   return (
     <Fragment>
       {showFilter && (
@@ -228,7 +259,7 @@ export function SeeReports() {
               </S.Grid>
 
               <S.Grid>
-                <TitleComponent title="Período:" small primary />
+                <TitleComponent title="Data:" small primary />
                 <S.ContentC>
                   <DateComponent
                     text={state.textDate}
@@ -240,7 +271,12 @@ export function SeeReports() {
                 </S.ContentC>
               </S.Grid>
 
-              <ButtonComponent title="FILTRAR" width="150px" color="white" />
+              <ButtonComponent
+                title="FILTRAR"
+                width="150px"
+                color="white"
+                onPress={() => submitFilter()}
+              />
             </View>
           </S.ContainerFilter>
         </S.BgDark>
@@ -264,7 +300,7 @@ export function SeeReports() {
             <S.Loading source={loadingGif}></S.Loading>
           ) : (
             <S.ListContainer>
-              {reports?.map((item: any) => {
+              {filter?.map((item: any) => {
                 return (
                   <S.List>
                     <Text onPress={() => actionReportId(item[0])}>
