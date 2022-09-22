@@ -50,6 +50,21 @@ export function MembersScreen(this: any) {
 
   const idCelula = members && members.length > 0 && Object?.entries(members[0])[0][1];
 
+  const clean = (value: string) => {
+    navigation.navigate(value)
+    dispatch({
+      type: FormReportActions.setRedeSelect,
+      payload: 'Selecione',
+    });
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: 'Selecione',
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: 'Selecione',
+    });
+  }
 
   useEffect(() => {
     if (idCelula !== false) {
@@ -380,7 +395,7 @@ export function MembersScreen(this: any) {
           </S.Division>
           <ButtonComponent
             title="Cadastrar"
-            onPress={() => navigation.navigate("Register")}
+            onPress={() => clean("Register")}
             width="136px"
             heigth="33px"
             size="12px"
@@ -390,7 +405,7 @@ export function MembersScreen(this: any) {
         </S.ContentHeader>
       </HeaderComponent>
       <ScrollView>
-        <S.Container>
+        <S.Content>
           {loading ? (
             <S.Loading source={loadingGif} />
           ) : (
@@ -432,13 +447,13 @@ export function MembersScreen(this: any) {
                         </Fragment>
                       );
                     })) : (
-                    <Text>Não há celulas</Text>
+                    <Text>Não há membros</Text>
                   )}
                 </>
               }
             </Fragment>
           )}
-        </S.Container>
+        </S.Content>
       </ScrollView>
       <ModalComponent
         isVisible={sendModal}

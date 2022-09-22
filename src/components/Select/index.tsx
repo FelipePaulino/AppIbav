@@ -34,7 +34,7 @@ export function SelectComponent({
         width={width}
       >
         <S.Field>
-          <S.Label>{labelSelect}</S.Label>
+          <S.Label numberOfLines={1}>{labelSelect}</S.Label>
         </S.Field>
         <S.Icons disabled={disabled}>
           {isModalVisible ? (

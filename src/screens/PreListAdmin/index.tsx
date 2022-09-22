@@ -9,12 +9,33 @@ import { ComeBackComponent } from "../../components/ComeBack";
 import { SelectedMenuComponent } from "../../components/SelectedMenu";
 
 import { IPropsAppStack } from "../../routes/AppStack/types";
+import { useFormReport } from "../../hooks/useFormReport";
+import { FormReportActions } from "../../contexts/FormReport";
 import { useAuth } from "../../hooks/useAuth";
+
 import * as S from "./styles";
 
 export function PreListAdminScreen() {
   const { signOut } = useAuth();
   const navigation = useNavigation<IPropsAppStack>();
+  const { dispatch } = useFormReport();
+
+
+  const clean = (value: string) => {
+    navigation.navigate(value)
+    dispatch({
+      type: FormReportActions.setRedeSelect,
+      payload: 'Selecione',
+    });
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: 'Selecione',
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: 'Selecione',
+    });
+  }
 
   return (
     <Fragment>
@@ -40,7 +61,7 @@ export function PreListAdminScreen() {
           <SelectedMenuComponent
             icon={<S.MembersIcon name="user-friends" />}
             title="Membros"
-            onPress={() => navigation.navigate("Members")}
+            onPress={() => clean('Members')}
           />
 
           <SelectedMenuComponent
@@ -52,7 +73,7 @@ export function PreListAdminScreen() {
           <SelectedMenuComponent
             icon={<S.UserGridIcon name="network-wired" />}
             title="Rede"
-            onPress={() => navigation.navigate("Network")}
+            onPress={() => clean('Network')}
           />
         </S.ContentOptions>
       </S.Content>

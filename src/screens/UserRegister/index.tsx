@@ -11,7 +11,6 @@ import { HeaderComponent } from "../../components/Header";
 import { ComeBackComponent } from "../../components/ComeBack";
 import { InputMaskComponent } from "../../components/InputMask";
 import { InputFieldComponent } from "../../components/InputField";
-// import { NotificationComponent } from "../../components/Notification";
 import { DefaultContentModalComponent } from "../../components/Modal/Default";
 
 import FormFields from "../../common/constants/form";
@@ -35,12 +34,14 @@ import { IDataUser } from "./types";
 import IAddress from "../../types/initialValues";
 
 import * as S from "./styles";
+import { maskCep } from "../../common/utils/masks";
 
 export function UserRegisterScreen() {
   const [users, setUsers] = useState([]);
+  const [diseble, setDiseble] = useState<any>();
   const [office, setOffice] = useState("Selecionar");
   const [showCalender, setShowCalender] = useState(false);
-  const [address, setAddress] = useState(initialValuesRequestCep);
+  const [address, setAddress] = useState<any>(initialValuesRequestCep);
   const [selectNetwork, setSelectNetwork] = useState("Selecionar");
   const [selectDisciples, setSelectDisciples] = useState("Selecionar");
   const [formValues, setFormValues] = useState<any>(initialValueRegisterUser);
@@ -182,14 +183,14 @@ export function UserRegisterScreen() {
             data_de_nascimento: stateReducer.textRegister,
           })
           .then(() => {
-            setConfirmRegisterModal(true)
-            setConfirmRegisterModal(true)
-            setFormValues(initialValueRegisterUser)
-            setAddress(initialValuesRequestCep)
+            setConfirmRegisterModal(true);
+            setConfirmRegisterModal(true);
+            setFormValues(initialValueRegisterUser);
+            setAddress(initialValuesRequestCep);
             setOffice("");
             setSelectNetwork("Selecionar");
             setSelectDisciples("Selecionar");
-        
+
             dispatch({
               type: FormReportActions.setTextRegister,
               payload: "",
@@ -214,14 +215,14 @@ export function UserRegisterScreen() {
             data_de_nascimento: stateReducer.textRegister,
           })
           .then(() => {
-            setConfirmRegisterModal(true)
-            setConfirmRegisterModal(true)
-            setFormValues(initialValueRegisterUser)
-            setAddress(initialValuesRequestCep)
+            setConfirmRegisterModal(true);
+            setConfirmRegisterModal(true);
+            setFormValues(initialValueRegisterUser);
+            setAddress(initialValuesRequestCep);
             setOffice("");
             setSelectNetwork("Selecionar");
             setSelectDisciples("Selecionar");
-        
+
             dispatch({
               type: FormReportActions.setTextRegister,
               payload: "",
@@ -248,15 +249,15 @@ export function UserRegisterScreen() {
             data_de_nascimento: stateReducer.textRegister,
           })
           .then(() => {
-            setConfirmRegisterModal(true)
-            setFormValues(initialValueRegisterUser)
-            setAddress(initialValuesRequestCep)
-            setSelectNetwork("Selecionar")
+            setConfirmRegisterModal(true);
+            setFormValues(initialValueRegisterUser);
+            setAddress(initialValuesRequestCep);
+            setSelectNetwork("Selecionar");
             setOffice("");
 
             setSelectNetwork("Selecionar");
             setSelectDisciples("Selecionar");
-        
+
             dispatch({
               type: FormReportActions.setTextRegister,
               payload: "",
@@ -267,6 +268,33 @@ export function UserRegisterScreen() {
       throw new Error("Ops, algo deu errado!");
     }
   };
+
+  useEffect(() => {
+    if (office === "pastor de rede") {
+      setDiseble(
+        formValues.network === "" ||
+          formValues.email === "" ||
+          FormFields.PASSWORD === "" ||
+          formValues.name === "" ||
+          formValues.phone === ""
+      );
+    } else if (office === "lider de celula") {
+      setDiseble(
+        formValues.numberCelula === "" ||
+          formValues.email === "" ||
+          FormFields.PASSWORD === "" ||
+          formValues.name === "" ||
+          formValues.phone === ""
+      );
+    } else if (office === "discipulador") {
+      setDiseble(
+        formValues.email === "" ||
+          FormFields.PASSWORD === "" ||
+          formValues.name === "" ||
+          formValues.phone === ""
+      );
+    }
+  }, [formValues, FormFields, office]);
 
   const renderSelectsOptions = () => {
     switch (office) {
@@ -410,11 +438,12 @@ export function UserRegisterScreen() {
 
             <InputFieldComponent
               primary
-              value={address.cep}
+              value={maskCep(address.cep)}
+              maxLength={9}
               placeholder={FormFields.CEP}
               onEndEditing={() => getAddressFromApi()}
               onChangeText={(value) =>
-                setAddress((old) => ({
+                setAddress((old: any) => ({
                   ...old,
                   cep: value,
                 }))
@@ -432,7 +461,7 @@ export function UserRegisterScreen() {
                       : FormFields.ADDRESS
                   }
                   onChangeText={(value) =>
-                    setAddress((old) => ({
+                    setAddress((old: any) => ({
                       ...old,
                       logradouro: value,
                     }))
@@ -462,7 +491,7 @@ export function UserRegisterScreen() {
                     address.bairro !== "" ? address.bairro : FormFields.DISTRICT
                   }
                   onChangeText={(value) =>
-                    setAddress((old) => ({
+                    setAddress((old: any) => ({
                       ...old,
                       bairro: value,
                     }))
@@ -481,7 +510,7 @@ export function UserRegisterScreen() {
                       : FormFields.CITY
                   }
                   onChangeText={(value) =>
-                    setAddress((old) => ({
+                    setAddress((old: any) => ({
                       ...old,
                       localidade: value,
                     }))
@@ -501,7 +530,9 @@ export function UserRegisterScreen() {
                   selectedOption={(value) =>
                     setFormValues({ ...formValues, state: value })
                   }
-                  labelSelect={address.uf ? address.uf : formValues.state}
+                  labelSelect={
+                    address.uf ? address.uf : formValues.state || "Selecione"
+                  }
                   dataOptions={selectState}
                   disabled={address.uf !== ""}
                 />
@@ -516,7 +547,9 @@ export function UserRegisterScreen() {
                   selectedOption={(value) =>
                     setFormValues({ ...formValues, stateCivil: value })
                   }
-                  labelSelect={formValues.stateCivil}
+                  labelSelect={
+                    formValues.stateCivil ? formValues.stateCivil : "Selecione"
+                  }
                   dataOptions={selectCivilStatus}
                 />
               </S.GridItem>
@@ -541,13 +574,7 @@ export function UserRegisterScreen() {
                 title="Cadastrar"
                 onPress={registerUser}
                 width="170px"
-                disabled={(
-                formValues.network === "" || 
-                formValues.email === "" ||
-                FormFields.PASSWORD === "" ||
-                formValues.name === "" ||
-                formValues.phone === ""
-                )}
+                disabled={diseble}
               />
             </S.FooterFields>
           </Fragment>

@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Image } from "react-native";
 
 export const ComeBack = styled.View`
   flex-direction: row;
@@ -29,4 +30,6 @@ export const List = styled.View`
   border-bottom-width: 1;
   padding-bottom: 5px;
 `;
+
+export const Loading = styled(Image)``;
 

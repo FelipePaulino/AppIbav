@@ -20,19 +20,19 @@ export function PreRegisterAdminScreen() {
   const { signOut } = useAuth();
   const navigation = useNavigation<IPropsAppStack>();
 
-  const clean = () => {
-    navigation.navigate("Register");
+  const clean = (value: string) => {
+    navigation.navigate(value);
     dispatch({
       type: FormReportActions.setRedeSelect,
-      payload: "*Selecione",
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: "*Selecione",
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: "*Selecione",
+      payload: "Selecione",
     });
   };
 
@@ -60,7 +60,7 @@ export function PreRegisterAdminScreen() {
           <SelectedMenuComponent
             icon={<S.RegisterIcon name="user-plus" />}
             title="Membros"
-            onPress={() => clean()}
+            onPress={() => clean('Register')}
           />
           <SelectedMenuComponent
             icon={<S.UserGridIcon name="network-wired" />}

@@ -30,6 +30,7 @@ export const TextDelete = styled.Text`
 export const BoldTextBlue = styled.Text`
     font-size: 16px;
     font-weight: bold;
+    text-transform: uppercase;
     color: #000A3E;
 `
 

@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface props {
   status: string;
@@ -36,12 +35,10 @@ export const Box = styled.View`
   border-bottom-width: 0.5;
 `;
 
-export const ContainerPerson = styled(TouchableOpacity)`
+export const ContainerPerson = styled.View`
   flex-direction: column;
   align-items: flex-start;
 `;
-
-export const BoxName = styled.View``;
 
 export const TextName = styled.Text`
   text-transform: uppercase;
@@ -65,6 +62,19 @@ export const TextStatus = styled.Text`
   text-transform: uppercase;
 `;
 
-export const Icon = styled(FontAwesome5)`
-  font-size: ${({ theme }) => theme.fonts.fontSize.small};
+export const IconContent = styled.View`
+  justify-content: space-between;
+  flex-direction: row;
+`
+
+export const SpacingIcon = styled.View`
+margin: 5px 0 0 25px;
+`
+
+export const Icon = styled(FontAwesome)`
+  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+`;
+
+export const IconEdit = styled(FontAwesome)`
+  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
 `;

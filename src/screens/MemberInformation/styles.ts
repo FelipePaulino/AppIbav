@@ -2,11 +2,11 @@ import styled from "styled-components/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export const Container = styled.View`
-  margin: 0 20px;
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
 `;
+
 
 export const Division = styled.View`
   flex-direction: row;

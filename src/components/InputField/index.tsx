@@ -10,6 +10,7 @@ export function InputFieldComponent({
   value,
   primary,
   label,
+  showPass,
   ...rest
 }: IContentInputProps) {
   return (
@@ -18,7 +19,9 @@ export function InputFieldComponent({
       <S.Field primary={primary}>
         <S.Input primary={primary} value={value} {...rest} onFocus={() => true} />
 
-        {icon && <Feather name={icon} size={24} color="#000A3E" />}
+        {icon && (
+          <Feather onPress={showPass} name={icon} size={24} color="#fff" />
+        )}
       </S.Field>
     </Fragment>
   );
