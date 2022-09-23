@@ -151,35 +151,90 @@ export function SeeReports() {
     });
   };
 
-  console.log(reports, "reports");
-
   const submitFilter = () => {
-    if (
-      state.redeSelect !== "Selecione" &&
-      state.discipuladoSelect === "Selecione"
-    ) {
-      const filterRede = reports.filter((item: any) => {
-        return item[1].rede === state.redeSelect;
-      });
-      setFilter(filterRede);
-    } else if (
-      state.discipuladoSelect !== "Selecione" &&
-      state.celulaSelect === "Selecione"
-    ) {
-      const filterDiscipulado = reports.filter((item: any) => {
-        return item[1].discipulado === state.discipuladoSelect;
-      });
-      setFilter(filterDiscipulado);
-    } else if (state.celulaSelect !== "Selecione") {
-      const filterCelula = reports.filter((item: any) => {
-        return item[1].celula === state.celulaSelect;
-      });
-      setFilter(filterCelula);
+    if (state.textDate !== "Selecione uma data") {
+      if (
+        state.redeSelect !== "Selecione" &&
+        state.discipuladoSelect === "Selecione"
+      ) {
+        const filterRede = reports.filter((item: any) => {
+          return (
+            item[1].rede === state.redeSelect && item[1].data === state.textDate
+          );
+        });
+        setFilter(filterRede);
+      } else if (
+        state.discipuladoSelect !== "Selecione" &&
+        state.celulaSelect === "Selecione"
+      ) {
+        const filterDiscipulado = reports.filter((item: any) => {
+          return (
+            item[1].discipulado === state.discipuladoSelect &&
+            item[1].data === state.textDate
+          );
+        });
+        setFilter(filterDiscipulado);
+      } else if (state.celulaSelect !== "Selecione") {
+        const filterCelula = reports.filter((item: any) => {
+          return (
+            item[1].celula === state.celulaSelect &&
+            item[1].data === state.textDate
+          );
+        });
+        setFilter(filterCelula);
+      } else {
+        const filterDate = reports.filter((item: any) => {
+          return item[1].data === state.textDate;
+        });
+        setFilter(filterDate);
+      }
+    } else {
+      if (
+        state.redeSelect !== "Selecione" &&
+        state.discipuladoSelect === "Selecione"
+      ) {
+        const filterRede = reports.filter((item: any) => {
+          return item[1].rede === state.redeSelect;
+        });
+        setFilter(filterRede);
+      } else if (state.discipuladoSelect !== "Selecione") {
+        const filterDiscipulado = reports.filter((item: any) => {
+          return item[1].discipulado === state.discipuladoSelect;
+        });
+        setFilter(filterDiscipulado);
+      } else {
+        const filterCelula = reports.filter((item: any) => {
+          return item[1].celula === state.celulaSelect;
+        });
+        setFilter(filterCelula);
+      }
     }
     setShowFilter(false);
   };
 
-  console.log(state.date, "filter");
+  const cleanFilter = () => {
+    dispatch({
+      type: FormReportActions.setRedeSelect,
+      payload: "Selecione",
+    });
+    dispatch({
+      type: FormReportActions.setDiscipuladoSelect,
+      payload: "Selecione",
+    });
+    dispatch({
+      type: FormReportActions.setCelulaSelect,
+      payload: "Selecione",
+    });
+    dispatch({
+      type: FormReportActions.setTextDate,
+      payload: "Selecione uma data",
+    });
+    dispatch({
+      type: FormReportActions.setDate,
+      payload: new Date(),
+    });
+    setFilter(reports);
+  };
 
   return (
     <Fragment>
@@ -289,13 +344,22 @@ export function SeeReports() {
       </HeaderComponent>
       <ScrollView>
         <S.Container>
-          <ButtonComponent
-            title="FILTRAR"
-            width="150px"
-            icon="filter"
-            color="white"
-            onPress={() => setShowFilter(true)}
-          />
+          <S.BoxButtons>
+            <ButtonComponent
+              title="FILTRAR"
+              width="130px"
+              icon="filter"
+              color="white"
+              onPress={() => setShowFilter(true)}
+            />
+            <ButtonComponent
+              title="LIMPAR FILTROS"
+              width="200px"
+              icon="times"
+              color="white"
+              onPress={() => cleanFilter()}
+            />
+          </S.BoxButtons>
           {loading ? (
             <S.Loading source={loadingGif}></S.Loading>
           ) : (

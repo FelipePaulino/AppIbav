@@ -28,23 +28,23 @@ export function HomeScreen() {
   const whatIsOffice = dataUser && dataUser.cargo;
 
   const { dispatch } = useFormReport();
-  const clean = () => {
-    navigation.navigate("SendReport")
+  const clean = (page: string) => {
+    navigation.navigate(page);
     dispatch({
       type: FormReportActions.setRedeSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setDiscipuladoSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setCelulaSelect,
-      payload: 'Selecione',
+      payload: "Selecione",
     });
     dispatch({
       type: FormReportActions.setOffer,
-      payload: '',
+      payload: "",
     });
     dispatch({
       type: FormReportActions.setTextDate,
@@ -58,7 +58,11 @@ export function HomeScreen() {
       type: FormReportActions.setPresencaCelula,
       payload: [],
     });
-  }
+    dispatch({
+      type: FormReportActions.setDate,
+      payload: new Date(),
+    });
+  };
 
   const office = () => {
     switch (whatIsOffice) {
@@ -108,7 +112,7 @@ export function HomeScreen() {
                 <SelectedMenuComponent
                   icon={<S.SendReportIcon name="document-text-sharp" />}
                   title="Entregar Relatório"
-                  onPress={() => clean()}
+                  onPress={() => clean("SendReport")}
                 />
 
                 {whatIsOffice === "administrador" ? (
@@ -145,7 +149,7 @@ export function HomeScreen() {
                   <SelectedMenuComponent
                     icon={<S.ReportView name="copy" />}
                     title="Ver Relatórios Entregues"
-                    onPress={() => navigation.navigate("SeeReports")}
+                    onPress={() => clean("SeeReports")}
                   />
                   <SelectedMenuComponent
                     icon={<S.MultiplicationIcon name="multiplication" />}
