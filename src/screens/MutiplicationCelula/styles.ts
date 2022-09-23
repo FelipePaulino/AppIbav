@@ -2,6 +2,16 @@ import styled from "styled-components/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import theme from "../../styles/theme";
 
+export const Content = styled.View`
+  max-width: 350;
+  width: 100%;
+  height: 100%;
+
+  margin-top: 32;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 export const ComeBack = styled.View`
   flex-direction: row;
 `;
@@ -21,6 +31,17 @@ export const TextText = styled.Text`
 
 export const Grid = styled.View`
   margin-bottom: 32;
+`;
+
+export const GridForm = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+`;
+
+export const GridItem = styled.View`
+  width: 48%;
+  margin-bottom: 12;
 `;
 
 export const ContentC = styled.View`

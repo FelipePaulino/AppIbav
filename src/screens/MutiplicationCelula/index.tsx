@@ -213,88 +213,95 @@ export function MultiplicationCelula() {
         </S.ComeBack>
       </HeaderComponent>
       <ScrollView>
-        <S.Grid>
-          <TitleComponent title={`Teste`} small primary />
-          <S.ContentC>
-            <S.IconC name="vector-square" />
-            <SelectComponent
-              onChange={handleRedeChange}
-              labelSelect={state.redeSelect}
-              dataOptions={mapRedesUnicas}
-              selectedOption={handleRedeChange}
-              width="300"
-            />
-          </S.ContentC>
-        </S.Grid>
-        <S.Grid>
-          <TitleComponent title={`Teste 2`} small primary />
-          <S.ContentC>
-            <S.IconC name="network-wired" />
-            <SelectComponent
-              onChange={handleDiscipuladoChange}
-              labelSelect={state.discipuladoSelect}
-              dataOptions={state.redeSelect && mapDiscipuladosUnicos}
-              selectedOption={handleDiscipuladoChange}
-              width="300"
-              disabled={state.redeSelect === "Selecione" ? true : false}
-            />
-          </S.ContentC>
-        </S.Grid>
-        <S.Grid>
-          <TitleComponent title={`Celula`} small primary />
-          <S.ContentC>
-            <S.IconC name="user-friends" />
-            {console.log(celulaAdm, "celulaAdm")}
-            <SelectComponent
-              onChange={handleCelulaChange}
-              labelSelect={state.celulaSelect}
-              dataOptions={celulaAdm}
-              selectedOption={selectedOptionCelula}
-              width="300"
-              disabled={state.discipuladoSelect === "Selecione" ? true : false}
-            />
-          </S.ContentC>
-        </S.Grid>
-        <InputFieldComponent
-          primary
-          value={newCelula ?? ""}
-          placeholder=""
-          onChangeText={(value) => setNewCelula(value)}
-          label="Célula Nova"
-        />
-        <TitleComponent title={`Novo líder`} small primary />
-        <SelectComponent
-          onChange={handleMember}
-          labelSelect={memberSelected ?? "Selecione"}
-          dataOptions={listMembersCelula ?? "Selecione"}
-          selectedOption={handleMember}
-          width="300"
-          disabled={state.celulaSelect === "Selecione" ? true : false}
-        />
-        <TitleComponent title={`Membros`} small primary />
-        <S.Paragraph>
-          Selecione os membros que vão para a nova célula
-        </S.Paragraph>
-        <S.Grid>
-          {listMembersCelula &&
-            listMembersCelula.length > 0 &&
-            Object.values(listMembersCelula)
-              .sort(compared)
-              .map((item: any) => {
-                return (
-                  <Checkbox.Item
-                    key={item.nome}
-                    label={item.nome}
-                    color="red"
-                    status={item.checked ? "checked" : "unchecked"}
-                    onPress={() => {
-                      memberMultiply(item);
-                    }}
-                  />
-                );
-              })}
-        </S.Grid>
-        <ButtonComponent title="Multiplicar" onPress={cadastro} width="90%" />
+        <S.Content>
+          <S.Grid>
+            <TitleComponent title={`Rede`} small primary />
+            <S.ContentC>
+              <S.IconC name="vector-square" />
+              <SelectComponent
+                onChange={handleRedeChange}
+                labelSelect={state.redeSelect}
+                dataOptions={mapRedesUnicas}
+                selectedOption={handleRedeChange}
+                width="300"
+              />
+            </S.ContentC>
+          </S.Grid>
+          <S.Grid>
+            <TitleComponent title={`Discipulado`} small primary />
+            <S.ContentC>
+              <S.IconC name="network-wired" />
+              <SelectComponent
+                onChange={handleDiscipuladoChange}
+                labelSelect={state.discipuladoSelect}
+                dataOptions={state.redeSelect && mapDiscipuladosUnicos}
+                selectedOption={handleDiscipuladoChange}
+                width="300"
+                disabled={state.redeSelect === "Selecione" ? true : false}
+              />
+            </S.ContentC>
+          </S.Grid>
+          <S.Grid>
+            <TitleComponent title={`Celula`} small primary />
+            <S.ContentC>
+              <S.IconC name="user-friends" />
+              <SelectComponent
+                onChange={handleCelulaChange}
+                labelSelect={state.celulaSelect}
+                dataOptions={celulaAdm}
+                selectedOption={selectedOptionCelula}
+                width="300"
+                disabled={state.discipuladoSelect === "Selecione" ? true : false}
+              />
+            </S.ContentC>
+          </S.Grid>
+          <S.GridForm>
+            <S.GridItem>
+              <TitleComponent title={`Célula nova:`} small primary />
+              <InputFieldComponent
+                primary
+                value={newCelula ?? ""}
+                placeholder=""
+                onChangeText={(value) => setNewCelula(value)}
+
+              />
+            </S.GridItem>
+            <S.GridItem>
+              <TitleComponent title={`Novo líder:`} small primary />
+              <SelectComponent
+                onChange={handleMember}
+                labelSelect={memberSelected ?? "Selecione"}
+                dataOptions={listMembersCelula ?? "Selecione"}
+                selectedOption={handleMember}
+                disabled={state.celulaSelect === "Selecione" ? true : false}
+              />
+            </S.GridItem>
+          </S.GridForm>
+          <TitleComponent title={`Membros`} small primary />
+          <S.Paragraph>
+            Selecione os membros que vão para a nova célula
+          </S.Paragraph>
+          <S.Grid>
+            {listMembersCelula &&
+              listMembersCelula.length > 0 &&
+              Object.values(listMembersCelula)
+                .sort(compared)
+                .map((item: any) => {
+                  return (
+                    <Checkbox.Item
+                      key={item.nome}
+                      label={item.nome}
+                      color="red"
+                      status={item.checked ? "checked" : "unchecked"}
+                      onPress={() => {
+                        memberMultiply(item);
+                      }}
+                    />
+                  );
+                })}
+          </S.Grid>
+          <ButtonComponent title="Multiplicar" onPress={cadastro} width="100%" />
+        </S.Content>
       </ScrollView>
     </>
   );

@@ -586,7 +586,6 @@ export function UserRegisterScreen() {
         onBackdropPress={() => setConfirmRegisterModal(false)}
       >
         <DefaultContentModalComponent
-          closeModal={setConfirmRegisterModal}
           type="register"
           data={formValues.name}
         />
