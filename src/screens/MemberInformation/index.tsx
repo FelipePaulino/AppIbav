@@ -4,6 +4,7 @@ import useUserFiltered from "../../hooks/useUserFiltered";
 import RequestService from "../../common/services/RequestService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GetStorage } from "../../common/constants/storage";
+import { useNavigation } from "@react-navigation/native";
 
 import { DateComponent } from "../../components/Date";
 import { ModalComponent } from "../../components/Modal";
@@ -21,6 +22,7 @@ import * as S from "./styles";
 import { selectCategory, selectCivilStatus, selectState } from "../../common/utils/selects";
 import { connectApi } from "../../common/services/ConnectApi";
 import { useFormReport } from "../../hooks/useFormReport";
+import { IPropsAppStack } from "../../routes/AppStack/types";
 
 export function MembersInformationScreen(this: any, { route }: any) {
     const [successModal, setSuccessModal] = useState(false);
@@ -44,6 +46,7 @@ export function MembersInformationScreen(this: any, { route }: any) {
     const [members, setMembers] = useState<any>([]);
 
     const { user } = useUserFiltered();
+    const navigation = useNavigation<IPropsAppStack>();
     const { trigger, setTrigger, celulaId } = useFormReport()
 
     const identifyCelula = user && user[0][1].numero_celula;
@@ -271,7 +274,11 @@ export function MembersInformationScreen(this: any, { route }: any) {
 
             <ModalComponent
                 isVisible={successModal}
-                onBackdropPress={() => setSuccessModal(false)}
+                onBackdropPress={() => {
+                    setSuccessModal(false);
+                    navigation.navigate("Members");
+                }
+                }
             >
                 <DefaultContentModalComponent
                     data={name}

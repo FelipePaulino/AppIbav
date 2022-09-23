@@ -78,10 +78,7 @@ export function HomeScreen() {
     <Fragment>
       <HeaderComponent>
         <LogoComponent full />
-
         <S.Buttons>
-          {/* <NotificationComponent /> */}
-
           <TouchableOpacity onPress={signOut}>
             <S.Material name="logout" size={24} />
           </TouchableOpacity>

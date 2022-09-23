@@ -18,7 +18,7 @@ export function ContentSelect({
     selectedOption(option);
   };
 
-  const option = dataOptions.map((item, index) => {
+  const option = dataOptions.map((item: any, index: any) => {
     return (
       <>
         <S.Options key={index} onPress={() => selectOption(item.value)}>

@@ -21,7 +21,7 @@ import { ButtonComponent } from "../../components/Button";
 
 export function ListUsersScreen() {
   const [id, setId] = useState("");
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState([]);
   const [name, setName] = useState<string>();
   const [loading, setLoading] = useState(true);
   const [confirmModal, setConfirmModal] = useState(false);
@@ -61,7 +61,11 @@ export function ListUsersScreen() {
     }
   };
 
- const names = users && Object.entries(users)?.sort(function (a: any, b: any) {
+  const disabledUsersAdmin = users && Object.entries(users).filter((item: any) => {
+    return item[1].cargo != 'administrador'
+  })
+
+  const listUsers = users && disabledUsersAdmin?.sort(function (a: any, b: any) {
     if (a[1].nome < b[1].nome) {
       return -1;
     } else {
@@ -73,11 +77,11 @@ export function ListUsersScreen() {
     <Fragment>
       <HeaderComponent>
         <S.ContentHeader>
-        <S.ComeBack>
-          <ComeBackComponent />
-          <S.Navigation>{MenuNavigation.USERS}</S.Navigation>
-        </S.ComeBack>
-        <ButtonComponent
+          <S.ComeBack>
+            <ComeBackComponent />
+            <S.Navigation>{MenuNavigation.USERS}</S.Navigation>
+          </S.ComeBack>
+          <ButtonComponent
             title="Cadastrar"
             onPress={() => navigation.navigate("UserRegister")}
             width="136px"
@@ -86,7 +90,7 @@ export function ListUsersScreen() {
             icon="user-plus"
             color="white"
           />
-          </S.ContentHeader>
+        </S.ContentHeader>
         {/* <NotificationComponent /> */}
       </HeaderComponent>
 
@@ -96,36 +100,36 @@ export function ListUsersScreen() {
             <S.Loading source={loadingGif} />
           ) : (
             <Fragment>
-              {names.map((user: any) => {
-                  return (
-                    <PersonLabelComponent
-                      nome={user[1]?.nome}
-                      onPress={() =>
-                        navigation.navigate("UsersInformation", {
-                          nome: `${user[1].nome}`,
-                          telefone: `${user[1].telefone}`,
-                          email: `${user[1].email}`,
-                          endereco: `${user[1].endereco}`,
-                          bairro: `${user[1].bairro}`,
-                          cep: `${user[1].cep}`,
-                          cidade: `${user[1].cidade}`,
-                          estado: `${user[1].estado}`,
-                          estado_civil: `${user[1].estado_civil}`,
-                          data_de_nascimento: `${user[1].data_de_nascimento}`,
-                          status: `${user[1].status}`,
-                          numero_casa: `${user[1].numero_casa}`,
-                          id: `${user[0]}`,
-                          active: setTrigger,
-                        })
-                      }
-                      delMember={() => {
-                        setConfirmModal(true),
-                          setName(user[1].nome),
-                          setId(user[0]);
-                      }}
-                    />
-                  );
-                })}
+              {listUsers.map((user: any) => {
+                return (
+                  <PersonLabelComponent
+                    nome={user[1]?.nome}
+                    onPress={() =>
+                      navigation.navigate("UsersInformation", {
+                        nome: `${user[1].nome}`,
+                        telefone: `${user[1].telefone}`,
+                        email: `${user[1].email}`,
+                        endereco: `${user[1].endereco}`,
+                        bairro: `${user[1].bairro}`,
+                        cep: `${user[1].cep}`,
+                        cidade: `${user[1].cidade}`,
+                        estado: `${user[1].estado}`,
+                        estado_civil: `${user[1].estado_civil}`,
+                        data_de_nascimento: `${user[1].data_de_nascimento}`,
+                        status: `${user[1].status}`,
+                        numero_casa: `${user[1].numero_casa}`,
+                        id: `${user[0]}`,
+                        active: setTrigger,
+                      })
+                    }
+                    delMember={() => {
+                      setConfirmModal(true),
+                        setName(user[1].nome),
+                        setId(user[0]);
+                    }}
+                  />
+                );
+              })}
             </Fragment>
           )}
         </S.Container>

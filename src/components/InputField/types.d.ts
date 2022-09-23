@@ -6,6 +6,7 @@ export type IContentInputProps = TextInputProps & {
   value?: string | undefined;
   primary?: boolean;
   label?: string;
+  showPass?: () => void;
 };
 
 export type IColorsProps = {
