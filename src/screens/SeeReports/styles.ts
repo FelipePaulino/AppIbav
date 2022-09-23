@@ -35,7 +35,7 @@ export const List = styled.View`
   border-bottom-width: 1;
   padding-bottom: 5px;
 `;
-// margin-right: ${({ icon }) => (icon ? "5" : "0")};
+
 export const ContainerFilter = styled(Animated.View) <Props>`
   width: 80%;
   background-color: white;
@@ -45,7 +45,6 @@ export const ContainerFilter = styled(Animated.View) <Props>`
   position: absolute;
   height: 100%;
   z-index: 1;
-  /* transform: ${({ open }) => (open ? 'translate(0px)' : "translate(-400px)")}; */
 `;
 
 export const BgDark = styled.View<Props>`
