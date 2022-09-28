@@ -1,8 +1,9 @@
 import styled from "styled-components/native";
 import { MaterialIcons } from "@expo/vector-icons";
+import theme from "../../../styles/theme";
 
 export const ContentModal = styled.View`
-  background-color: ${({ theme }) => theme.colors.light};
+  background-color: ${theme.colors.light};
   width: 100%;
 
   padding-left: 20;
@@ -14,25 +15,25 @@ export const ContentModal = styled.View`
 `;
 
 export const Description = styled.Text`
-  color: ${({ theme }) => theme.colors.grey};
+  color: ${theme.colors.grey};
 
   text-align: center;
-  font-size: ${({ theme }) => theme.fonts.fontSize.small};
+  font-size: ${theme.fonts.fontSize.small};
 `;
 
 export const SubDescription = styled.Text`
-  color: ${({ theme }) => theme.colors.red};
+  color: ${theme.colors.red};
 `;
 
 export const Name = styled.Text`
-  color: ${({ theme }) => theme.colors.blue};
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  color: ${theme.colors.blue};
+  font-family: ${theme.fonts.fontFamily.bold};
 
   text-transform: uppercase;
 `;
 
 export const Success = styled(MaterialIcons)`
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${theme.colors.blue};
   font-size: 48;
 
   margin-top: 10;
