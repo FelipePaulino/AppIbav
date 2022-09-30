@@ -1,16 +1,17 @@
 import styled from "styled-components/native";
 import { Image } from "react-native";
+import theme from "../../styles/theme";
 
 export const ComeBack = styled.View`
   flex-direction: row;
 `;
 
 export const TitlePage = styled.Text`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
   text-transform: uppercase;
 
   font-size: 14;
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  font-family: ${theme.fonts.fontFamily.bold};
 `;
 
 export const Container = styled.KeyboardAvoidingView`
