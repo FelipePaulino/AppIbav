@@ -1,5 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import styled from "styled-components/native";
+import theme from "../../../styles/theme";
 
 export const Content = styled.View`
   flex-direction: row;
@@ -9,7 +10,7 @@ export const Content = styled.View`
   height: 48;
   width: 100%;
 
-  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-color: ${theme.colors.grey};
   border-bottom-width: 1;
 `;
 
@@ -18,7 +19,7 @@ export const ContentName = styled.View`
 `;
 
 export const InfoName = styled.Text`
-  color: ${({ theme }) => theme.colors.grey};
+  color: ${theme.colors.grey};
 
   font-size: 14;
   text-transform: uppercase;
