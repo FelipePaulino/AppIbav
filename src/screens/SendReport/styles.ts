@@ -1,13 +1,14 @@
 import styled from "styled-components/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Image } from "react-native";
+import theme from "../../styles/theme";
 
 export const Navigation = styled.Text`
-  color: ${({ theme }) => theme.colors.light};
+  color: ${theme.colors.light};
   text-transform: uppercase;
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.small};
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
+  font-size: ${theme.fonts.fontSize.small};
+  font-family: ${theme.fonts.fontFamily.bold};
 `;
 
 export const Content = styled.View`
@@ -41,9 +42,9 @@ export const ContentC = styled.View`
 `;
 
 export const IconC = styled(FontAwesome5)`
-  color: ${({ theme }) => theme.colors.red};
+  color: ${theme.colors.red};
 
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-size: ${theme.fonts.fontSize.medium};
 
   margin-right: 20;
 `;
@@ -52,16 +53,16 @@ export const DescriptionC = styled.Text`
   width: 100%;
 
   font-size: 14;
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
-  color: ${({ theme }) => theme.colors.grey};
+  font-family: ${theme.fonts.fontFamily.bold};
+  color: ${theme.colors.grey};
   text-transform: uppercase;
 
-  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-color: ${theme.colors.grey};
   border-bottom-width: 1;
 `;
 
 export const Observations = styled.TextInput`
-  border-color: ${({ theme }) => theme.colors.grey};
+  border-color: ${theme.colors.grey};
   border-width: 1;
 
   padding-left: 10;

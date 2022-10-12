@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import theme from "../../../styles/theme";
 
 export const Content = styled.TouchableOpacity`
   justify-content: center;
@@ -25,7 +26,7 @@ export const Options = styled.TouchableOpacity`
 `;
 
 export const OptionSelect = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.fontSize.small};
+  font-size: ${theme.fonts.fontSize.small};
   text-transform: capitalize;
 
   padding-top: 5;

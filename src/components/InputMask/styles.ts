@@ -1,8 +1,9 @@
 import styled from "styled-components/native";
 import { IColorsProps } from "../InputMask/types";
+import theme from "../../styles/theme";
 
 export const Field = styled.View<IColorsProps>`
-  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-color: ${theme.colors.grey};
   border-bottom-width: 1;
 
   width: 100%;
