@@ -10,14 +10,18 @@ export const Navigation = styled.Text`
 `;
 
 export const Content = styled.View`
-  flex: 1;
-
+  flex-direction: column;
+  justify-content: space-between;
   max-width: 350;
   width: 100%;
   margin-top: 20;
   margin-left: auto;
   margin-right: auto;
 `;
+
+export const ContentBox = styled.View`
+
+`
 
 export const Heading = styled.View`
   align-items: center;
