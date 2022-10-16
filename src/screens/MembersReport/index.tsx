@@ -138,6 +138,7 @@ export function MembersReportScreen() {
       ) : (
         <ScrollView>
           <S.Content>
+            <S.ContentBox>
             {whatIsOffice !== "lider" && (
               <S.Heading>
                 <S.Title>Célula</S.Title>
@@ -157,6 +158,8 @@ export function MembersReportScreen() {
                   />
                 ))}
             </ScrollView>
+            </S.ContentBox>
+            <S.ContentBox>
             <FooterInfoComponent />
 
             <S.Button>
@@ -173,6 +176,7 @@ export function MembersReportScreen() {
                 }
               />
             </S.Button>
+            </S.ContentBox>
           </S.Content>
         </ScrollView>
       )}

@@ -16,7 +16,7 @@ export function DateComponent({
     <S.Date>
       <S.Label>{label}</S.Label>
       <S.Content onPress={open}>
-        <S.TextSelect>{text}</S.TextSelect>
+        <S.TextSelect numberOfLines={1}>{text}</S.TextSelect>
         <S.SelectDate>
           <S.Icon name="calendar" />
         </S.SelectDate>

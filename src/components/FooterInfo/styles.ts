@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import theme from "../../styles/theme";
 
 export const Footer = styled.View`
   padding-top: 25;
@@ -13,6 +14,6 @@ font-size: 12px;
 `;
 
 export const Decoration = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.fontFamily.bold};
-  color: ${({ theme }) => theme.colors.blue};
+  font-family: ${theme.fonts.fontFamily.bold};
+  color: ${theme.colors.blue};
 `;

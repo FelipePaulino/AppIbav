@@ -234,7 +234,7 @@ export function SendReportScreen() {
       case "lider":
         return (
           <S.Grid>
-            <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+            <TitleComponent title={`${FormFields.CELULA}*:`} small primary />
             <S.ContentC>
               <S.IconC name="user-friends" />
               <S.DescriptionC>{`${userInfo && userInfo.numero_celula} - ${
@@ -297,7 +297,7 @@ export function SendReportScreen() {
         return (
           <>
             <S.Grid>
-              <TitleComponent title={`${FormFields.NETWORK}:`} small primary />
+              <TitleComponent title={`${FormFields.NETWORK}*:`} small primary />
               <S.ContentC>
                 <S.IconC name="vector-square" />
                 <SelectComponent
@@ -311,7 +311,7 @@ export function SendReportScreen() {
             </S.Grid>
             <S.Grid>
               <TitleComponent
-                title={`${FormFields.DISCIPLESHIP}:`}
+                title={`${FormFields.DISCIPLESHIP}*:`}
                 small
                 primary
               />
@@ -328,7 +328,7 @@ export function SendReportScreen() {
               </S.ContentC>
             </S.Grid>
             <S.Grid>
-              <TitleComponent title={`${FormFields.CELULA}:`} small primary />
+              <TitleComponent title={`${FormFields.CELULA}*:`} small primary />
               <S.ContentC>
                 <S.IconC name="user-friends" />
                 <SelectComponent
@@ -366,7 +366,7 @@ export function SendReportScreen() {
                 {office()}
                 <S.Grid>
                   <TitleComponent
-                    title={`${FormFields.OFFER}R$:`}
+                    title={`${FormFields.OFFER}R$*:`}
                     small
                     primary
                   />
@@ -387,7 +387,7 @@ export function SendReportScreen() {
                 </S.Grid>
 
                 <S.Grid>
-                  <TitleComponent title={`${FormFields.DATE}:`} small primary />
+                  <TitleComponent title={`${FormFields.DATE}*:`} small primary />
                   <S.ContentC>
                     <DateComponent
                       text={state.textDate}

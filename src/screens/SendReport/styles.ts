@@ -64,10 +64,7 @@ export const DescriptionC = styled.Text`
 export const Observations = styled.TextInput`
   border-color: ${theme.colors.grey};
   border-width: 1;
-
-  padding-left: 10;
-  padding-right: 10;
-
+  padding: 10px;
   margin-top: 15;
 `;
 
