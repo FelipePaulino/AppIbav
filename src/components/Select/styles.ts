@@ -16,7 +16,6 @@ export const Container = styled.TouchableOpacity<ISizeProps>`
 
   height: 32;
   width: ${({ width }) => (width ? width : "100%")};
-  
   margin-top: ${(props) => (props.small ? "-20" : "0")};
 
   border-color: ${theme.colors.grey};
@@ -36,6 +35,9 @@ export const Field = styled.View``;
 
 export const Label = styled.Text`
   padding-left: 15;
+  max-width: 135px; /* Tamanho */
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   color: ${theme.colors.grey};
   text-transform: capitalize;

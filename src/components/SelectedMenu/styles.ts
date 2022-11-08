@@ -5,6 +5,7 @@ import theme from "../../styles/theme";
 export const Content = styled(TouchableOpacity)`
   align-items: center;
   flex-direction: column;
+  width: 100px;
 `;
 
 export const BackgroundIcon = styled.View`
