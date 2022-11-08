@@ -443,17 +443,21 @@ export function RegisterScreen() {
                 onChangeText={setEmail}
               />
 
-              <InputFieldComponent
-                primary
+              <InputMaskComponent
                 value={address.cep}
+                mask="cep"
+                maxLength={8}
                 placeholder={FormFields.CEP}
+                inputMaskChange={(value: string) => setAddress((old) => ({
+                  ...old,
+                  cep: value,
+                }))}
                 onEndEditing={() => getAddressFromApi()}
-                onChangeText={(value) =>
-                  setAddress((old) => ({
-                    ...old,
-                    cep: value,
-                  }))
-                }
+                onChangeText={(value) => setAddress((old) => ({
+                  ...old,
+                  cep: value,
+                }))}
+                primary
               />
 
               <S.GridForm>
