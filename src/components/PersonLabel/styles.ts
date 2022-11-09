@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { FontAwesome } from "@expo/vector-icons";
+import theme from '../../styles/theme'
 
 interface props {
   status: string;
@@ -31,7 +32,7 @@ export const Box = styled.View`
   padding: 2px 5px;
   margin: 10px 0;
 
-  border-bottom-color: ${({ theme }) => theme.colors.grey};
+  border-bottom-color: ${theme.colors.grey};
   border-bottom-width: 0.5;
 `;
 
@@ -72,9 +73,9 @@ margin: 5px 0 0 25px;
 `
 
 export const Icon = styled(FontAwesome)`
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-size: ${theme.fonts.fontSize.medium};
 `;
 
 export const IconEdit = styled(FontAwesome)`
-  font-size: ${({ theme }) => theme.fonts.fontSize.medium};
+  font-size: ${theme.fonts.fontSize.medium};
 `;
