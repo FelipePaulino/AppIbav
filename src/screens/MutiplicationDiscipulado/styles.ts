@@ -1,6 +1,44 @@
 import styled from "styled-components/native";
+import { FontAwesome5 } from "@expo/vector-icons";
+import theme from "../../styles/theme";
 
-export const TextoTest = styled.Text`
+export const ComeBack = styled.View`
   flex-direction: row;
-  align-items: center;
+`;
+
+export const TitlePage = styled.Text`
+  color: ${theme.colors.light};
+  text-transform: uppercase;
+
+  font-size: 14;
+  font-family: ${theme.fonts.fontFamily.bold};
+`;
+
+export const Content = styled.View`
+  max-width: 350;
+  width: 100%;
+  height: 100%;
+
+  margin-top: 32;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+export const Grid = styled.View`
+  margin-bottom: 32;
+`;
+
+export const ContentC = styled.View`
+  flex-direction: row;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+  width: 310;
+  height: 40;
+`;
+
+export const IconC = styled(FontAwesome5)`
+  color: ${theme.colors.red};
+  font-size: ${theme.fonts.fontSize.medium};
+  margin-right: 20;
 `;
