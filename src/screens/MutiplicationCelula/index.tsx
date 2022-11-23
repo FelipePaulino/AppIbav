@@ -277,10 +277,12 @@ export function MultiplicationCelula() {
               />
             </S.GridItem>
           </S.GridForm>
-          <TitleComponent title={`Membros`} small primary />
-          <S.Paragraph>
-            Selecione os membros que vão para a nova célula
-          </S.Paragraph>
+          <TitleComponent title={`Membros:`} small primary uppercase blue weight />
+          <S.labelParagraph>
+            <S.Paragraph>
+              Selecione os membros que vão para a nova célula
+            </S.Paragraph>
+          </S.labelParagraph>
           <S.Grid>
             {listMembersCelula &&
               listMembersCelula.length > 0 &&

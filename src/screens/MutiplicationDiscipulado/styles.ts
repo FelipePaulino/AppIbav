@@ -42,3 +42,14 @@ export const IconC = styled(FontAwesome5)`
   font-size: ${theme.fonts.fontSize.medium};
   margin-right: 20;
 `;
+
+export const labelParagraph = styled.View`
+  padding: 3px;
+  border-bottom-color: #999;
+  border-bottom-width: 0.5;
+`
+
+export const Paragraph = styled.Text`
+  color: #999;
+  font-size: 12;
+`;

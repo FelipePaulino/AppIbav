@@ -9,6 +9,7 @@ import { useFormReport } from "../../hooks/useFormReport";
 import { FormReportActions } from "../../contexts/FormReport";
 
 import * as S from "./styles";
+import { ButtonComponent } from "../../components/Button";
 
 export function MultiplicationDiscipulado() {
   const { state, dispatch } = useFormReport();
@@ -87,7 +88,7 @@ export function MultiplicationDiscipulado() {
             </S.ContentC>
           </S.Grid>
           <S.Grid>
-            <TitleComponent title={`Celula`} small primary />
+            <TitleComponent title={`Discipulado Novo:`} small primary />
             <S.ContentC>
               <S.IconC name="user-friends" />
               <SelectComponent
@@ -100,6 +101,16 @@ export function MultiplicationDiscipulado() {
               />
             </S.ContentC>
           </S.Grid>
+          <TitleComponent title={`CÉLULAS:`} small primary uppercase weight />
+          <S.labelParagraph>
+            <S.Paragraph>
+              Selecione as células que vão para o novo discipulado
+            </S.Paragraph>
+          </S.labelParagraph>
+          <S.Grid>
+
+          </S.Grid>
+          <ButtonComponent title="Multiplicar" onPress={() => { }} width="100%" />
         </S.Content>
       </ScrollView>
     </>
