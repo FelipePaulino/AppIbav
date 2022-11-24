@@ -147,6 +147,7 @@ export function MultiplicationCelula() {
   }, [listCelula]);
   const [checked, setChecked] = React.useState(false);
   const memberMultiply = (member: any) => {
+    console.log(member, 'MEMBRO')
     const newMember = { ...member, checked: !member?.checked };
     const transformClick = Object.values(listMembersCelula).filter(
       (item: any) => {
@@ -165,6 +166,8 @@ export function MultiplicationCelula() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  console.log(listMembersCelula, 'listMembersCelula')
+
   const cadastro = () => {
     const objectNewLider = Object.values(listMembersCelula).filter(
       (item: any) => {
@@ -176,6 +179,7 @@ export function MultiplicationCelula() {
     str = memberSelected.replace(/[ÀÁÂÃÄÅ]/g, "A");
     str = memberSelected.replace(/[àáâãäå]/g, "a");
     str = memberSelected.replace(/[ÈÉÊË]/g, "E");
+    str = memberSelected.replace(/\s/g, '');
     memberSelected.replace(/[^a-z0-9]/gi, '');
     console.log(objectNewLider, 'objectNewLider')
     const email = `${str}@aguaviva.com.br`
@@ -201,6 +205,15 @@ export function MultiplicationCelula() {
     }
     catch (err) {
       throw new Error("Ops, algo deu errado!");
+    }
+  }
+
+  const newCelulaMultiplied = () => {
+    try {
+      connectApi.post("/celulas.json", {
+      })
+    } catch (err) {
+
     }
   }
 
