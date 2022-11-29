@@ -20,8 +20,8 @@ export function Multiplication() {
   const { signOut } = useAuth();
   const navigation = useNavigation<IPropsAppStack>();
 
-  const clean = () => {
-    navigation.navigate("Register");
+  const clean = (page: string) => {
+    navigation.navigate(page);
     dispatch({
       type: FormReportActions.setRedeSelect,
       payload: "*Selecione",
@@ -66,7 +66,7 @@ export function Multiplication() {
           <SelectedMenuComponent
             icon={<S.UserGridIcon name="user-friends" />}
             title="Multiplicação Celula"
-            onPress={() => navigation.navigate("MultiplicationCelula")}
+            onPress={() => clean("MultiplicationCelula")}
           />
           <SelectedMenuComponent
             icon={<S.UserGridIcon name="network-wired" />}
