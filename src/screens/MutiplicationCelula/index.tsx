@@ -29,8 +29,6 @@ export function MultiplicationCelula() {
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
 
-
-
   const userInfo = user && user[0][1];
   const whatOffice = userInfo && userInfo.cargo;
 
@@ -147,7 +145,6 @@ export function MultiplicationCelula() {
   }, [listCelula]);
   const [checked, setChecked] = React.useState(false);
   const memberMultiply = (member: any) => {
-    console.log(member, 'MEMBRO')
     const newMember = { ...member, checked: !member?.checked };
     const transformClick = Object.values(listMembersCelula).filter(
       (item: any) => {
@@ -165,8 +162,6 @@ export function MultiplicationCelula() {
   //Object.values(listMembersCelula).sort(compared);
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-
-  console.log(listMembersCelula, 'listMembersCelula')
 
   const cadastro = () => {
     const objectNewLider = Object.values(listMembersCelula).filter(
@@ -208,14 +203,26 @@ export function MultiplicationCelula() {
     }
   }
 
-  const newCelulaMultiplied = () => {
-    try {
-      connectApi.post("/celulas.json", {
-      })
-    } catch (err) {
+  const celulaFilter = state.celulaSelect.split('- ')[1]
+  const renderOptionsLeader = listMembersCelula && listMembersCelula.filter((item: any) => item.nome !== celulaFilter)
+  // const renderPastor = celulas && celulas.filter((item: any) => item.pastor ===)
 
-    }
-  }
+  // const newCelulaMultiplied = () => {
+  //   try {
+  //     connectApi.post("/celulas.json", {
+  //       lider: memberSelected,
+  //       numero_celula: newCelula,
+  //       discipulador: state.redeSelect,
+
+  //     })
+  //   } catch (err) {
+
+  //   }
+  // }
+
+  console.log(celulas, 'TESTANDO')
+
+  // JA FAZ A CRIAÇÃO DE USUARIO.
 
   return (
     <>
@@ -284,7 +291,7 @@ export function MultiplicationCelula() {
               <SelectComponent
                 onChange={handleMember}
                 labelSelect={memberSelected ?? "Selecione"}
-                dataOptions={listMembersCelula ?? "Selecione"}
+                dataOptions={renderOptionsLeader ?? "Selecione"}
                 selectedOption={handleMember}
                 disabled={state.celulaSelect === "Selecione" ? true : false}
               />
@@ -308,6 +315,7 @@ export function MultiplicationCelula() {
                       label={item.nome}
                       color="red"
                       status={item.checked ? "checked" : "unchecked"}
+                      disabled={state.celulaSelect.includes(item.nome)}
                       onPress={() => {
                         memberMultiply(item);
                       }}
