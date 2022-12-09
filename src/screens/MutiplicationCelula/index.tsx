@@ -26,6 +26,8 @@ export function MultiplicationCelula() {
   const [memberSelected, setMemberSelected] = useState<any>();
   const [newCelula, setNewCelula] = useState<any>();
   const [membersChecked, setMembersChecked] = useState([])
+  const [membersUncheck, setMembersUncheck] = useState([])
+  const [leaderCelula, setLeaderCelula] = useState<any>([])
 
   const { state, dispatch } = useFormReport();
   const { user, loading } = useUserFiltered();
@@ -39,6 +41,7 @@ export function MultiplicationCelula() {
         const response = await connectApi.get("/celulas.json");
 
         setCelulas(Object.values(response.data));
+        setLeaderCelula(Object.entries(response.data))
       };
       getCelulas();
     }
@@ -157,10 +160,10 @@ export function MultiplicationCelula() {
 
   useEffect(() => {
     const filterCheckedMembers = listMembersCelula && listMembersCelula.filter((item: any) => item.checked === true)
+    const filterUncheckedMembers = listMembersCelula && listMembersCelula.filter((item: any) => item.checked === false)
     setMembersChecked(filterCheckedMembers)
+    setMembersUncheck(filterUncheckedMembers)
   }, [listMembersCelula])
-
-  console.log(membersChecked, 'MEMBROS SELECIONADOS')
 
   function compared(a: any, b: any) {
     if (a.nome < b.nome) return -1;
@@ -184,12 +187,13 @@ export function MultiplicationCelula() {
     str = memberSelected.replace(/[ÈÉÊË]/g, "E");
     str = memberSelected.replace(/\s/g, '');
     memberSelected.replace(/[^a-z0-9]/gi, '');
-    console.log(objectNewLider, 'objectNewLider')
+    // console.log(objectNewLider, 'objectNewLider')
     const email = `${str}@aguaviva.com.br`
     const password = `${str}123456`
     createUserWithEmailAndPassword(auth, email, password);
     credentialsPost(objectNewLider, email, password);
     newCelulaMultiplied();
+    removeMembersNewCelula();
   };
 
 
@@ -216,9 +220,8 @@ export function MultiplicationCelula() {
   const renderOptionsLeader = listMembersCelula && listMembersCelula.filter((item: any) => item.nome !== celulaFilter)
   const renderPastor = celulas && celulas.filter((item: any) => item.rede === state.redeSelect)
   const pastorCelula = renderPastor[0]?.pastor
-
-  // console.log(pastorCelula, 'PASTOR SELECIONADO')
-  console.log(listMembersCelula, 'listMembersCelula')
+  const renderLeader = leaderCelula.filter((item: any) => item[1].lider === celulaFilter)
+  const idCelula = renderLeader && renderLeader.length && renderLeader[0][0]
 
   const newCelulaMultiplied = () => {
     try {
@@ -226,8 +229,9 @@ export function MultiplicationCelula() {
         lider: memberSelected,
         numero_celula: newCelula,
         pastor: pastorCelula,
-        discipulador: state.redeSelect,
-        membros: membersChecked
+        discipulador: state.discipuladoSelect,
+        membros: membersChecked,
+        rede: state.redeSelect
       })
         .then(() => alert("Nova Celula Registrada"));
     } catch (err) {
@@ -235,9 +239,15 @@ export function MultiplicationCelula() {
     }
   }
 
-  // console.log(celulas, 'TESTANDO')
-
-  // JA FAZ A CRIAÇÃO DE USUARIO.
+  const removeMembersNewCelula = () => {
+    try {
+      connectApi.put(`/celulas/${idCelula}.json`, {
+        membros: membersUncheck
+      }).then(() => alert("Celula editada"));
+    } catch (err) {
+      alert('Erro ao editar a celula')
+    }
+  }
 
   return (
     <>
