@@ -8,8 +8,10 @@
     "icon": "./assets/image/logo-app.png",
     "scheme": "aguavivarp",
     "orientation": "portrait",
-    "assetBundlePatterns": ["**/*"],
-    "splash":{
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
       "image": "./assets/image/logo-app.png",
       "backgroundColor": "#000A3E"
     },
@@ -18,13 +20,18 @@
       "buildNumber": "1.0.0"
     },
     "android": {
-      "adaptiveIcon":{
+      "adaptiveIcon": {
         "foregroundImage": "./assets/image/logo-app.png",
         "backgroundColor": "#000A3E"
       },
       "package": "com.viniciusdevitalo.aguavivarp",
-      "versionCode": 13,
+      "versionCode": 14,
       "permissions": []
+    },
+    "extra": {
+      "eas": {
+        "projectId": "54ed5342-5a48-4bea-b73c-0bf9348ab33a"
+      }
     }
   }
 }
