@@ -1,4 +1,4 @@
-package com.aguavivarp;
+package com.viniciusdevitalo.aguavivarp;
 
 import android.os.Build;
 import android.os.Bundle;
