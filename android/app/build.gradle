@@ -133,9 +133,9 @@ android {
 
     defaultConfig {
         applicationId "com.aguavivarp"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        minSdkVersion 29
+        targetSdkVersion 29
+        versionCode 14
         versionName "1.0"
     }
     splits {
